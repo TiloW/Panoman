@@ -1,0 +1,93 @@
+<% # coding: utf-8
+%>
+
+<h1>Inhalt wählen</h1>
+
+<% content_for :head do %>
+  <script>
+    var listedPanos = new Object();
+    
+    <% @cities.each do |c| %>
+      listedPanos[<%= c.id %>] = new Array();
+      <% panos = c.panoramas.sort_by{ |p| p.name } %>
+      <% panos.each do |p| %>
+        listedPanos[<%= c.id %>].push([<%= p.id %>, "<%= p.name %>"])
+      <% end %>
+    <% end %>
+  </script>
+  <%= javascript_include_tag "pano-dropdown" %>
+<% end %>
+
+<ul class="tasks">
+  <form action="generate" method="get">
+    <div class="field">
+      <label>Nicht veröffentlichte Panoramen überspringen</label>
+      <input type="checkbox" name="skip_unpublished" checked="true">
+    </div>
+    <div class="field">
+      <label>Zu erstellender Inhalt</label>
+      <select name="option">
+      <% @options.each do |o| %>
+        <option><%= o %></option>
+      <% end %>
+      </select>
+    </div>
+    <div id="cityList" class="field">
+      <label>Auf Stadt beschränken</label>
+      <select name="city">
+        <option value="-1">NICHT BESCHRÄNKEN</option>
+        <% @cities.each do |c| %>
+          <option value="<%= c.id %>"><%= c.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <div id="panoList" class="field">
+      <label>Auf Panorama beschränken</label>
+      <select name="pano">
+      </select>
+    </div>
+    <div class="field"><input type="submit" value="Generator starten" /></div>
+  </form>
+</ul>
+
+<p>
+  Die hier aufgelisteten Optionen entsprechen jeweils einem Ordner im Verzeichnis <span class="highlight"><%= Rails.application.config.template_path %></span> im Hauptverzeichnis der Anwendung.
+</p>
+<p>
+  Das Ergebnis der Generierung wird in einem entsprechendem Ordner im Verzeichnis <span class="highlight"><%= Rails.application.config.generated_out_path %></span> abgelegt.
+</p>
+<p>
+  Die Ordner dürfen beliebige Dateien und Unterordner enthalten, es werden die Zeichenketten 
+  <span class="highlight">CITY-ID</span>, <span class="highlight">CITY-NAME</span>, 
+  <span class="highlight">PANO-ID</span> und <span class="highlight">PANO-NAME</span>
+  in den Datei- und Ordnernamen durch entsprechende Werte ersetzt.
+  Dabei werden die Ordner mehrfach generiert (z.B. für jede Stadt ein Ordner).
+  Soll <span class="highlight">PANO-NAME</span> verwendet werden, 
+  so muss vorher im Pfad ein stadtspezifischer Name vorkommen (Panoramanamen sind nicht über alle Städte eindeutig).
+  Bei <span class="highlight">PANO-ID</span> erübrigt sich diese Problematik.
+</p>
+<p>
+  Damit eine Datei nicht nur kopiert sondern auch intern bearbeitet wird muss sie die Endung <span class="highlight">.erb</span>
+  tragen und eingebetteten Ruby-Code beinhalten.
+  Aus <span class="highlight">test.xml.erb</span> würde z.B. die Datei <span class="highlight">test.xml</span> erstellt werden.
+  Es stehen die Variablen <span class="highlight">@cities</span> und 
+  gegebenenfalls <span class="highlight">@city</span> sowie <span class="highlight">@pano</span> zur Verfügung.
+</p>
+<p>
+  Es dürften <span class="highlight">keine Dateien mit dem selbem Namen die sich nur durch die Endung .erb unterscheiden</span> im gleichen Verzeichnis liegen.
+  Die Dateien würden die gleiche Zieldatei erhalten und sich gegenseitig überschreiben.
+</p>
+<p>
+  Nicht veröffentliche Panoramen werden gegebenenfalls übersprungen. 
+  Falls diese Option aktiv ist, werden keine Panorama-spezifischen Dateien für unveröffentliche Panoramen angelegt.
+  Allerdings muss innerhalb der <span class="highlight">.erb</span>-Dateien 
+  ein manuelles Überspringen aller nicht veröffentlichen Panoramen mittels Test auf <span class="highlight">pano.published</span> stattfinden.
+</p>
+<p>
+  Durch Einstellen eines Filters können nur Dateien für bestimmte Städte oder Panoramen erzeugt werden.
+  Es findet auch hier nur ein Auschhluss der Dateien statt - innerhalb der Dateien werden alle Städte/Panoramen in die Generierung des Inhalts einbezogen.
+  Die Filter machen vor allem Sinn für ein schnelles Testen anhand einer einzelnen Stadt/Panorama.
+</p>
+<p>
+  Die Generierung kann je nach Umfang der Quelldateien einige Zeit in Anspruch nehmen.
+</p>

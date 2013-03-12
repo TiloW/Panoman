@@ -1,0 +1,63 @@
+<% # coding: utf-8
+%>
+
+<h1>Generierungsbericht: <%= @option %></h1>
+
+<div id="sections">
+  <ul>
+    <li><a href="#tab-report">Zusammenfassung</a></li>
+    <li><a href="#tab-details">Details</a></li>
+  </ul>
+  <div id="tab-report">
+    <p>
+      <% case @file_count %>
+      <% when 0 %>
+        Es wurde keine Datei generiert.
+      <% when 1%>
+        Es wurde eine Datei geneiert.
+      <% else %>
+        Es wurden insgesamt <%= @file_count %> Dateien generiert.
+      <% end %>
+    </p>
+    <% if @skip %>
+      <p>Nicht veröffentlichte Panoramen wurden übersprungen.</p>
+    <% else %>
+      <p>Unveröffentliche Panoramen wurden ebenfalls einbezogen.</p>
+    <% end %>
+  </div>  
+  
+  <div id="tab-details" class="section">
+    <table>
+      <tr class="table-header">
+        <th>Quelldatei</th>
+        <th>Zieldatei(en)</th>
+      </tr>
+      <% @global_files.each do |f| %>
+        <tr>
+          <td><%= f %></td>
+          <td><%= @global_files_out[f] %></td>
+        </tr>
+      <% end %>
+      <% @city_files.each do |f| %>
+        <tr>
+          <td><%= f %></td>
+          <td><ul>
+            <% @city_files_out[f].each do |i, out| %>
+              <li><%= out %></li>
+            <% end %>
+          </ul></td>
+        </tr>
+      <% end %>
+      <% @pano_files.each do |f| %>
+        <tr>
+          <td><%= f %></td>
+          <td><ul>
+            <% @pano_files_out[f].each do |i, out| %>
+              <li><%= out %></li>
+            <% end %>
+          </ul></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
