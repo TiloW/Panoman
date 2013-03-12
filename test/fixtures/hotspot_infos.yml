@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  panorama: 1
+  name: MyString
+  path: MyString
+
+two:
+  panorama: 1
+  name: MyString
+  path: MyString

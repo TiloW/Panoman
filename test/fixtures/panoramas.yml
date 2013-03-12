@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  description: MyString
+  date_of_recording: 2011-07-31
+  latitude: 1.5
+  longitude: 1.5
+  rotation: 1
+  initial_center: 1
+  initial_vertical: 1
+  repeative: false
+
+two:
+  name: MyString
+  description: MyString
+  date_of_recording: 2011-07-31
+  latitude: 1.5
+  longitude: 1.5
+  rotation: 1
+  initial_center: 1
+  initial_vertical: 1
+  repeative: false

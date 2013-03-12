@@ -1,0 +1,19 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'simple-panorama' -%>
+  <script>
+    $(function() {
+      var pano = new SimplePanorama({
+        'elem': $('.panorama'), 
+        'imagePath': "<%= FileHelper.get_image @panorama %>",
+        'modules': ['move_mousedown'],
+        'callback': function () {
+          <%= generateHotspotsJS(@panorama) %>
+        }
+      });
+    });
+  </script>
+<% end %>
+
+<div class)"panoContainer" style="padding: 6px 16px;">
+  <div class="panorama" style="left: -16px;"></div>
+</div>

@@ -1,0 +1,59 @@
+<% # coding: utf-8 
+%>
+<% @panorama = @internal_link.panorama %>
+  
+<h1>Bearbeiten: Interner Link von <%= @panorama.name %></h1>
+
+<div id="sections">
+  <ul>
+    <li><a href="#tab-fields">Datensatz</a></li>
+    <li><a href="#tab-start">Startpanorama</a></li>
+    <% unless @internal_link.destination_id.nil? %>
+      <li><a href="#tab-dest">Zielpanorama</a></li>
+    <% end %>
+  </ul>
+
+  <div id="tab-fields" class="section">
+    <%= form_for(@internal_link) do |f| %>
+      <div class="field">
+        <%= f.label :destination_id, "Verlinktes Panorama" %>
+        <% panos = @internal_link.panorama.city.panoramas.sort_by{ |p| p.name } %>
+        <% pano_coll = panos.collect {|p| [ p.name, p.id ] } %>
+        <% pano_coll.delete([@panorama.name, @panorama.id]) %>
+        <%= f.select("destination_id", pano_coll, {:include_blank => false}) %>
+      </div>
+      <div class="field">
+        <%= f.label :alt_name, "Alternativer Name" %>
+        <%= f.text_field :alt_name, :size => 65 %>
+      </div>
+      <div class="field">
+        <%= f.label :path, "Hotspot-Bereich" %>
+        <%= f.text_field :path %>
+      </div>
+      <div class="field">
+        <%= f.hidden_field :panorama_id %>
+      </div>
+      <div class="field">
+        <%= f.label :linked_panorama_center, "Horizontale Position zu Beginn der Animation des verlinkten Panoramas" %>
+        <%= f.number_field :linked_panorama_center %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Speichern" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div id="tab-start" class="section">
+    <%= render 'layouts/panorama' %>
+  </div>
+  
+  <% unless @internal_link.destination_id.nil? %>
+    <div id="tab-dest" class="section">
+      <% tmp = @panorama %>
+      <% @panorama = Panorama.find(@internal_link.destination_id) %>
+      <%= render 'layouts/panorama' %>
+      <% @panorama = tmp %>
+    </div>
+  <% end %>   
+   
+</div>

@@ -1,0 +1,25 @@
+<%# coding: utf-8 
+%>
+<header>
+  <!--<div class="round logo full-width">Panoman <%= Rails.application.config.version %></div>-->
+  <% unless flash[:error].nil? %>
+    <div class="ui-state-error">
+      <span><%= flash[:error] %></span>
+      <%= flash[:error_details] %>
+    </div>
+  <% end %>
+  <% unless flash[:notice].nil? %>
+    <div class="notice full-width">
+      <span>Hinweiß</span>
+      <%= flash[:notice].html_safe %>
+    </div>
+  <% end %>
+  <%= render 'layouts/nav' %>
+  <div class="spacer"></div>
+  <div class="breadcrumb full-width">
+    <% breadcrumb = get_breadcrumb %>
+    <% unless breadcrumb.nil? %>
+      <%= breadcrumb.html_safe %>
+    <% end %>
+  </div>
+</header>

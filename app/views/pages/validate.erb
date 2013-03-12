@@ -1,0 +1,89 @@
+<% # coding: utf-8
+%>
+
+<h1>Datenbank Validierungsbericht</h1>
+
+<div id="sections">
+  <ul>
+    <li><a href="#tab-report">Zusammenfassung</a></li>
+    <li><a href="#tab-images">Bildverzeichnis</a></li>
+    <li><a href="#tab-links">Verlinkungen</a></li>
+  </ul>
+  <div id="tab-report" class="section">
+    <p>Es wurden <%= @missing_images_count %> ungültige Bildverknüfungen und <%= @corrupt_links_count %> defekte Links gefunden.</p>
+  </div>
+  
+  <div id="tab-images" class="section">
+    <p>
+      Es wurden <%= @missing_images_count %> ungültige Bildverknüfungen gefunden.
+      Diese verteilen sich auf <%= @missing_images_pano_count %> Panoramen in insgesamt <%= @missing_images_city_count %> Städten.
+    </p>
+    <p>
+      Es werden im folgenden alle Panoramen aufgelistet zu denen mindestens ein Bild fehlt, die fehlenden Bilder sind auch im einzelnen aufgelistet.
+    </p>
+    
+    <div class="accordion">
+      <% @cities.each do |city| %>
+        <% unless @missing_images[city.name].nil? %>
+          <h3><a href="#"><%= city.name %></a></h3>
+          <div>
+            <table>
+              <% @missing_images[city.name].each do |pano_name, missing_files| %>
+              <tr>
+                <td><%= pano_name %></td>
+                <td>
+                  <ul>
+                    <% missing_files.each do |miss_file| %>
+                      <li><%= miss_file %></li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+              <% end %>
+            </table>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  
+  <div id="tab-links" class="section">
+    <p>
+      Es wurden <%= @corrupt_links_count %> verwaiste Links gefunden.
+      Diese verteilen sich auf <%= @corrupt_links_pano_count %> Panoramen in insgesamt <%= @corrupt_links_city_count %> Städten.
+    </p>
+    <p>
+      Nicht alle hier aufgeführten Links müssen falsch sein, es ist eine manuelle Nachprüfung zu empfehlen. 
+      Manche Seiten leiten automatisch auf andere gültige Seiten weiter, hier ist es möglicherweise sinnvoll direkt auf die gültige Seite zu verlinken.
+      Es werden im folgenden alle Seiten aufgelistet dich nicht mit HTTP-Status Code OK (#200) geantwortet haben.
+    </p>
+    
+    <div class="accordion">
+      <% @cities.each do |city| %>
+        <% unless @corrupt_links[city.name].nil? %>
+          <h3><a href="#"><%= city.name %></a></h3>
+          <div>
+            <table>
+              <% @corrupt_links[city.name].each do |pano_name, corr_links| %>
+              <tr>
+                <td><%= pano_name %></td>
+                <td>
+                  <table>
+                    <% corr_links.each do |link| %>
+                      <tr>
+                        <td><%= link.name %></td>
+                        <td><a href="<%= link.url %>"><%= truncate(link.url, :length => 64, :seperator => "..") %></a></td>
+                      </tr>
+                    <% end %>
+                  </table>
+                </td>
+              </tr>
+              <% end %>
+            </table>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  
+</div>

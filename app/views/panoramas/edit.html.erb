@@ -1,0 +1,87 @@
+<% # coding: utf-8 
+%>
+
+<h1>Bearbeiten: <%= @panorama.name %></h1>
+
+<div id="sections">
+  <ul>
+    <li><a href="#tab-fields">Datensatz</a></li>
+    <li><a href="#tab-map">Karte</a></li>
+    <li><a href="#tab-image">Panorama</a></li>
+  </ul>
+
+  <div id="tab-fields" class="section">
+    <%= form_for(@panorama) do |f| %>
+      <div class="field">
+        <%= f.label :published, "Veröffentlicht" %>
+        <%= f.check_box :published %>
+      </div>
+      <div class="field">
+        <%= f.label :name, "Name" %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :alt_name, "Alternativer Name (Lang)" %>
+        <%= f.text_field :alt_name, :size => 65 %>
+      </div>
+      <div class="field">
+        <%= f.label :tag_list, "Tags" %>
+        <%= f.text_field :tag_list, :size => 65 %>
+      </div>
+      <div class="field">
+        <%= f.label :description, "Beschreibungstext" %>
+        <%= f.text_area :description, :rows => 4, :cols => 50 %>
+      </div>
+      <div class="field">
+        <%= f.label :date_of_recording, "Datum der Aufnahme" %>
+        <%= f.date_select :date_of_recording, {:order => [:month, :year], :discard_day => true, 
+          :start_year => 2000, :end_year => Time.now.year} %>
+      </div>
+      <div class="field">
+        <%= f.label :latitude, "Breitengrad" %>
+        <%= f.text_field :latitude, :value => f.object.get_latitude %>
+      </div>
+      <div class="field">
+        <%= f.label :longitude, "Längengrad" %>
+        <%= f.text_field :longitude, :value => f.object.get_longitude %>
+      </div>
+      <div class="field">
+        <%= f.label :rotation, "Standard-Rotation" %>
+        <%= f.number_field :rotation %>
+      </div>
+      <div class="field">
+        <%= f.label :initial_center, "Horizontale Position zu Beginn der Animation" %>
+        <%= f.number_field :initial_center %>
+      </div>
+      <div class="field">
+        <%= f.label :initial_vertical, "Vertikale Position zu Beginn der Animation" %>
+        <%= f.number_field :initial_vertical %>
+      </div>
+      <div class="field">
+        <%= f.label :repeative, "Panorama wiederholt sich (360°)" %>
+        <%= f.check_box :repeative %>
+      </div>
+      <div class="field">
+        <%= f.hidden_field :city_id %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Speichern" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div id="tab-map" class="section">
+    <% content_for(:head) do %>
+      <%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false" %>
+      <%= javascript_include_tag "maps-coordinates" %>
+    <% end %>
+    <div id="main-map"></div>
+    <p>Durch Doppelklicken auf die Karte kann eine neue Position in den Datensatz übertragen werden.
+    Anschließend muss der Datensatz manuell gespeichert werden.</p>
+  </div>
+  
+  <div id="tab-image" class="section">
+    <%= render 'layouts/panorama' %>
+  </div>
+                  
+</div>

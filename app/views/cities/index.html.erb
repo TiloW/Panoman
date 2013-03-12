@@ -1,0 +1,33 @@
+<h1>Städte</h1>
+  
+<div id="sticky">  
+  <ul>
+    <li><a href="#tab-table">Liste</a></li>
+  </ul>
+  
+  <div id="tab-tasks">
+    <ul class="tasks">
+      <li><%= link_to "Stadt hinzufügen", new_city_path, :class => 'button' %></li>
+    </ul>
+  </div>
+</div>
+
+<div id="sections">
+  <ul>
+    <li><a href="#tab-table">Liste</a></li>
+  </ul>
+
+  <div id="tab-table" class="section">
+    <%= 
+      generate_table(nil, nil, @cities) do |city|
+        row_data = [
+          city.id,
+          (link_to city.name, city_path(city.id)),
+          (link_to "Details", edit_city_path(city.id), :class => 'details button'),
+          (link_to "Löschen", city, :remote => true, :class => 'delete button', :method => 'delete',
+               :confirm => "Stadt '#{city.name}' wirklich löschen?")
+        ]
+      end
+    %>
+  </div>
+</div>

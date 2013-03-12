@@ -1,0 +1,40 @@
+<% # coding: utf-8 
+%>
+
+<h1>Bearbeiten: <%= @hotspot_info.name %></h1>
+
+<div id="sections">
+  <ul>
+    <li><a href="#tab-fields">Datensatz</a></li>
+    <li><a href="#tab-image">Panorama</a></li>
+  </ul>
+
+  <div id="tab-fields" class="section">
+    <%= form_for(@hotspot_info) do |f| %>
+      <div class="field">
+        <%= f.label :namem, "Name" %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :alt_name, "Alternativer Name (Lang)" %>
+        <%= f.text_field :alt_name, :size => 65  %>
+      </div>
+      <div class="field">
+        <%= f.label :path, "Hotspot-Bereich" %>
+        <%= f.text_field :path %>
+      </div>
+      <div class="field">
+        <%= f.hidden_field :panorama_id %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Speichern" %>
+      </div>
+    <% end %>
+  </div>
+           
+  <div id="tab-image" class="section">
+    <% @panorama = @hotspot_info.panorama %>
+    <%= render 'layouts/panorama' %>
+  </div>
+
+</div>

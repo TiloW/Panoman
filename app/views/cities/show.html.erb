@@ -1,0 +1,78 @@
+<%# coding: utf-8 
+%>
+
+<% content_for :head do %>
+  <%= javascript_include_tag "panorama-lists" %>
+<% end %>
+
+
+
+
+<div id="sticky">
+  <ul>
+    <li><a href="#tab-tasks">Aufgaben</a></li>
+  </ul>
+  
+  <div id="tab-tasks">
+    <ul class="tasks">
+      <li><%= link_to "Panorama hinzufügen", new_panorama_path(:city_id => @city.id), :class => :button %></li>
+    </ul>
+  </div>
+</div>
+
+<h1><%= @city.name %></h1>
+<div id="sections">
+  <ul>
+    <li><a href="#tab-table">Liste</a></li>
+    <li><a href="#tab-priority">Anordnung</a></li>
+  </ul>
+  
+  <div id="tab-table" class="section">
+    <h3>Tag-Cloud</h3>
+    <p>
+    <% @tag_cloud.each do |tag| %>
+      <%= link_to tag.name, city_path(@city.id, { :tag => tag.name }) %> 
+      <% unless @tag_cloud.last == tag %>
+        /
+      <% end %>
+    <% end %>
+    </p>
+    <% unless @tag.nil? %>
+      <p>Es werden nur mit "<%= @tag %>" assoziierte Panoramen angezeigt.</p>
+      <p><%= link_to "Filter löschen", city_path(@city.id), :class => :button %></p>
+    <% end %>
+    
+    <%= 
+      generate_table(nil, ["Name", "Details", "Veröff.", "Datum", "360°", "Bild", "Löschen"], @panoramas) do |pano|
+        row_data = [
+          pano.id,
+          (link_to pano.name, panorama_path(pano.id)),
+          (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
+          generate_chkbtn(:panoramas, pano.id, :published, pano.published),
+          pano.date_of_recording.nil? ? "[Unbekannt]" : (l pano.date_of_recording, :format => :month),
+          generate_chkbtn(:panoramas, pano.id, :repeative, pano.repeative),
+          "<img title=\"Pfad: #{FileHelper.get_default_thumbnail_location pano}\"" +
+              "class=\"thumbnail\" src=\"#{FileHelper.get_thumbnail pano}\" alt=\"nicht gefunden\" />",
+            (link_to "Löschen", pano, :remote => true, :class => 'delete button', :method => 'delete',
+                                      :confirm => "Panorama '#{pano.name}' wirklich löschen?")
+        ]
+      end
+    %>
+  </div>
+  
+  <div id="tab-priority" class="section">
+    <%= 
+      generate_table(nil, nil, @panoramas_priorized) do |pano|
+        row_data = [
+          pano.id,
+          pano.name,
+          (link_to "an Anfang verschieben", shift_panorama_path(pano, :dest => "top"), :remote => true, :class => "button top"),
+          @tag.nil? ? (link_to "hoch", shift_panorama_path(pano, :dest => "up"), :remote => true, :class => "button up") : "",
+          @tag.nil? ? (link_to "runter", shift_panorama_path(pano, :dest => "down"), :remote => true, :class => "button down") : "",
+          (link_to "an Ende verschieben", shift_panorama_path(pano, :dest => "bottom"), :remote => true, :class => "button bottom"),
+          "<img title=\"Pfad: #{FileHelper.get_default_thumbnail_location pano}\"" +
+              "class=\"thumbnail\" src=\"#{FileHelper.get_thumbnail pano}\" alt=\"nicht gefunden\" />"
+        ]
+      end
+    %>
+  </div>

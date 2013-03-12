@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  panorama_id: 1
+  destination_id: 1
+  path: MyString
+
+two:
+  panorama_id: 1
+  destination_id: 1
+  path: MyString

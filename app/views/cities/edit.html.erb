@@ -1,0 +1,27 @@
+<% # coding: utf-8 
+%>
+
+<h1>Bearbeiten: <%= @city.name %></h1>
+
+<div id="sections">
+  <ul>
+    <li><a href="#tab-fields">Datensatz</a></li>
+  </ul>
+  
+  <div id="tab-fields" class="section">
+    <%= form_for(@city) do |f| %>
+      <div class="field">
+        <%= f.label :name, "Name"  %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :html_content, "Zusätliches HTML"  %>
+        <%= f.text_area :html_content, :cols => 75 %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Speichern" %>
+      </div>
+    <% end %>
+  </div>
+
+</div>

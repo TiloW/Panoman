@@ -1,0 +1,24 @@
+<div class="panorama">
+  <applet archive="<%= Rails.application.config.pmvr_path %>" MAYSCRIPT codebase=".." code="pmvr.class" name="pmvr"  width="100%" height="300" align="absmiddle"> 
+    <param name="image" value="<%= FileHelper.get_image @panorama %>"> 
+    <param name="center" value="<%= @panorama.initial_center %>">
+    <% if @panorama.repeative %>
+      <param name="view" value="360">
+    <% end %>
+    <param name="hover" value="yes">
+    <param name="showlinks" value="yes">
+    <% counter = -1 %>
+    <% @panorama.internal_links.each do |link| %>
+      <% dest = Panorama.find(link.destination_id) %>
+      <param name="link<%= counter+=1 %>" value="<%= link.path %>,<%= panorama_path(dest.id) %>,<%= dest.name %>">
+    <% end %>
+        
+    <% @panorama.external_links.each do |link| %>
+      <param name="link<%= counter+=1 %>" value="<%= link.path %>,<%= link.url %>,<%= link.name %>">
+    <% end %>
+        
+    <% @panorama.hotspot_infos.each do |hotspot| %>
+      <param name="link<%= counter+=1 %>" value="<%= hotspot.path %>,-,<%= hotspot.name %>">
+    <% end %> 
+  </applet>
+</div>

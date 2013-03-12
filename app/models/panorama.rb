@@ -1,0 +1,54 @@
+class Panorama < ActiveRecord::Base
+  include Named, Dated, Located
+  
+  acts_as_taggable
+  
+  has_many :external_links, :dependent => :destroy
+  has_many :internal_links, :dependent => :destroy
+  has_many :hotspot_infos, :dependent => :destroy
+  
+  after_initialize :default_values
+  before_destroy :destroy_internal_links
+  
+  belongs_to :city
+  
+  attr_accessible :name,
+                  :tag_list,
+                  :alt_name,
+                  :description,
+                  :date_of_recording,
+                  :latitude,
+                  :longitude,
+                  :rotation,
+                  :initial_center,
+                  :initial_vertical,
+                  :repeative,
+                  :published,
+                  :priority
+                  
+  validates :name, :presence => true, :uniqueness => {:scope => :city_id}
+  
+  validates :priority, :presence => true, :uniqueness => {:scope => :city_id}
+  
+  validates_numericality_of :latitude,
+                            :longitude,
+                            :rotation,
+                            :initial_center,
+                            :initial_vertical,
+                            :priority, 
+                            :allow_nil => true
+                            
+  private
+    def default_values
+      self.name ||= "Neues Panorama"
+      self.rotation ||= "20"
+      self.initial_vertical ||= "250"
+      self.repeative = true if self.repeative.nil?
+      self.published = true if self.published.nil?
+      self.priority ||= self.id
+    end
+    
+    def destroy_internal_links
+      InternalLink.where(:destination_id => self.id).each { |l| l.destroy }
+    end
+end

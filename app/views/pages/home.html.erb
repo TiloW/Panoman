@@ -1,0 +1,60 @@
+<% # coding: utf-8
+%>
+
+<h1>Übersicht</h1>
+
+
+<div id="sticky">
+  <ul>
+    <li><a href="#tab-tasks">Aufgaben</a></li>
+  </ul>
+  
+  <div id="tab-tasks">  
+    <p>Die folgenden Aufgaben können längere Zeit in Anspruch nehmen. Bei Ausführung sollte der Ladevorgang nicht abgebrochen werden.</p>
+    <% unless Rails.env.production? %>
+      <p>Rails wird zur Zeit nicht im <span class="highlight">Performance-optimierten production environment</span> ausgeführt!</p>
+    <% end %>
+    <ul class="tasks">
+      <li><%= link_to "Statistik anzeigen", { :controller => "pages", :action =>  "stats" }, :class => "button" %></li>
+      <li><%= link_to "Datenbank validieren", { :controller => "pages", :action =>  "validate"}, :class => "button", :confirm => "Die Validierung der Datenbank dauert wahrscheinlich sehr lange."  %></li>
+      <li><%= link_to "Inhalte generieren", { :controller => "generator", :action => "choose"}, :class => "button"  %></li>
+      <li>
+        <%= link_to "Externe Links reparieren", { :controller => "pages", :action => "repair_links"}, :class => "button", :confirm => 
+                "Dies wird die Datenbank dauerhaft ändern. Zuvor sollte ein Backup angelegt werden.\n" +
+                "Die Titel der Links werden reduztiert, so dass sie nicht den Anfang der URL enthalten. " +
+                "Außerdem wird innerhalb der URL jedes \"%2C\" durch ein Komma ersetzt."
+        %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="sections">
+  <ul>
+    <li><a href="#tab-conf">Konfiguration</a></li>
+  </ul>
+  <div id="tab-conf" class="section">
+    <table>
+      <tr>
+        <td>Version</td>
+        <td><%= Rails.application.config.version %></td>
+      </tr>
+      <tr>
+        <td>Root URL</td>
+        <td><%= Rails.application.config.root_url %></td>
+      </tr>
+      <tr>
+        <td>Verzechnis für Templates</td>
+        <td><%= Rails.application.config.template_path %></td>
+      </tr>
+      <tr>
+        <td>Ausgabe-Verzechnis</td>
+        <td><%= Rails.application.config.generated_out_path %></td>
+      </tr>
+      <tr>
+        <td>Unter-Verzeichnis der Bilder</td>
+        <td>/public<%= Rails.application.config.img_path %></td>
+      </tr>
+    </table>
+  </div>
+</div>
