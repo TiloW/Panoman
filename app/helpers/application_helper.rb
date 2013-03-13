@@ -8,19 +8,19 @@ module ApplicationHelper
     pano.hotspot_infos.each do |spot|
       result += "#{objName}.create"
       result += spot.is_circle ? "Circle" : "Rect"
-      result += "Hotspot('#{spot.name}', #{spot.get_scaled_path});\n"
+      result += "Hotspot('#{spot.name}', #{spot.get_scaled_path}, 'info');\n"
     end
     
     pano.external_links.each do |spot|
       result += "#{objName}.create"
       result += spot.is_circle ? "Circle" : "Rect"
-      result += "Hotspot('#{spot.name}', #{spot.get_scaled_path});\n"
+      result += "Hotspot('#{spot.name}', #{spot.get_scaled_path}, 'extern');\n"
     end
     
     pano.internal_links.each do |spot|
       result += "#{objName}.create"
       result += spot.is_circle ? "Circle" : "Rect"
-      result += "Hotspot('#{spot.get_dest.name}', #{spot.get_scaled_path});\n"
+      result += "Hotspot('#{spot.get_dest.name}', #{spot.get_scaled_path}, 'intern');\n"
     end
     
     result

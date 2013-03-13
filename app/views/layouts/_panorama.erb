@@ -10,10 +10,30 @@
           <%= generateHotspotsJS(@panorama) %>
         }
       });
+      $('.panoramaControls').buttonset();
+      
+      cbxInfo = $('#cbx_info');
+      cbxExt = $('#cbx_extern');
+      cbxInt = $('#cbx_intern');
+      
+      cbxInfo.click(function(event) {
+        pano.showHotspots('info', cbxInfo.attr('checked')=='checked');
+      });
+      cbxExt.click(function(event) {
+        pano.showHotspots('extern', cbxExt.attr('checked')=='checked');
+      });
+      cbxInt.click(function(event) {
+        pano.showHotspots('intern', cbxInt.attr('checked')=='checked');
+      });
     });
   </script>
 <% end %>
 
 <div class="panoContainer" style="padding: 6px 16px;">
+  <div class="panoramaControls" style="padding-bottom: .5em">
+    <input type="checkbox" id="cbx_intern" checked="checked" /><label for="cbx_intern">Interne Links</label>
+    <input type="checkbox" id="cbx_extern" checked="checked" /><label for="cbx_extern">Externe Links</label>
+    <input type="checkbox" id="cbx_info" checked="checked"  /><label for="cbx_info">Hotspots</label>
+  </div>
   <div class="panorama" style="left: -16px;"></div>
 </div>

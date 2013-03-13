@@ -1,5 +1,5 @@
 class ExternalLink < ActiveRecord::Base
-  include Hotspot
+  include Hotspot, Named
   
   belongs_to :panorama
   
