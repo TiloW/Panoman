@@ -20,10 +20,10 @@ module ApplicationHelper
     pano.internal_links.each do |spot|
       result += "#{objName}.create"
       result += spot.is_circle ? "Circle" : "Rect"
-      result += "Hotspot('#{spot.get_dest.name}', #{spot.get_scaled_path}, 'intern');\n"
+      result += "Hotspot('<a href=\"" + panorama_path(spot.get_dest) + "\">#{spot.get_dest.name}</a>', #{spot.get_scaled_path}, 'intern');\n"
     end
     
-    result
+    result.html_safe
   end
   
   def get_title

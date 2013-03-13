@@ -1,5 +1,5 @@
 class HotspotInfo < ActiveRecord::Base
-  include Hotspot, Name
+  include Hotspot, Named
   
   belongs_to :panorama
   
