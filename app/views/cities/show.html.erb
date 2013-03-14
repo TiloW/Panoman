@@ -21,7 +21,7 @@
 </div>
 
 <a href="<%= edit_city_path(@city) %>">Datensatz</a>
-<h1><%= @city.name %></h1>
+<h2><%= @city.name %></h2>
 <div id="sections">
   <ul>
     <li><a href="#tab-table">Liste</a></li>
@@ -44,16 +44,16 @@
     <% end %>
     
     <%= 
-      generate_table(nil, ["Name", "Details", "Veröff.", "Datum", "360°", "Bild", "Löschen"], @panoramas) do |pano|
+      generate_table(nil, ["Bild", "Details", "Links", "360", "Datum°", "imNetz", "Löschen"], @panoramas) do |pano|
         row_data = [
           pano.id,
-          (link_to pano.name, panorama_path(pano.id)),
-          (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
-          generate_chkbtn(:panoramas, pano.id, :published, pano.published),
-          pano.date_of_recording.nil? ? "[Unbekannt]" : (l pano.date_of_recording, :format => :month),
-          generate_chkbtn(:panoramas, pano.id, :repeative, pano.repeative),
           "<img title=\"Pfad: #{FileHelper.get_default_thumbnail_location pano}\"" +
               "class=\"thumbnail\" src=\"#{FileHelper.get_thumbnail pano}\" alt=\"nicht gefunden\" />",
+          (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
+          (link_to pano.name, panorama_path(pano.id)),
+          generate_chkbtn(:panoramas, pano.id, :repeative, pano.repeative),
+          pano.date_of_recording.nil? ? "[Unbekannt]" : (l pano.date_of_recording, :format => :month),
+          generate_chkbtn(:panoramas, pano.id, :published, pano.published),
             (link_to "Löschen", pano, :remote => true, :class => 'delete button', :method => 'delete',
                                       :confirm => "Panorama '#{pano.name}' wirklich löschen?")
         ]
