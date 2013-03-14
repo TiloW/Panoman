@@ -3,10 +3,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="copyright" content="Helmut Kölbach">   <% cityname = @city.name %>     <% @pano.tag_list.to_s == "Warnemünde"||@pano.tag_list.to_s == "Hohe Düne"||@pano.tag_list.to_s == "Mainz-Kastell"||@pano.tag_list.to_s == "Travemünde" ? (city_town = @pano.tag_list.to_s) : "" %>   <% citytown = city_town.blank? ? ("") : (city_town) %>   <% @city.name = cityname + " " + citytown %>   <% @pano.tag_list.to_s == "Botanischer Garten"||@pano.tag_list.to_s == "BUGA 2009"||@pano.tag_list.to_s == "Burg Vischering"||@pano.tag_list.to_s == "Gruga-Park"||@pano.tag_list.to_s == "Neroberg" ? (city_spot = @pano.tag_list.to_s)||@pano.tag_list.to_s == "Zeche Zollverein" : "" %>  <% cityspot = city_spot.blank? ? ("") : (city_spot) %>     
+<meta name="copyright" content="Helmut Kölbach">     
 <title><%= @pano.name %> <%= @city.name %> </title>
 <meta http-equiv="content-language" content="de">
-<meta name="description" content="<meta name="description" content="<% @panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= @panoname %> <%= cityspot %> in <%= @city.name %> - <%= (@pano.repeative == true) ? ("360° Widescreen-Panorama") : ("Widescreen-Panorama") %>"> 
+<meta name="description" content="<meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= pano.location %> in <%= @city.name %> <%= @pano.district %> - <%= (@pano.repeative == true) ? ("360° Widescreen-Panorama") : ("Widescreen-Panorama") %>"> 
 <link rel="stylesheet" type="text/css" href="../pano.css">
   <!--[if IE]>
     <style type="text/css">@import url(../pano_ie.css);</style>
@@ -22,7 +22,7 @@
    <div class="rahmen_wor">
    </div>
    <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="2"><br> 
-    <%= @panoname + " " + cityspot + " " + @city.name %>
+    <%= panoname %> <%= @pano.location %>  <%= @city.name %> <%= @pano.district %>
    </div>
  </div><br> 
  <div style="clear:left">
@@ -30,7 +30,7 @@
 
  <div style="all_w">
   <applet  archive="pmvr.jar" mayscript codebase=".." code="pmvr.class" name="pmvr"  width="97%" height="500" >
-  <param name="image" value="../en/<% city_name = FileHelper.to_filename cityname %><%= city_name.to_s == "koeln" ? "cologne" : (city_name.to_s == "muenchen" ? "munich" :(city_name.to_s == "nuernberg" ? "nuremberg" : city_name)) %>/panoramas/<%= FileHelper.to_filename @pano.name %>_5.jpg">
+  <param name="image" value="../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_5.jpg">
   <param name="zmax" value="150">
   <param name="zoom" value="no"> 
   <param name="delay" value="15000"> 
@@ -42,7 +42,7 @@
     counter = -1 
     @pano.internal_links.each do |link|
     dest = Panorama.find(link.destination_id)%>
-    <param name="link<%= counter+=1 %>" value="<%= link.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,http://stadtpanoramen.de/<%= FileHelper.to_filename dest.city.name %>/<%= FileHelper.to_filename dest.name %>_5c.html,<%= dest.name %>">
+    <param name="link<%= counter+=1 %>" value="<%= link.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,http://stadtpanoramen.de/<%= @city.get_filename %>/<%= dest.get_filename %>_5c.html,<%= dest.name %>">
     <% end %>  
     <br><font size="+1" color="red">Zum Betrachten der interaktiven Panoramen <br>muss die Java-Unterstützung installiert und aktiviert sein.</font><br><br><font color="white">Infos dazu finden Sie <a href="http://www.stadtpanoramen.de/html/st_hilfe_3.html" class="white">hier auf den Hilfe-Seiten. </a><br><br>Alternativ können die Panoramabilder <br>  <a href="http://www.stadtpanoramen.de/stadt/bilder_staedte.html" class="white">hier bei den Städte-Bilder</a> auch <br>ohne Java-Aktivierung betrachtet werden.<br><br> 
   </applet>

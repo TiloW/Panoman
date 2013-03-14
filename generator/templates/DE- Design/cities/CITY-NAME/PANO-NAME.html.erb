@@ -101,7 +101,7 @@
    </div>
    <div class="applet">
     <applet  archive="pmvr.jar" mayscript codebase=".." code="pmvr.class" name="pmvr"  width="500" height="250" >
-     <param name="image" value="../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= FileHelper.to_filename @pano.name %>_3.jpg">
+     <param name="image" value="../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_3.jpg">
      <param name="zMax" value="150">
      <param name="delay" value="15000">
      <%= @pano.rotation == -60 ? "<param name='vauto'" : "<param name='auto'" %> value="<%= @pano.rotation %>">
@@ -112,7 +112,7 @@
      @pano.internal_links.each do |link|      
        dest = link.get_dest %>
        <% altnam = link.alt_name %>
-       <param name="link<%= counter+=1 %>" value="<%= link.path %>, http://stadtpanoramen.de/<%= @city.get_filename %>/<%= dest.get_filename %>.html,<%= altnam.blank? ? dest.name : altnam  %>">
+       <param name="link<%= counter+=1 %>" value="<%= link.path %>,http://stadtpanoramen.de/<%= @city.get_filename %>/<%= dest.get_filename %>.html,<%= altnam.blank? ? dest.name : altnam  %>">
      <% end %>       
      <table width="498" height="250" bgcolor="#cccccc"><tr><td align=center><font size="+1" color=red>Zum Betrachten der interaktiven Panoramen <br>muss die Java-Unterstützung <br>installiert und aktiviert sein. </font><br><br>Infos dazu finden Sie auf den <a href="http://www.stadtpanoramen.de/html/st_hilfe_3.html">Hilfe-Seiten</a><br><br>Alternativ können die Panoramabilder <br> hier bei den <a href="http://www.stadtpanoramen.de/stadt/bilder_staedte.html" target="_blank">Städte-Bilder</a> auch <br>ohne Java-Aktivierung betrachtet werden.</td></tr></table> 
     </applet><br>   
