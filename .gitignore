@@ -10,3 +10,4 @@
 /db/*.sqlite3
 /CHANGELOG
 /generator/templates/z-ausgelagert
+/generator/templates/A-Auswahl
