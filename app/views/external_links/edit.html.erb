@@ -20,16 +20,16 @@
         <%= f.text_field :en_name %>
       </div>
       <div class="field">
+        <%= f.label :path, "Hotspot-Bereich" %>
+        <%= f.text_field :path %>
+      </div>
+      <div class="field">
         <%= f.label :url, "URL" %>
-        <%= f.url_field :url %>
+        <%= f.url_field :url, :size => 85 %>
       </div>
       <div class="field">
         <%= f.label :en_url, "Englische URL" %>
-        <%= f.url_field :en_url %>
-      </div>
-      <div class="field">
-        <%= f.label :path, "Hotspot-Bereich" %>
-        <%= f.text_field :path %>
+        <%= f.url_field :en_url, :size => 85 %>
       </div>
       <div class="field">
         <%= f.hidden_field :panorama_id %>

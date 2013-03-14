@@ -4,8 +4,8 @@
    <meta charset=utf-8> 
    <meta http-equiv="content-language" content="de">
    <meta name="viewport" content="height=device-height">    
-   <meta name="copyright" content="Helmut Kölbach">  <% cityname = @city.name %>     <% @pano.tag_list.to_s == "Warnemünde"||@pano.tag_list.to_s == "Hohe Düne"||@pano.tag_list.to_s == "Mainz-Kastell"||@pano.tag_list.to_s == "Travemünde" ? (city_town = @pano.tag_list.to_s) : "" %>   <% citytown = city_town.blank? ? ("") : (city_town) %>   <% @city.name = cityname + " " + citytown %>   <% @pano.tag_list.to_s == "Botanischer Garten"||@pano.tag_list.to_s == "BUGA 2009"||@pano.tag_list.to_s == "Burg Vischering"||@pano.tag_list.to_s == "Gruga-Park"||@pano.tag_list.to_s == "Neroberg" ? (city_spot = @pano.tag_list.to_s)||@pano.tag_list.to_s == "Zeche Zollverein" : "" %>  <% cityspot = city_spot.blank? ? ("") : (city_spot) %>
-   <meta name="description" content="<% @panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= @panoname %> <%= cityspot %> in <%= @city.name %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
+   <meta name="copyright" content="Helmut Kölbach">    
+   <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= pano.location %> in <%= @city.name %> <%= @pano.district %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
     <link rel="stylesheet" href="../css/s-panorama.css"> 
     <link rel="stylesheet" href="../css/panosmall.css"> 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -16,7 +16,7 @@
       $(function() {
         pano = new SimplePanorama({
          'elem': $('#pano'), 
-         'imagePath': '../en/<%= FileHelper.to_filename cityname %>/panoramas/<%= @pano.get_filename %>_3.jpg', 
+         'imagePath': '../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_3.jpg', 
          'modules': ['move_mousedown', 'move_swipe'],      
          'initialPos':<%= @pano.initial_center %>,
          'repeative': <%= @pano.repeative %>
@@ -58,38 +58,37 @@
     
     function street()
     {
-      document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>s');
+      document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>s');
     }
     function inf()
     {
       starts();
-      document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>i');
+      document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>i');
     }
     function haus()
     {
       starts();
-      document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>h');
+      document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>h');
     }
     function hausaus()
     {
        document.pmvr.set('showlinks','no');
-       document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>');
+       document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>');
     }
     function spot_on()
     {
-       document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>');
+       document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>');
        document.pmvr.set('showlinks','yes');
     }
      //-->
     </script>
-     <% citytitle = cityspot.blank? ? (citytown.blank? ? (@city.en_name) : (citytown)) : (cityspot) %>
-   <title><%= @panoname + " " + citytitle %> - StadtPanorama</title>
+   <title><%= panoname %> <%= @pano.location %> <%= @city.name %> - StadtPanorama</title>
   </head>
 <body onUnload="panostop()">
  <div id="all" class="all">   
   <div id="javapano" class="javapano">  
    <div class="titletext">    
-      <%= @panoname + " <br>" + cityspot + " " + @city.name %>     
+      <%= panoname %> <%= @pano.location %> <br><%= @city.name %> <%= @pano.district %>
    </div>
     
    <div class="logo"><a href="http://www.stadtpanoramen.de" target="_top"> <img src="../navpic/stadtpanoramen.gif" height="24" width="218" border="0" alt="StadtPanoramen - Start"></a>
@@ -102,7 +101,7 @@
    </div>
    <div class="applet">
     <applet  archive="pmvr.jar" mayscript codebase=".." code="pmvr.class" name="pmvr"  width="500" height="250" >
-     <param name="image" value="../en/<% city_name = FileHelper.to_filename cityname %><%= city_name.to_s == "koeln" ? "cologne" : (city_name.to_s == "muenchen" ? "munich" :(city_name.to_s == "nuernberg" ? "nuremberg" : city_name)) %>/panoramas/<%= FileHelper.to_filename @pano.name %>_3.jpg">
+     <param name="image" value="../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= FileHelper.to_filename @pano.name %>_3.jpg">
      <param name="zMax" value="150">
      <param name="delay" value="15000">
      <%= @pano.rotation == -60 ? "<param name='vauto'" : "<param name='auto'" %> value="<%= @pano.rotation %>">
@@ -113,7 +112,7 @@
      @pano.internal_links.each do |link|      
        dest = link.get_dest %>
        <% altnam = link.alt_name %>
-       <param name="link<%= counter+=1 %>" value="<%= link.path %>, http://stadtpanoramen.de/<%= FileHelper.to_filename cityname %>/<%= dest.get_filename %>.html,<%= altnam.blank? ? dest.name : altnam  %>">
+       <param name="link<%= counter+=1 %>" value="<%= link.path %>, http://stadtpanoramen.de/<%= @city.get_filename %>/<%= dest.get_filename %>.html,<%= altnam.blank? ? dest.name : altnam  %>">
      <% end %>       
      <table width="498" height="250" bgcolor="#cccccc"><tr><td align=center><font size="+1" color=red>Zum Betrachten der interaktiven Panoramen <br>muss die Java-Unterstützung <br>installiert und aktiviert sein. </font><br><br>Infos dazu finden Sie auf den <a href="http://www.stadtpanoramen.de/html/st_hilfe_3.html">Hilfe-Seiten</a><br><br>Alternativ können die Panoramabilder <br> hier bei den <a href="http://www.stadtpanoramen.de/stadt/bilder_staedte.html" target="_blank">Städte-Bilder</a> auch <br>ohne Java-Aktivierung betrachtet werden.</td></tr></table> 
     </applet><br>   
@@ -139,7 +138,7 @@
     @pano.internal_links.each do |link|      
       dest = link.get_dest %>
       <% altnam = link.alt_name %>
-      <a href="http://stadtpanoramen.de/<%= FileHelper.to_filename cityname %>/<%= dest.get_filename %>.html" class="yellow"><%= dest.name %> </a> <br>
+      <a href="http://stadtpanoramen.de/<%= @city.get_filename %>/<%= dest.get_filename %>.html" class="yellow"><%= dest.name %> </a> <br>
     <% end %> 
    </div> 
     
@@ -207,11 +206,11 @@
     </div>
   
     <div id="indexlink"  class="more"><br>
-     Weitere <a href="index.html" target="_top" class="white">Panoramen von <%= cityname %> <img src="../navpic/pfeil_rr.gif" width="8" height="8" alt="" border="0"></a>
+     Weitere <a href="index.html" target="_top" class="white">Panoramen von <%= @city.name %> <img src="../navpic/pfeil_rr.gif" width="8" height="8" alt="" border="0"></a>
      </div>
   
      <div class="thumbs">
-      <iframe width="797" height="150" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" name="archiv"  src="bildarchiv_<%= FileHelper.to_filename cityname %>.html#<%= FileHelper.to_filename @pano.name %>"> </iframe>
+      <iframe width="797" height="150" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" name="archiv"  src="bildarchiv_<%= @city.get_filename %>.html#<%= @pano.get_filename %>"> </iframe>
      </div>
      <div class="advrow">
    <script type="text/javascript"><!--
@@ -254,7 +253,7 @@
       <div class="rahmen_wor">
       </div>
       <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="15">        
-      <%= @panoname + " " + cityspot + " " + @city.name %>    
+      <%= panoname %> <%= @pano.location %> <%= @city.name %> <%= @pano.district %>
       </div>
      </div>     
      <div id="pano">
@@ -288,13 +287,13 @@
     </div>  
     <div id="menue">
       <ul>
-        <li><a href="index.html"><%= cityname %> </a></li>
+        <li><a href="index.html"><%= @city.name %> </a></li>
         <li><a href="http://www.stadtpanoramen.de/html/360_grad.html">Photo-Service </a></li>
         <li><a href="http://www.stadtpanoramen.de/html/st_kontakt_index.html">Kontakt </a></li>
       </ul>
     </div>
     <div id="thumbframe">
-   <iframe width="781" height="144"  frameborder="0" marginheight="0" marginwidth="0" scrolling="no" name="archiv"  src="bildarchiv_<%= FileHelper.to_filename cityname %>.html#<%= FileHelper.to_filename @pano.name %>"> </iframe>
+   <iframe width="781" height="144"  frameborder="0" marginheight="0" marginwidth="0" scrolling="no" name="archiv"  src="bildarchiv_<%= @city.get_filename %>.html#<%= @pano.get_filename %>"> </iframe>
     </div> 
     <div class="foot">&nbsp;
     </div>       

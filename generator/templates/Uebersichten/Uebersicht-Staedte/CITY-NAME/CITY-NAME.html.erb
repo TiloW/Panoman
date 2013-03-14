@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>Übersicht STADTsortiert</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/master.css" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style>
+    tr:hover td {
+      background: #CCF;
+    }
+  </style>
+</head>
+<body>
+  <h2><%= @city.name %></h2>
+  <table>
+    <tr>
+      <th>Panorama</th>
+      <th>Datum</th>
+      <th>Alternativname</th>
+      <th>360</th>
+      <th>imNetz</th>
+    <tr>
+    <% @city.panoramas.order(:date_of_recording).each do |pano| %>
+      <tr>
+        <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>/edit"><%= pano.name %></a></td>
+        <td width="150px"><%= pano.get_german_month %></td>
+        <td><%= pano.alt_name %></td>
+        <td><%= pano.repeative ? 'Ja' : 'Nein' %></td>
+        <td><%= pano.published ? 'Ja' : 'Nein' %></td>
+      <tr>
+    <% end %>
+  </table>
+  
+</body>
+</html>
