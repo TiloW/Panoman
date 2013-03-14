@@ -23,6 +23,10 @@ class InternalLink < ActiveRecord::Base
   def get_name
     alt_name.nil? || alt_name.empty? ? get_dest.name : alt_name
   end
+        
+  def get_en_name
+    alt_en_name.nil? || alt_en_name.empty? ? get_dest.en_name : alt_en_name
+  end
     
   private
     def default_values

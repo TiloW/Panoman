@@ -1,5 +1,41 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  date:
+    formats:
+      default: ! '%d.%m.%Y'
+      long: ! '%e. %B %Y'
+      short: ! '%e. %b'
+      month: ! '%B %Y'
+    month_names:
+    - 
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    order:
+    - :day
+    - :month
+    - :year
+    prompts:
+      day: Day
+      hour: Hour
+      minute: Minute
+      month: Month
+      second: Secund
+      year: Year
+  errors: &errors
+    format: ! '%{attribute} %{message}'
+  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+  activemodel:
+    errors:
+      <<: *errors
+  activerecord:
+    errors:
+      <<: *errors

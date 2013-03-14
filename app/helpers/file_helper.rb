@@ -5,7 +5,7 @@ module FileHelper
   def self.to_filename string
     string.downcase.gsub(/[äÄ]/, "ae").gsub(/[üÜ]/, "ue").
       gsub(/[öÖ]/, "oe").gsub("ß", "ss").gsub(" ", "_").
-      gsub(/[.]/, "")
+      gsub(/[.]/, "").gsub(/[']/, "").gsub("é", "e")
   end
   
   def self.pano_to_filename pano

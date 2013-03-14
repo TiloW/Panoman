@@ -10,6 +10,9 @@
     <li><a href="#tab-image">Panorama</a></li>
   </ul>
 
+  <div id="tab-image" class="section">
+    <%= render 'layouts/panorama' %>
+  </div>
   <div id="tab-fields" class="section">
     <%= form_for(@panorama) do |f| %>
       <div class="field">
@@ -18,19 +21,19 @@
       </div>
       <div class="field">
         <%= f.label :name, "Name" %>
-        <%= f.text_field :name %>
+        <%= f.text_field :name, :size => 45 %>
       </div>
       <div class="field">
         <%= f.label :alt_name, "Alternativer Name (Lang)" %>
-        <%= f.text_field :alt_name, :size => 65 %>
+        <%= f.text_field :alt_name, :size => 45 %>
       </div>
       <div class="field">
         <%= f.label :en_name, "Englischer Name" %>
-        <%= f.text_field :en_name %>
+        <%= f.text_field :en_name, :size => 45 %>
       </div>
       <div class="field">
         <%= f.label :alt_en_name, "Alternativer Englischer Name (Lang)" %>
-        <%= f.text_field :alt_en_name, :size => 65 %>
+        <%= f.text_field :alt_en_name, :size => 45 %>
       </div>
       <div class="field">
         <%= f.label :district, "Ortsteil" %>

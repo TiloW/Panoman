@@ -44,7 +44,7 @@ class Panorama < ActiveRecord::Base
                             
   private
     def default_values
-      self.name ||= "Neues Panorama"
+      self.name ||= ""
       self.rotation ||= "20"
       self.initial_vertical ||= "250"
       self.repeative = true if self.repeative.nil?
