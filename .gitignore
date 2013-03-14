@@ -9,3 +9,4 @@
 /public/panoramas
 /db/*.sqlite3
 /CHANGELOG
+/generator/templates/z-ausgelagert
