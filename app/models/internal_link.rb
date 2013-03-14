@@ -5,6 +5,7 @@ class InternalLink < ActiveRecord::Base
   
   attr_accessible :destination_id,
                   :alt_name,
+                  :alt_en_name,
                   :linked_panorama_center,
                   :path
                   

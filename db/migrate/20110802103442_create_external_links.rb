@@ -1,5 +1,5 @@
 class CreateExternalLinks < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :external_links do |t|
       t.integer :panorama_id
       t.string :name
@@ -9,9 +9,5 @@ class CreateExternalLinks < ActiveRecord::Migration
       t.timestamps
     end
     add_index :external_links, :panorama_id
-  end
-
-  def self.down
-    drop_table :external_links
   end
 end

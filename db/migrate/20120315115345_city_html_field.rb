@@ -1,8 +1,5 @@
 class CityHtmlField < ActiveRecord::Migration
-  def self.up
+  def change
     add_column :cities, :html_content, :string
-  end
-
-  def self.down
   end
 end

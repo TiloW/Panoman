@@ -6,8 +6,9 @@ class ExternalLink < ActiveRecord::Base
   after_initialize :default_values
   
   attr_accessible :name, 
-                  :alt_name, 
+                  :en_name,
                   :url,
+                  :en_url,
                   :path
                   
   validates :name, :presence => true, :uniqueness => {:scope => :panorama_id}

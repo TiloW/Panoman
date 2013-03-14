@@ -1,5 +1,5 @@
 class CreatePanoramas < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :panoramas do |t|
       t.integer :city_id
       t.string :name
@@ -15,9 +15,5 @@ class CreatePanoramas < ActiveRecord::Migration
       t.timestamps
     end
     add_index :panoramas, :city_id
-  end
-
-  def self.down
-    drop_table :panoramas
   end
 end

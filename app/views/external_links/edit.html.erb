@@ -16,12 +16,16 @@
         <%= f.text_field :name %>
       </div>
       <div class="field">
-        <%= f.label :alt_name, "Alternativer Name (Lang)" %>
-        <%= f.text_field :alt_name, :size => 65  %>
+        <%= f.label :en_name, "Englischer Name" %>
+        <%= f.text_field :en_name %>
       </div>
       <div class="field">
         <%= f.label :url, "URL" %>
         <%= f.url_field :url %>
+      </div>
+      <div class="field">
+        <%= f.label :en_url, "Englische URL" %>
+        <%= f.url_field :en_url %>
       </div>
       <div class="field">
         <%= f.label :path, "Hotspot-Bereich" %>

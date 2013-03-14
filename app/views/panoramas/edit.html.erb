@@ -25,6 +25,14 @@
         <%= f.text_field :alt_name, :size => 65 %>
       </div>
       <div class="field">
+        <%= f.label :en_name, "Englischer Name" %>
+        <%= f.text_field :en_name %>
+      </div>
+      <div class="field">
+        <%= f.label :alt_en_name, "Alternativer Englischer Name (Lang)" %>
+        <%= f.text_field :alt_en_name, :size => 65 %>
+      </div>
+      <div class="field">
         <%= f.label :tag_list, "Tags" %>
         <%= f.text_field :tag_list, :size => 65 %>
       </div>

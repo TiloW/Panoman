@@ -19,13 +19,17 @@ module Hotspot
   def get_xywh factor = 1
     tmp = get_scaled_nums(factor)
     
-    w = (tmp[0] - tmp[1]).abs
+    w = (tmp[0] - tmp[2]).abs
     x = [tmp[0], tmp[2]].min
     
     h = (tmp[1] - tmp[3]).abs
     y = [tmp[1],tmp[3]].min
     
     [x,y,w,h].join(",")
+  end
+  
+  def get_scaled_path_sp factor = 1
+    is_circle ? get_scaled_path(factor) : get_xywh(factor)
   end
   
 end

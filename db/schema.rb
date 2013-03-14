@@ -10,9 +10,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120316194230) do
+ActiveRecord::Schema.define(:version => 20130313093126) do
 
   create_table "cities", :force => true do |t|
+    t.text     "en_name"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -20,16 +21,15 @@ ActiveRecord::Schema.define(:version => 20120316194230) do
   end
 
   create_table "external_links", :force => true do |t|
+    t.text     "en_url"
     t.integer  "panorama_id"
     t.string   "name"
     t.string   "url"
     t.string   "path"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "alt_name"
+    t.string   "en_name"
   end
-
-  add_index "external_links", ["panorama_id"], :name => "index_external_links_on_panorama_id"
 
   create_table "hotspot_infos", :force => true do |t|
     t.integer  "panorama_id"
@@ -42,20 +42,12 @@ ActiveRecord::Schema.define(:version => 20120316194230) do
 
   add_index "hotspot_infos", ["panorama_id"], :name => "index_hotspot_infos_on_panorama_id"
 
-  create_table "internal_links", :force => true do |t|
-    t.integer  "panorama_id"
-    t.integer  "destination_id"
-    t.string   "path"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "alt_name"
-    t.integer  "linked_panorama_center"
-  end
-
-  add_index "internal_links", ["destination_id"], :name => "index_internal_links_on_destination_id"
-  add_index "internal_links", ["panorama_id"], :name => "index_internal_links_on_panorama_id"
+# Could not dump table "internal_links" because of following StandardError
+#   Unknown type '' for column 'alt_en_name'
 
   create_table "panoramas", :force => true do |t|
+    t.text     "en_name"
+    t.text     "en_alt_name"
     t.integer  "city_id"
     t.string   "name"
     t.string   "description"
@@ -70,9 +62,10 @@ ActiveRecord::Schema.define(:version => 20120316194230) do
     t.datetime "updated_at"
     t.string   "alt_name"
     t.integer  "priority"
+    t.boolean  "published"
+    t.string   "district"
+    t.string   "location"
   end
-
-  add_index "panoramas", ["city_id"], :name => "index_panoramas_on_city_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

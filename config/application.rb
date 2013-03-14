@@ -46,6 +46,6 @@ module Panoman
     config.img_path = "/panoramas"
     config.template_path = "/generator/templates"
     config.generated_out_path = "/generator/results"
-    config.version = "0.9.7.1"
+    config.version = "0.9.7.1 - Github"
   end
 end

@@ -5,7 +5,7 @@ class HotspotInfo < ActiveRecord::Base
   
   after_initialize :default_values
   
-  attr_accessible :name, 
+  attr_accessible :name,
                   :alt_name,
                   :path
                   

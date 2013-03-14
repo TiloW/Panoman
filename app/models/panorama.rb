@@ -13,8 +13,10 @@ class Panorama < ActiveRecord::Base
   belongs_to :city
   
   attr_accessible :name,
-                  :tag_list,
                   :alt_name,
+                  :en_name,
+                  :alt_en_name,
+                  :tag_list,
                   :description,
                   :date_of_recording,
                   :latitude,
