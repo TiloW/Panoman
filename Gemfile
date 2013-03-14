@@ -5,7 +5,7 @@ gem 'rails', '3.0.9'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'rake', '0.8.7'
+gem 'rake'
 gem 'sqlite3'
 gem 'acts-as-taggable-on', '~>2.2.0'
 gem 'mongrel', '>= 1.2.0.pre2'

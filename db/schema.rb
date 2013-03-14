@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20130313093126) do
 
   create_table "panoramas", :force => true do |t|
     t.text     "en_name"
-    t.text     "en_alt_name"
+    t.text     "alt_en_name"
     t.integer  "city_id"
     t.string   "name"
     t.string   "description"
@@ -63,8 +63,6 @@ ActiveRecord::Schema.define(:version => 20130313093126) do
     t.string   "alt_name"
     t.integer  "priority"
     t.boolean  "published"
-    t.string   "district"
-    t.string   "location"
   end
 
   create_table "taggings", :force => true do |t|
