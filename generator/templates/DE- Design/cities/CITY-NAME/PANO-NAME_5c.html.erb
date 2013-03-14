@@ -1,0 +1,82 @@
+﻿<% #coding: utf-8
+%><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="copyright" content="Helmut Kölbach">   <% cityname = @city.name %>     <% @pano.tag_list.to_s == "Warnemünde"||@pano.tag_list.to_s == "Hohe Düne"||@pano.tag_list.to_s == "Mainz-Kastell"||@pano.tag_list.to_s == "Travemünde" ? (city_town = @pano.tag_list.to_s) : "" %>   <% citytown = city_town.blank? ? ("") : (city_town) %>   <% @city.name = cityname + " " + citytown %>   <% @pano.tag_list.to_s == "Botanischer Garten"||@pano.tag_list.to_s == "BUGA 2009"||@pano.tag_list.to_s == "Burg Vischering"||@pano.tag_list.to_s == "Gruga-Park"||@pano.tag_list.to_s == "Neroberg" ? (city_spot = @pano.tag_list.to_s)||@pano.tag_list.to_s == "Zeche Zollverein" : "" %>  <% cityspot = city_spot.blank? ? ("") : (city_spot) %>     
+<title><%= @pano.name %> <%= @city.name %> </title>
+<meta http-equiv="content-language" content="de">
+<meta name="description" content="<meta name="description" content="<% @panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= @panoname %> <%= cityspot %> in <%= @city.name %> - <%= (@pano.repeative == true) ? ("360° Widescreen-Panorama") : ("Widescreen-Panorama") %>"> 
+<link rel="stylesheet" type="text/css" href="../pano.css">
+  <!--[if IE]>
+    <style type="text/css">@import url(../pano_ie.css);</style>
+  <![endif]-->
+<script type="text/javascript" language="javascript" src="../cinepano.js">
+</script>
+</head>
+<body bgcolor="#000000" leftmargin="0" rightmargin="0" onLoad="rand()" onUnload="panostop()">
+<div class="all_w">
+ <div class="rahmen_w">
+   <div class="rahmen_wol">
+   </div>
+   <div class="rahmen_wor">
+   </div>
+   <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="2"><br> 
+    <%= @panoname + " " + cityspot + " " + @city.name %>
+   </div>
+ </div><br> 
+ <div style="clear:left">
+</div>
+
+ <div style="all_w">
+  <applet  archive="pmvr.jar" mayscript codebase=".." code="pmvr.class" name="pmvr"  width="97%" height="500" >
+  <param name="image" value="../en/<% city_name = FileHelper.to_filename cityname %><%= city_name.to_s == "koeln" ? "cologne" : (city_name.to_s == "muenchen" ? "munich" :(city_name.to_s == "nuernberg" ? "nuremberg" : city_name)) %>/panoramas/<%= FileHelper.to_filename @pano.name %>_5.jpg">
+  <param name="zmax" value="150">
+  <param name="zoom" value="no"> 
+  <param name="delay" value="15000"> 
+  <param name="auto" value="<%= @pano.rotation %>">
+  <param name="center" value="<%= @pano.initial_center %>"> 
+  <% if @pano.repeative %><param name='view' value='360'><% end %>
+  <param name="hover" value="yes"> 
+    <% 
+    counter = -1 
+    @pano.internal_links.each do |link|
+    dest = Panorama.find(link.destination_id)%>
+    <param name="link<%= counter+=1 %>" value="<%= link.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,http://stadtpanoramen.de/<%= FileHelper.to_filename dest.city.name %>/<%= FileHelper.to_filename dest.name %>_5c.html,<%= dest.name %>">
+    <% end %>  
+    <br><font size="+1" color="red">Zum Betrachten der interaktiven Panoramen <br>muss die Java-Unterstützung installiert und aktiviert sein.</font><br><br><font color="white">Infos dazu finden Sie <a href="http://www.stadtpanoramen.de/html/st_hilfe_3.html" class="white">hier auf den Hilfe-Seiten. </a><br><br>Alternativ können die Panoramabilder <br>  <a href="http://www.stadtpanoramen.de/stadt/bilder_staedte.html" class="white">hier bei den Städte-Bilder</a> auch <br>ohne Java-Aktivierung betrachtet werden.<br><br> 
+  </applet>
+  <noscript><font size="2" color=red><br>Für die Panoramen sollte JavaScript <br>in den Browsereinstellungen aktiviert sein!</font><br></noscript> 
+ </div> 
+ <div class="rahmen_wu">
+   <div class="rahmen_wul"><img src="../navpic/pan.gif" alt="" width="8" height="4"><br><img src="../navpic/pan.gif" alt="" width="20" height="2"><a href="javascript:end()" onMouseOut="panogo();tauschpf(pfname,Bild5)" onMouseOver="panostop();tauschpf(pfname,Bild6);status='zur&uuml;ck';return true"><img src="../navpic/pfeil_r.gif" width="8" height="8" name="pfname" alt="" border="0"><img src="../navpic/pan.gif" alt="" width="5" height="2" border="0"><img src="../navpic/tminib.gif" width="86" height="10" alt="" border="0"></a>
+   </div>
+   <div class="rahmen_wur"><img src="../navpic/pan.gif" alt="" width="8" height="5"><br><a  href="http://www.stadtpanoramen.de/html/st_kontakt_index.html" target="_blank" onMouseOver="status='Kontakt';return true"><img src="../navpic/tphk.gif" alt="" width="119" height="8" border="0"></a><img src="../navpic/pan.gif" alt="" width="26" height="8" border="0">
+   </div>
+   <div class="rahmen_wum"><img src="../navpic/pan.gif" alt="" width="8" height="2"><br><% unless @pano.date_of_recording.nil? %><%= l @pano.date_of_recording, :format => :month %><% end %>
+   </div>
+ </div>
+ <div class="all_w"><img src="../navpic/taste-lll.jpg" alt="" width="26" height="13"><img src="../navpic/tastenaus.jpg" alt="" width="205" height="13" border="0" name="tastenname" usemap="#tastennameMap5"><img src="../navpic/taste-rrr.jpg" alt="" width="22" height="13" border="0">
+ </div>
+ <br>
+   <div style="width: 100%; height: 23px; text-align:center; <%= @pano.internal_links.empty? ? "display:none;" : "" %>"><a href="javascript:document.pmvr.set('showlinks','yes')" onMouseover="status='Anklickbare Bereiche einblenden';return true;"><img src="../navpic/tastecinehot.jpg" width="53" height="23" border="0" name="hsname" title=" Panorama-Tour einblenden - &#13; auch mit Leertaste ein- und ausblenden "alt=""></a>
+   </div> 
+ <div class="rahmen_w">
+  <div class="textinfo_l"><a href="http://www.stadtpanoramen.de" class="white">START <br>www.stadtpanoramen.de</a>
+  </div>
+  <div class="textinfo_r">
+  </div>
+  <div class="textinfo_m"><a href="javascript:full()"><br>
+    <img src="../navpic/fullscreen.gif" width="85" height="23" title="Vergößerung auf Vollbild" alt="Full Screen" name= "fsname" border="0" onMouseOut="tauschfs(fsname,Bildfs)" onMouseOver="tauschfs(fsname,Bildfsc)"></a> <br>Vollbild-Ansicht <br>(mit Esc-Taste wieder ausschalten)
+  </div>
+ </div>
+</div>
+ <map name="tastennameMap5">
+  <area shape="rect" coords="0,0,41,13" href="javascript:ll()" title="Schnell links drehen"  alt="" onMouseUp="tastell(tastenname,Bildll2)" onMouseDown="tastell(tastenname,Bildll)">
+  <area shape="rect" coords="42,0,81,13" href="javascript:l()" title="Links drehen"  alt="" onMouseUp="tastel(tastenname,Bildl2)" onMouseDown="tastel(tastenname,Bildl)">
+  <area shape="rect" coords="82,0,123,13" href="javascript:stop() "title="Stop"  alt="" onMouseUp="tastestop(tastenname,Bildstop2)" onMouseDown="tastestop(tastenname,Bildstop)">
+  <area shape="rect" coords="124,0,164,13" href="javascript:r()" title="Rechts drehen"  alt="" onMouseUp="taster(tastenname,Bildr2)" onMouseDown="taster(tastenname,Bildr)">
+  <area shape="rect" coords="165,0,210,13" href="javascript:rr()" title="Schnell rechts drehen"  alt="" onMouseUp="tasterr(tastenname,Bildrr2)"  onmousedown="tasterr(tastenname,Bildrr)">
+ </map>
+</body>
+</html>
