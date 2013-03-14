@@ -5,6 +5,7 @@
       var pano = new SimplePanorama({
         'elem': $('.panorama'), 
         'imagePath': "<%= FileHelper.get_image @panorama %>",
+        'repeative': <%= @panorama.repeative %>,
         'modules': ['move_mousedown', 'show_coordinates'],
         'callback': function () {
           <%= generateHotspotsJS(@panorama) %>
