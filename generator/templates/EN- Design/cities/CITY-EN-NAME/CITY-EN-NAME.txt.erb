@@ -9,7 +9,7 @@
       dest = Panorama.find(link.destination_id);
       result += "link" + @counter.to_s + "=" + link.path + "," + 
           (dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name)) + ".html," + 
-          (link.alt_en_name.blank? ? (dest.en_alt_name.blank? ? (dest.en_name.blank? ? (dest.name) : (dest.en_name)) : (dest.en_alt_name)) : (link.alt_en_name)) + "\n"
+          (link.alt_en_name.blank? ? (dest.alt_en_name.blank? ? (dest.en_name.blank? ? (dest.name) : (dest.en_name)) : (dest.alt_en_name)) : (link.alt_en_name)) + "\n"
       @counter += 1
     end
     result

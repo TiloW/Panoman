@@ -3,10 +3,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="copyright" content="Helmut Koelbach">  <% cityname = @city.en_name %>     <% @pano.tag_list.to_s == "Warnemünde"||@pano.tag_list.to_s == "Hohe Düne"||@pano.tag_list.to_s == "Mainz-Kastell"||@pano.tag_list.to_s == "Travemünde" ? (city_town = @pano.tag_list.to_s) : "" %>   <% citytown = city_town.blank? ? ("") : (city_town) %>   <% @city.en_name = citytown + " " + cityname %>   <% @pano.tag_list.to_s == "Botanischer Garten"||@pano.tag_list.to_s == "BUGA 2009"||@pano.tag_list.to_s == "Burg Vischering"||@pano.tag_list.to_s == "Gruga-Park"||@pano.tag_list.to_s == "Neroberg"||@pano.tag_list.to_s == "Zeche Zollverin" ? (city_spot = @pano.tag_list.to_s) : "" %>  <% cityspot_en = city_spot.blank? ? ("") : ((city_spot == "Botanischer Garten") ? ("Botanic Garden") : (city_spot)) %>
+<meta name="copyright" content="Helmut Koelbach"> <% location_en = @pano.location.blank? ? ("") : ((@pano.location == "Botanischer Garten") ? ("Botanic Garden") : ((@pano.location == "Burg Vischering") ? ("Vischering Castle") : (@pano.location))) %>
 <meta http-equiv="content-language" content="de">
-<meta name="description" content="<% @panoname = (@pano.en_alt_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.en_alt_name)) %> <%= @panoname %> <%= cityspot_en %> in <%= @city.en_name + " Germany" %> - <%= (@pano.repeative == true) ? ("360° Widescreen Panorama") : ("Widescreen Panorama") %>">
-<title><%= @pano.en_name %> <%= @city.en_name %> </title>
+<meta name="description" content="<% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %> <%= pano_enname %> <%= location_en %> in <%= @pano.district %> <%= @city.en_name + " Germany" %> - <%= (@pano.repeative == true) ? ("360° Widescreen Panorama") : ("Widescreen Panorama") %>">
+<% citytitle = location_en.blank? ? (@pano.district.blank? ? (@city.en_name) : (@pano.district)) : (location_en) %>
+<title><%= pano_enname %> <%= citytitle %> </title>
 <link rel="stylesheet" type="text/css" href="../pano.css">
   <!--[if IE]>
     <style type="text/css">@import url(../pano_ie.css);</style>
@@ -22,7 +23,7 @@
    <div class="rahmen_wor">
    </div>
    <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="2"><br> 
-     <%= @panoname + " " + cityspot_en + " " + @city.en_name + " Germany" %>  
+     <%= pano_enname %> <%= location_en %> <%= @pano.district %> <%=@city.en_name %> Germany
     </div>
  </div><br> 
  <div style="clear:left">

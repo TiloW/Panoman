@@ -4,8 +4,8 @@
    <meta charset=utf-8> 
    <meta http-equiv="content-language" content="de">   
    <meta name="viewport" content="height=device-height"> 
-   <meta name="copyright" content="Helmut Koelbach">  <% cityname = @city.en_name %>     <% @pano.tag_list.to_s == "Warnemünde"||@pano.tag_list.to_s == "Hohe Düne"||@pano.tag_list.to_s == "Mainz-Kastell"||@pano.tag_list.to_s == "Travemünde" ? (city_town = @pano.tag_list.to_s) : "" %>   <% citytown = city_town.blank? ? ("") : (city_town) %>   <% @city.en_name = citytown + " " + cityname %>   <% @pano.tag_list.to_s == "Botanischer Garten"||@pano.tag_list.to_s == "BUGA 2009"||@pano.tag_list.to_s == "Burg Vischering"||@pano.tag_list.to_s == "Gruga-Park"||@pano.tag_list.to_s == "Neroberg"||@pano.tag_list.to_s == "Zeche Zollverin" ? (city_spot = @pano.tag_list.to_s) : "" %>  <% cityspot_en = city_spot.blank? ? ("") : ((city_spot == "Botanischer Garten") ? ("Botanic Garden") : ((city_spot == "Burg Vischering") ? ("Vischering Castle") : (city_spot))) %> 
-   <meta name="description" content="<% @panoenname = (@pano.en_alt_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.en_alt_name)) %> <%= @panoenname %> <%= cityspot_en %> in <%= @city.en_name + " Germany" %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
+   <meta name="copyright" content="Helmut Koelbach"> <% location_en = @pano.location.blank? ? ("") : ((@pano.location == "Botanischer Garten") ? ("Botanic Garden") : ((@pano.location == "Burg Vischering") ? ("Vischering Castle") : (@pano.location))) %> 
+   <meta name="description" content="<% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %> <%= pano_enname %> <%= location_en %> in <%= @city.en_name + " Germany" %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
     <link rel="stylesheet" href="../css/s-panorama.css"> 
     <link rel="stylesheet" href="../css/panosmall.css"> 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -58,38 +58,39 @@
     
     function street()
     {
-      document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>s');
+      document.pmvr.set('script','<%= FileHelper.to_filename @city.en_name %>.txt:<%= @pano.get_filename %>s');
     }
     function inf()
     {
       starts();
-      document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>i');
+      document.pmvr.set('script','<%= FileHelper.to_filename @city.en_name %>.txt:<%= @pano.get_filename %>i');
     }
     function haus()
     {
       starts();
-      document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>h');
+      document.pmvr.set('script','<%= FileHelper.to_filename @city.en_name %>.txt:<%= @pano.get_filename %>h');
     }
     function hausaus()
     {
        document.pmvr.set('showlinks','no');
-       document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>');
+       document.pmvr.set('script','<%= FileHelper.to_filename @city.en_name %>.txt:<%= @pano.get_filename %>');
     }
     function spot_on()
     {
-       document.pmvr.set('script','<%= FileHelper.to_filename cityname %>.txt:<%= @pano.get_filename %>');
+       document.pmvr.set('script','<%= FileHelper.to_filename @city.en_name %>.txt:<%= @pano.get_filename %>');
        document.pmvr.set('showlinks','yes');
     }
      //-->
     </script>
-     <% citytitle = cityspot_en.blank? ? (citytown.blank? ? (@city.en_name) : (citytown)) : (cityspot_en) %>
-   <title><%= @panoenname + " " + citytitle %> - City Panorama</title>
+     <% citytitle = location_en.blank? ? (@pano.district.blank? ? (@city.en_name) : (@pano.district)) : (location_en) %>
+   <title><%= pano_enname %> <%= citytitle %> - City Panorama</title>
+    
   </head>
 <body onUnload="panostop()">
  <div id="all" class="all">   
   <div id="javapano" class="javapano">  
    <div class="titletext">                   
-      <%= @panoenname + " <br>" + cityspot_en + " " + @city.en_name + " Germany" %>    
+      <%= pano_enname + " <br>" + location_en + " " + @city.en_name + " Germany" %>    
    </div>
     
    <div class="logo"><a href="http://www.panorama-cities.net" target="_top"> <img src="../navpic/stadtpanoramen.gif" height="24" width="218" border="0" alt="CityPanoramas - Start"></a>
@@ -112,7 +113,7 @@
      <% counter = -1 
      @pano.internal_links.each do |link|      
        dest = link.get_dest %>       
-       <param name="link<%= counter+=1 %>" value="<%= link.path %>,http://www.panorama-cities.net/<%= FileHelper.to_filename cityname %>/<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html,<%= link.alt_en_name.blank? ? (dest.en_name.blank? ? (dest.name):(dest.en_name)) : (link.alt_en_name) %>">
+       <param name="link<%= counter+=1 %>" value="<%= link.path %>,http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html,<%= link.alt_en_name.blank? ? (dest.en_name.blank? ? (dest.name):(dest.en_name)) : (link.alt_en_name) %>">
      <% end %>       
      <table width="498" height="250" bgcolor="#cccccc"><tr><td align=center><font size="+1" color=red>Please enable Java support!<br><br>To install Java (or just learn more about Java) visit:<br><br><a href="http://www.java.com">http://www.java.com</a></td></tr></table> 
     </applet><br>   
@@ -137,7 +138,7 @@
     @pano.internal_links.each do |link|      
       dest = link.get_dest %>
       <% altnam = link.alt_name %>
-      <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename cityname %>/<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html" class="yellow"><%= link.alt_en_name.blank? ? (dest.en_name.blank? ? (dest.name):(dest.en_name)) : (link.alt_en_name) %> </a> <br>
+      <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html" class="yellow"><%= link.alt_en_name.blank? ? (dest.en_name.blank? ? (dest.name):(dest.en_name)) : (link.alt_en_name) %> </a> <br>
     <% end %> 
    </div> 
     
@@ -225,11 +226,11 @@ google_language = "en";
     </div>
   
     <div id="indexlink"  class="more"><br>
-     More <a href="<%= FileHelper.to_filename cityname %>_germany.html" target="_top" class="white">Panoramas of <%= cityname %> <img src="../navpic/pfeil_rr.gif" width="8" height="8" alt="" border="0"></a>
+     More <a href="<%= FileHelper.to_filename @city.en_name %>_germany.html" target="_top" class="white">Panoramas of <%= @city.en_name %> <img src="../navpic/pfeil_rr.gif" width="8" height="8" alt="" border="0"></a>
      </div>
   
      <div class="thumbs">
-      <iframe width="797" height="150" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" name="archiv"  src="image_archive_<%= FileHelper.to_filename cityname %>.html#<%= @pano.en_name.blank? ? (@pano.get_filename) : (FileHelper.to_filename @pano.en_name) %>"> </iframe>
+      <iframe width="797" height="150" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" name="archiv"  src="image_archive_<%= FileHelper.to_filename @city.en_name %>.html#<%= @pano.en_name.blank? ? (@pano.get_filename) : (FileHelper.to_filename @pano.en_name) %>"> </iframe>
      </div>
      <div class="advrow">
    <script type="text/javascript"><!--
@@ -272,7 +273,7 @@ google_language = "en";
       <div class="rahmen_wor">
       </div>
       <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="15">             
-      <%= @panoenname + " " + cityspot_en + " " + @city.en_name + " Germany" %>    
+      <%= pano_enname + " " + location_en + " " + @city.en_name + " Germany" %>    
       </div>
      </div>     
      <div id="pano">
@@ -306,12 +307,12 @@ google_language = "en";
     </div>  
     <div id="menue">
       <ul>
-        <li><a href="<%= @city.get_filename %>_germany.html"><%= cityname %> </a></li>
+        <li><a href="<%= FileHelper.to_filename @city.en_name %>_germany.html"><%= @city.en_name %> </a></li>
         <li><a href="http://www.panorama-cities.net/html/st_kontakt_index.html">Contact us</a></li>
       </ul>
     </div>
     <div id="thumbframe">
-   <iframe width="781" height="144"  frameborder="0" marginheight="0" marginwidth="0" scrolling="no" name="archiv"  src="image_archive_<%= FileHelper.to_filename cityname %>.html#<%= @pano.en_name.blank? ? (@pano.get_filename) : (FileHelper.to_filename @pano.en_name) %>"> </iframe>
+   <iframe width="781" height="144"  frameborder="0" marginheight="0" marginwidth="0" scrolling="no" name="archiv"  src="image_archive_<%= FileHelper.to_filename @city.en_name %>.html#<%= @pano.en_name.blank? ? (@pano.get_filename) : (FileHelper.to_filename @pano.en_name) %>"> </iframe>
     </div> 
     <div class="foot">&nbsp;
     </div>       

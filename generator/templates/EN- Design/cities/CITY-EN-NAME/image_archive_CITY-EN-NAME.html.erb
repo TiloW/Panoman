@@ -39,7 +39,7 @@
             <% @city.panoramas.sort_by!{ |pano| pano.priority }.each do |pano| %>
              <% next unless pano.published %>
               <div id="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>" class="thumbWrapper" style="background-image: url(photos/<%= FileHelper.to_filename pano.name %>.jpg)">
-                <a href="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>.html" title="<%= pano.en_alt_name.blank? ? (pano.en_name.blank? ? (pano.name):(pano.en_name)) : (pano.en_alt_name) %>" target="_top">
+                <a href="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>.html" title="<%= pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name):(pano.en_name)) : (pano.alt_en_name) %>" target="_top">
                   <span class="title"><%= pano.en_name.blank? ? (pano.name):(pano.en_name) %> </span></a>
               </div>
             <% end %> 
