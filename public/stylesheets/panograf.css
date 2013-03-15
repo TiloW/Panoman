@@ -1,0 +1,8 @@
+div#sticky {
+  max-width: 200px;
+  margin-top: -100px;
+}
+
+#sections {
+  margin-right: 225px;
+}

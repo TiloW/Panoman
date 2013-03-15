@@ -1,9 +1,15 @@
 <a href="<%= edit_panorama_path(@panorama) %>">Datensatz</a>
-<h2><%= @panorama.name %> &nbsp; &nbsp; <%= @panorama.alt_name %> <br>
-<%= @panorama.en_name %>  &nbsp; &nbsp; <%= @panorama.alt_en_name %></h2>
+<h1><%= @panorama.name %></h1>
+<% 
+  subTitle = []
+  subTitle.push @panorama.alt_name unless @panorama.alt_name.blank?
+  subTitle.push @panorama.en_name unless @panorama.en_name.blank?
+  subTitle.push @panorama.alt_en_name unless @panorama.alt_en_name.blank?
+%>
+<h2><%=  subTitle.join(",&nbsp;&nbsp;").html_safe %></h2>
 
   
-<div id="sticky" class="all_tasks">
+<div id="sticky">
   <ul>
     <li><a href="#tab-tasks">Aufgaben</a></li>
   </ul>
@@ -23,57 +29,7 @@
     <li><a href="#tab-intlinks">Interne Links</a></li>
     <li><a href="#tab-exlinks">Externe Links</a></li>
     <li><a href="#tab-hotspots">Hotspots</a></li>
-  </ul>
-    
-    <div class="section"><br>
-    Interne Links
-    <%= 
-      generate_table(nil, nil, @internal_links) do |link|
-        dest_pano = Panorama.find(link.destination_id)
-        row_data = [
-          link.id,
-          dest_pano.name,
-          link.path,
-          link.alt_name,
-          link.alt_en_name,
-          (link_to "Details", edit_internal_link_path(link.id), :class => 'button'),
-          (button_to "Löschen", link, :remote => true, :class => 'delete button', :method => 'delete',
-                                      :confirm => "Internen Link von \"#{link.panorama.name}\" zu \"#{dest_pano.name}\" wirklich löschen?")
-        ]
-      end
-    %>
-    ___________________________________________<br>
-    Externe Links
-    <%= 
-      generate_table(nil, nil, @external_links) do |link|
-        row_data = [
-          link.id,
-          link.name,
-          link.en_name,
-          link.path,
-          link.url,
-          (link_to "Details", edit_external_link_path(link.id), :class => 'button'),
-          (button_to "Löschen", link, :remote => true, :class => 'delete button', :method => 'delete',
-                                      :confirm => "Externen Link '#{link.name}' wirklich löschen?")
-        ]
-      end
-    %>
-    ___________________________________________<br>
-    Straßen
-    <%= 
-      generate_table(nil, nil, @hotspot_infos) do |hotspot|
-        row_data = [
-          hotspot.id,
-          hotspot.name,
-          hotspot.path,
-          (link_to "Details", edit_hotspot_info_path(hotspot.id), :class => 'button'),
-          (button_to "Löschen", hotspot, :remote => true, :class => 'delete button', :method => 'delete',
-                                      :confirm => "Hotspot '#{hotspot.name}' wirklich löschen?")
-        ]
-      end
-    %>
-  </div>
-  
+  </ul>  
   
   <div id="tab-intlinks">
     <%= 
@@ -119,6 +75,58 @@
   </div>
   
   <div id="tab-preview" class="section">
+    <div>
+      <h3>Interne Links</h3>
+      <p>
+        <%= 
+          generate_table(nil, nil, @internal_links) do |link|
+            dest_pano = Panorama.find(link.destination_id)
+            row_data = [
+              link.id,
+              dest_pano.name,
+              link.path,
+              link.alt_name,
+              link.alt_en_name,
+              (link_to "Details", edit_internal_link_path(link.id), :class => 'button'),
+              (button_to "Löschen", link, :remote => true, :class => 'delete button', :method => 'delete',
+                                          :confirm => "Internen Link von \"#{link.panorama.name}\" zu \"#{dest_pano.name}\" wirklich löschen?")
+            ]
+          end
+        %>
+      </p>
+      <h3>Externe Links</h3>
+      <p>
+        <%= 
+          generate_table(nil, nil, @external_links) do |link|
+            row_data = [
+              link.id,
+              link.name,
+              link.en_name,
+              link.path,
+              link.url,
+              (link_to "Details", edit_external_link_path(link.id), :class => 'button'),
+              (button_to "Löschen", link, :remote => true, :class => 'delete button', :method => 'delete',
+                                          :confirm => "Externen Link '#{link.name}' wirklich löschen?")
+            ]
+          end
+        %>
+      </p>
+      <h3>Hotspots</h3>
+      <p>
+        <%= 
+          generate_table(nil, nil, @hotspot_infos) do |hotspot|
+            row_data = [
+              hotspot.id,
+              hotspot.name,
+              hotspot.path,
+              (link_to "Details", edit_hotspot_info_path(hotspot.id), :class => 'button'),
+              (button_to "Löschen", hotspot, :remote => true, :class => 'delete button', :method => 'delete',
+                                          :confirm => "Hotspot '#{hotspot.name}' wirklich löschen?")
+            ]
+          end
+        %>
+      </p>
+    </div>
     <%= render 'layouts/panorama' %>
   </div>
 </div>
