@@ -1,8 +1,199 @@
-div#sticky {
-  max-width: 200px;
-  margin-top: -100px;
+* {
+  font-family: Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  margin: 8px 0;
+}
+
+body {
+  font-size: 12px;
+}
+
+header {
+  position: fixed;
+  background-color: #f7b64a;
+  width: 100%;
+  padding: 10px;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #e78f08;
+}
+
+div.field {
+  padding: 5px 0;
+}
+
+.clear {
+  clear: both;
+}
+
+header .spacer {
+  width: 16px;
+  height: 5px;
+  float: left;
+}
+
+#content {
+  padding: 16px 32px;
+}
+
+body {
+  padding-top: 50px;
+}
+
+#main-map {
+  height: 500px;
+  margin-bottom: 16px;
 }
 
 #sections {
-  margin-right: 225px;
+  margin-right: 32%;
 }
+
+#sticky {
+  top: 106px;
+  position: fixed;
+  z-index: 100;
+  width: 30%;
+  right: 10px;
+}
+
+#sticky div {
+  padding: 16px;
+}
+
+ul.tasks li {
+  margin-right: 10px;
+  padding: 5px 0;
+}
+
+ul {
+  list-style: none;
+}
+
+h3 {
+  font-size: 16px;
+  color: #444;
+  padding: 10px 0;
+}
+
+#tab-images li {
+  padding: 1px 0;
+}
+
+th {
+  padding: 0 4px;
+}
+
+h1, h2, h3 {
+  clear: left;
+  color: #666;
+  padding-bottom: 10px;
+}
+
+header a {
+  float: left;
+}
+
+#content table {
+  border-spacing: 0;
+  font-size: 15px;
+}
+
+#content a {
+  color: #1c94cd;
+  text-decoration: none;
+}
+
+#content a:hover {
+  text-decoration: underline;
+}
+
+#content h3 a:hover, #content ul.ui-tabs-nav li a:hover {
+  text-decoration: none;
+}
+
+#content table .button  {
+  font-size: 13px;
+}
+
+#content table td {
+  padding: 8px 16px;
+  margin: 0;
+  border: none;
+}
+
+#content table tr td:first {
+  vertical-align: top;
+}
+
+#content table table td {
+  padding: 2px 8px;
+}
+
+#content table tr td:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#content table tr td:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#content table tr:hover, #content table tr.item-edited:hover {
+  background-color: #b2d7ff;
+}
+
+#content table tr.item-edited {
+  background-color: #FFDEAB;
+}
+
+#content table table tr:hover {
+  background-color: #FFF;
+}
+
+#content table tr.table-header {
+  background-color: transparent;
+}
+
+#content table tr.table-header th {
+  padding: 16px;
+  font-size: 16px;
+}
+
+#sections .accordion{
+  margin-top: 16px;
+}
+
+.ui-state-error {
+  position: absolute;
+  right: 160px;
+  border-radius: 5px;
+  padding: 10px;
+  width: 50%;
+  margin: auto;
+  font-size: 13px;
+  font-weight: bold;
+  border: 2px dotted #FFF;
+}
+
+.ui-state-error li {
+  padding-left: 10px;
+}
+
+#content form label {
+  display: block;
+  width: 300px;
+  float: left;
+}
+
+#content .highlight {
+  font-weight: bold;
+  color: #333;
+}
+  
+.ui-accordion .ui-accordion-content{ overflow:visible !important; }
