@@ -1,9 +1,14 @@
+
+<% 
+  r = Random.new
+  id = r.rand(2*16...2*17)
+%>
 <% content_for :head do %>
   <%= javascript_include_tag 'simple-panorama' -%>
   <script>
     $(function() {
       var pano = new SimplePanorama({
-        'elem': $('.panorama'), 
+        'elem': $('.panorama_<%= id %>'), 
         'imagePath': "<%= FileHelper.get_image @panorama %>",
         'repeative': <%= @panorama.repeative %>,
         'modules': ['move_mousedown', 'show_coordinates'],
@@ -36,5 +41,5 @@
     <input type="checkbox" id="cbx_extern" checked="checked" /><label for="cbx_extern">Externe Links</label>
     <input type="checkbox" id="cbx_info" checked="checked"  /><label for="cbx_info">Hotspots</label>
   </div>
-  <div class="panorama" style="left: -16px;"></div>
+  <div class="panorama_<%= id %>" style="left: -16px;"></div>
 </div>

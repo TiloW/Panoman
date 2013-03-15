@@ -13,9 +13,6 @@
     <li><a href="#tab-image">Panorama</a></li>
   </ul>
 
-  <div id="tab-image" class="section">
-    <%= render 'layouts/panorama' %>
-  </div>
   <div id="tab-fields" class="section">
     <%= form_for(@panorama) do |f| %>
       <div class="field">
@@ -90,6 +87,8 @@
         <%= f.submit "Speichern" %>
       </div>
     <% end %>
+    
+    <%= render 'layouts/panorama' %>
   </div>
   
   <div id="tab-map" class="section">
