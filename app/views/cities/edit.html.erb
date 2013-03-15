@@ -1,7 +1,9 @@
 <% # coding: utf-8 
 %>
 
-<a href="<%= city_path(@city) %>">Panoramen</a>
+<% unless @city.new_record? %>
+  <a href="<%= city_path(@city) %>">Panoramen</a>
+<% end %>
 <h1>Bearbeiten: <%= @city.name %></h1>
 
 <div id="sections">
