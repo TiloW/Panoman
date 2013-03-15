@@ -1,10 +1,18 @@
-  div#sticky {
+div#sticky {
   max-width: 200px;
   margin-top: -100px;
- }
+}
 
-
-
-  #sections {
+#sections {
    margin-right: 225px;
- }
+}
+
+.sp-hotspot:hover {
+  background-color: rgba(0,0,0,.75);
+  color: #FF0;
+}
+
+.sp-hotspot a {
+  color: #AAF;
+  color: red;
+}
