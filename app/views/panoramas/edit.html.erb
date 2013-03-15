@@ -1,7 +1,10 @@
 <% # coding: utf-8 
 %>
 
-<a href="<%= panorama_path(@panorama) %>">Links</a> <h1>Bearbeiten: <%= @panorama.name %></h1>
+
+<% unless @panorama.new_record? %>
+  <a href="<%= panorama_path(@panorama) %>">Links</a> <h1>Bearbeiten: <%= @panorama.name %></h1>
+<% end %>
 
 <div id="sections">
   <ul>
