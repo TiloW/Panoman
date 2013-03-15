@@ -39,7 +39,7 @@ module GeneratorHelper
          file.gsub!("CITY-EN-NAME", FileHelper.to_filename(city.en_name))
       end
     end
-    unless pano.blank?
+    unless pano.nil?
       file.gsub!("PANO-ID", pano.id.to_s)
       file.gsub!("PANO-NAME", FileHelper.to_filename(pano.name))
       if pano.en_name.blank?
