@@ -185,6 +185,14 @@ header a {
   padding-left: 10px;
 }
 
+.ui-button-text .ui-button-text {
+  padding: 0;
+}
+
+.ui-button-icon-only .ui-button-text {
+  padding: 1px;
+}
+
 #content form label {
   display: block;
   width: 300px;
