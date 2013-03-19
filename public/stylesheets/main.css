@@ -194,9 +194,13 @@ table tr.table-header th {
 }
 
 form label {
-  display: block;
   width: 300px;
   float: left;
+}
+
+form .ui-buttonset label {
+  float: none;
+  width: auto;
 }
 
 .highlight {

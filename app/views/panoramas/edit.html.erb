@@ -54,6 +54,11 @@
       <div class="actions">
         <%= f.submit "Speichern" %>
       </div>  
+      
+      <div>
+         <%= render 'layouts/panorama' %>
+      </div>
+      
       <div class="field">
         <%= f.label :latitude, "Breitengrad" %>
         <%= f.text_field :latitude, :value => f.object.get_latitude %>
@@ -85,11 +90,7 @@
       <div class="field">
         <%= f.hidden_field :city_id %>
       </div>
-    <% end %>  
-      <div>
-         <%= render 'layouts/panorama' %>
-      </div>
-    
+    <% end %>      
   </div>
   
   <div id="tab-map" class="section">
