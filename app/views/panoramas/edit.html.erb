@@ -10,6 +10,7 @@
   <ul>
     <li><a href="#tab-fields">Datensatz</a></li>
     <li><a href="#tab-map">Karte</a></li>
+    <li><a href="#tab-image">Panorama</a></li>
   </ul>
 
   <div id="tab-fields" class="section">
@@ -43,19 +44,17 @@
         <%= f.text_field :location %>
       </div>
       <div class="field">
+        <%= f.label :tag_list, "Tags" %>
+        <%= f.text_field :tag_list, :size => 65 %>
+      </div>
+      <div class="field">
+        <%= f.label :description, "Beschreibungstext" %>
+        <%= f.text_area :description, :rows => 4, :cols => 50 %>
+      </div>
+      <div class="field">
         <%= f.label :date_of_recording, "Datum der Aufnahme" %>
         <%= f.date_select :date_of_recording, {:order => [:month, :year], :discard_day => true, 
           :start_year => 2000, :end_year => Time.now.year} %>
-      </div>  
-      <div class="field">
-        <%= f.label :repeative, "Panorama wiederholt sich (360°)" %>
-        <%= f.check_box :repeative %>
-      </div>
-      <div class="actions">
-        <%= f.submit "Speichern" %>
-      </div>    
-      <div>
-         <%= render 'layouts/panorama' %>
       </div>
       <div class="field">
         <%= f.label :latitude, "Breitengrad" %>
@@ -78,18 +77,18 @@
         <%= f.number_field :initial_vertical %>
       </div>
       <div class="field">
-        <%= f.label :tag_list, "Tags" %>
-        <%= f.text_field :tag_list, :size => 65 %>
-      </div>
-      <div class="field">
-        <%= f.label :description, "Beschreibungstext" %>
-        <%= f.text_area :description, :rows => 4, :cols => 50 %>
+        <%= f.label :repeative, "Panorama wiederholt sich (360°)" %>
+        <%= f.check_box :repeative %>
       </div>
       <div class="field">
         <%= f.hidden_field :city_id %>
       </div>
+      <div class="actions">
+        <%= f.submit "Speichern" %>
+      </div>
     <% end %>
     
+    <%= render 'layouts/panorama' %>
   </div>
   
   <div id="tab-map" class="section">
@@ -102,5 +101,8 @@
     Anschließend muss der Datensatz manuell gespeichert werden.</p>
   </div>
   
+  <div id="tab-image" class="section">
+    <%= render 'layouts/panorama' %>
+  </div>
                   
 </div>
