@@ -2,25 +2,25 @@
 
 module ApplicationHelper
   
+  def generateHotspotFunctionCall(pano, objName, spot, content, category)
+      result = "#{objName}.create"
+      result += spot.is_circle ? "Circle" : "Rect"
+      result + "Hotspot(\"#{content.gsub('"', "'")}\", #{spot.get_scaled_path_sp}, \"#{category}\");\n"
+  end
+  
   def generateHotspotsJS(pano, objName = "pano")
     result = ""
     
     pano.hotspot_infos.each do |spot|
-      result += "#{objName}.create"
-      result += spot.is_circle ? "Circle" : "Rect"
-      result += "Hotspot('#{spot.name}', #{spot.get_scaled_path_sp}, 'info');\n"
+      result += generateHotspotFunctionCall(pano, objName, spot, spot.name, 'info')
     end
     
     pano.external_links.each do |spot|
-      result += "#{objName}.create"
-      result += spot.is_circle ? "Circle" : "Rect"
-      result += "Hotspot('#{spot.name}', #{spot.get_scaled_path_sp}, 'extern');\n"
+      result += generateHotspotFunctionCall(pano, objName, spot, spot.name, 'extern')
     end
     
     pano.internal_links.each do |spot|
-      result += "#{objName}.create"
-      result += spot.is_circle ? "Circle" : "Rect"
-      result += "Hotspot('<a href=\"" + panorama_path(spot.get_dest) + "\">#{spot.get_dest.name}</a>', #{spot.get_scaled_path_sp}, 'intern');\n"
+      result += generateHotspotFunctionCall(pano, objName, spot, "<a href=\"" + panorama_path(spot.get_dest) + "\">#{spot.get_dest.name}</a>", 'intern')
     end
     
     result.html_safe
