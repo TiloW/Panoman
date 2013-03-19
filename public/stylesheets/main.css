@@ -98,69 +98,69 @@ header a {
   float: left;
 }
 
-#content table {
+table {
   border-spacing: 0;
   font-size: 15px;
 }
 
-#content a {
+a {
   color: #1c94cd;
   text-decoration: none;
 }
 
-#content a:hover {
+a:hover {
   text-decoration: underline;
 }
 
-#content h3 a:hover, #content ul.ui-tabs-nav li a:hover {
+h3 a:hover, ul.ui-tabs-nav li a:hover {
   text-decoration: none;
 }
 
-#content table .button  {
+table .button  {
   font-size: 13px;
 }
 
-#content table td {
+table td {
   padding: 4px 16px;
   margin: 0;
   border: none;
 }
 
-#content table tr td:first {
+table tr td:first {
   vertical-align: top;
 }
 
-#content table table td {
+table table td {
   padding: 2px 8px;
 }
 
-#content table tr td:first-child {
+table tr td:first-child {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
-#content table tr td:last-child {
+table tr td:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
 
-#content table tr:hover, #content table tr.item-edited:hover {
+table tr:hover, #content table tr.item-edited:hover {
   background-color: #b2d7ff;
 }
 
-#content table tr.item-edited {
+table tr.item-edited {
   background-color: #FFDEAB;
 }
 
-#content table table tr:hover {
+table table tr:hover {
   background-color: #FFF;
 }
 
-#content table tr.table-header {
+table tr.table-header {
   background-color: transparent;
 }
 
-#content table tr.table-header th {
+table tr.table-header th {
   padding: 16px;
   font-size: 16px;
 }
@@ -193,13 +193,13 @@ header a {
   padding: 1px;
 }
 
-#content form label {
+form label {
   display: block;
   width: 300px;
   float: left;
 }
 
-#content .highlight {
+.highlight {
   font-weight: bold;
   color: #333;
 }
