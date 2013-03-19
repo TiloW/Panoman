@@ -7,7 +7,27 @@ div#sticky {
    margin-right: 225px;
 }
 
+.sp-hotspot {
+  border-width: 1px;
+  border-color: #FF0;
+  background-color: rgba(0,0,0,0);
+  overflow:visible;
+}
+
+.sp-hotspot a {
+  font: 11pt Arial, Helvetica, sans-serif;  
+  font-weight:bold;
+  color: #FF0;
+  background-color: rgba(0,0,50,0.35);
+}
+
+.sp-circ .sp-hotspot-content {
+  top:35%;
+  left:3%;
+  width: 96%;
+  }
+  
 .sp-hotspot:hover {
-  background-color: rgba(0,0,0,.75);
+  background-color: rgba(0,0,0,0);
   color: #FF0;
 }
