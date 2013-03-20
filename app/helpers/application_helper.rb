@@ -17,7 +17,7 @@ module ApplicationHelper
     pano.external_links.each{ |s| orderedHotspots.push s }
     pano.internal_links.each{ |s| orderedHotspots.push s }
     
-    orderedHotspots.sort_by{ |s| -s.get_area }
+    orderedHotspots.sort_by!{ |s| -s.get_area }
     
     orderedHotspots.each do |spot|
       result += if spot.is_a? HotspotInfo
