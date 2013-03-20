@@ -11,11 +11,11 @@ div#sticky {
   border: 1px solid #FF0;
 }
   
-.sp-hotspot:hover {
+html.no-touch .sp-hotspot:hover {
   background-color: rgba(255,255,0,.1);
 }
   
-.sp-hotspot:hover .sp-hotspot-content {
+html.no-touch .sp-hotspot:hover .sp-hotspot-content {
   opacity: 0;
 }
 
