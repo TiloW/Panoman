@@ -42,7 +42,11 @@
           hotspotTitle.css('opacity', 0);
           $('#panoContainer_<%= id %> .sp-hotspot').on('mouseenter', function(event) {
           	$(event.currentTarget).find('.title').clone().appendTo(hotspotTitle);
-          	hotspotTitle.css('opacity', 1);
+          	
+          	hotspotTitle.css({
+          		'opacity': 1,
+          		'margin-left': -hotspotTitle.width()/2 + 'px'
+          	});
           });
           $('#panoContainer_<%= id %> .sp-hotspot').on('mouseleave', function() {
           	hotspotTitle.html('');
