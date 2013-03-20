@@ -8,26 +8,29 @@ div#sticky {
 }
 
 .sp-hotspot {
-  border-width: 1px;
-  border-color: #FF0;
-  background-color: rgba(0,0,0,0);
-  overflow:visible;
+  border: 1px solid #FF0;
 }
-
-.sp-hotspot a {
-  font: 11pt Arial, Helvetica, sans-serif;  
-  font-weight:bold;
-  color: #FF0;
-  background-color: rgba(0,0,50,0.35);
-}
-
-.sp-circ .sp-hotspot-content {
-  top:35%;
-  left:3%;
-  width: 96%;
-  }
   
 .sp-hotspot:hover {
-  background-color: rgba(0,0,0,0);
-  color: #FF0;
+  background-color: rgba(255,255,0,.1);
+}
+  
+.sp-hotspot:hover .sp-hotspot-content {
+  opacity: 0;
+}
+
+.sp-hotspot-content a {
+  display: block;
+  height: 100%;
+}
+
+.hotspot-title {
+	position: relative;
+	top: 125px;
+	left: 50%;
+	background-color: #FF0;
+	padding: 1em;
+	color: #000;
+	font-weight: bold;
+	z-index: 99;	
 }

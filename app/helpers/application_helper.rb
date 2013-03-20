@@ -21,11 +21,11 @@ module ApplicationHelper
     
     orderedHotspots.each do |spot|
       result += if spot.is_a? HotspotInfo
-        generateHotspotFunctionCall(pano, objName, spot, spot.name, 'info')
+        generateHotspotFunctionCall(pano, objName, spot, '<span class="title">' + spot.name + '</span>', 'info')
       elsif spot.is_a? ExternalLink
-        generateHotspotFunctionCall(pano, objName, spot, spot.name, 'extern')
+        generateHotspotFunctionCall(pano, objName, spot, '<span class="title">' + spot.name + '</span>', 'extern')
       else
-        generateHotspotFunctionCall(pano, objName, spot, "<a href=\"" + panorama_path(spot.get_dest) + "\">#{spot.get_dest.name}</a>", 'intern')
+        generateHotspotFunctionCall(pano, objName, spot, "<a href=\"" + panorama_path(spot.get_dest) + "\"><span class=\"title\">#{spot.get_dest.name}</span></a>", 'intern')
       end
     end
     

@@ -1,14 +1,14 @@
 
 <% 
   r = Random.new
-  id = r.rand(2*16...2*17)
+  id = r.rand(2**16...2**17)
 %>
 <% content_for :head do %>
   <%= javascript_include_tag 'simple-panorama' -%>
   <script>
     $(function() {
       var pano = new SimplePanorama({
-        'elem': $('.panorama_<%= id %>'), 
+        'elem': $('#panoContainer_<%= id %> .panorama'), 
         'imagePath': "<%= FileHelper.get_image @panorama %>",
         'repeative': <%= @panorama.repeative %>,
         'modules': ['move_mousedown', 'show_coordinates'],
@@ -19,7 +19,7 @@
           
           initCbx = function(id) {
             var cbxName = 'cbx_' + id;
-            var cbx = $('#' + cbxName);
+            var cbx = $('#' + cbxName + '_<%= id %>');
             var val = localStorage.getItem(cbxName);
             
             if(val != null && val != 'false')
@@ -36,18 +36,30 @@
           
           initCbx('intern');
           initCbx('extern');
-          initCbx('info');            
+          initCbx('info');
+          
+          hotspotTitle = $('#panoContainer_<%= id %> .hotspot-title');
+          hotspotTitle.css('opacity', 0);
+          $('#panoContainer_<%= id %> .sp-hotspot').on('mouseenter', function(event) {
+          	$(event.currentTarget).find('.title').clone().appendTo(hotspotTitle);
+          	hotspotTitle.css('opacity', 1);
+          });
+          $('#panoContainer_<%= id %> .sp-hotspot').on('mouseleave', function() {
+          	hotspotTitle.html('');
+          	hotspotTitle.css('opacity', 0);
+          });
         }
       });
-    });
+    });    
   </script>
 <% end %>
 
-<div class="panoContainer" style="padding: 6px 16px;">
+<div id="panoContainer_<%= id %>" style="padding: 6px 16px;">
   <div class="panoramaControls" style="padding-bottom: .5em">
-    <input type="checkbox" id="cbx_intern" /><label for="cbx_intern">Interne Links</label>
-    <input type="checkbox" id="cbx_extern" /><label for="cbx_extern">Externe Links</label>
-    <input type="checkbox" id="cbx_info" /><label for="cbx_info">Hotspots</label>
+    <input type="checkbox" id="cbx_intern_<%= id %>" /><label for="cbx_intern_<%= id %>">Interne Links</label>
+    <input type="checkbox" id="cbx_extern_<%= id %>" /><label for="cbx_extern_<%= id %>">Externe Links</label>
+    <input type="checkbox" id="cbx_info_<%= id %>" /><label for="cbx_info_<%= id %>">Hotspots</label>
   </div>
-  <div class="panorama_<%= id %>" style="left: -16px;"></div>
+  <span class="hotspot-title"></span>
+  <div class="panorama" style="left: -16px;"></div>
 </div>
