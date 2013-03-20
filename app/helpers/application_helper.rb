@@ -11,16 +11,22 @@ module ApplicationHelper
   def generateHotspotsJS(pano, objName = "pano")
     result = ""
     
-    pano.hotspot_infos.each do |spot|
-      result += generateHotspotFunctionCall(pano, objName, spot, spot.name, 'info')
-    end
+    orderedHotspots = []
     
-    pano.external_links.each do |spot|
-      result += generateHotspotFunctionCall(pano, objName, spot, spot.name, 'extern')
-    end
+    pano.hotspot_infos.each{ |s| orderedHotspots.push s }
+    pano.external_links.each{ |s| orderedHotspots.push s }
+    pano.internal_links.each{ |s| orderedHotspots.push s }
     
-    pano.internal_links.each do |spot|
-      result += generateHotspotFunctionCall(pano, objName, spot, "<a href=\"" + panorama_path(spot.get_dest) + "\">#{spot.get_dest.name}</a>", 'intern')
+    orderedHotspots.sort_by{ |s| -s.get_area }
+    
+    orderedHotspots.each do |spot|
+      result += if spot.is_a? HotspotInfo
+        generateHotspotFunctionCall(pano, objName, spot, spot.name, 'info')
+      elsif spot.is_a? ExternalLink
+        generateHotspotFunctionCall(pano, objName, spot, spot.name, 'extern')
+      else
+        generateHotspotFunctionCall(pano, objName, spot, "<a href=\"" + panorama_path(spot.get_dest) + "\">#{spot.get_dest.name}</a>", 'intern')
+      end
     end
     
     result.html_safe

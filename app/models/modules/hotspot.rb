@@ -32,4 +32,13 @@ module Hotspot
     is_circle ? get_scaled_path(factor) : get_xywh(factor)
   end
   
+  def get_area factor = 1
+    if is_circle
+      Math::PI * get_scaled_nums(factor)[2]**2
+    else
+      tmp = get_scaled_nums(factor)
+      ((tmp[0] - tmp[2])*(tmp[1] - tmp[3])).abs
+    end
+  end
+  
 end
