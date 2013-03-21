@@ -1,12 +1,11 @@
 <a href="<%= edit_panorama_path(@panorama) %>">Datensatz</a>
-<h1><%= @panorama.name %></h1>
+<h1><%= @panorama.name %> &nbsp;&nbsp;&nbsp; <%= @panorama.alt_name %></h1>
 <% 
   subTitle = []
-  subTitle.push @panorama.alt_name unless @panorama.alt_name.blank?
   subTitle.push @panorama.en_name unless @panorama.en_name.blank?
   subTitle.push @panorama.alt_en_name unless @panorama.alt_en_name.blank?
 %>
-<h2><%=  subTitle.join(",&nbsp;&nbsp;").html_safe %></h2>
+<h2><%=  subTitle.join(" &nbsp;&nbsp;&nbsp; ").html_safe %></h2>
 
   
 <div id="sticky">
