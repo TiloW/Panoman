@@ -22,27 +22,21 @@
                    
           <% pano_filename = FileHelper.to_filename pano.name %>
           <% pano_en_filename = FileHelper.to_filename( pano.en_name.blank? ? pano.name : pano.en_name ) %>
-          <Placemark id="<%= pano_filename %>">       
-            
-   
-             
-    <% pano.tag_list.to_s == "Warnemünde"|| pano.tag_list.to_s == "Hohe Düne"||pano.tag_list.to_s == "Mainz-Kastell"||pano.tag_list.to_s == "Travemünde" ? (city_town = pano.tag_list.to_s) : "" %> 
-    <% citytown = city_town.blank? ? ("") : (city_town + "<br>") %> 
-    
-    <% pano.tag_list.to_s == "Botanischer Garten"||pano.tag_list.to_s == "BUGA 2009"||pano.tag_list.to_s == "Burg Vischering"||pano.tag_list.to_s == "Gruga-Park"||pano.tag_list.to_s == "Neroberg"||pano.tag_list.to_s == "Zeche Zollverin" ? (city_spot = pano.tag_list.to_s) : "" %> 
-    <% city_spot_en = city_spot.blank? ? ("") : ((city_spot == "Botanischer Garten") ? ("Botanic Garden") : ((city_spot == "Burg Vischering") ? ("Vischering Castle") : (city_spot))) %>
+          <Placemark id="<%= pano_filename %>">   
+
     
     <% panoenname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
     <% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
            
     
-            <name><center><%= pano.name %> <%= city_spot %> in <%= city.name %> <%= city_town %></center></name>
+            <name><center><%= pano.name %> </center></name>
             <description>
-              <![CDATA[<center>
+              <![CDATA[<center> 
                       <a href="http://www.stadtpanoramen.de/<%= city_filename %>/index.html" title="StadtPanoramen <%= city.name %>"><img src="http://www.stadtpanoramen.de/navpic/de_ico-small.gif" alt=""></a><br>
-                    <%= pano.alt_name.blank? ? ('<img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>') : (panoname.to_s + " <br>") %>
-                      <a href="http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>.html" title="Panorama <%= panoname %> <%= city_spot %> in <%= city.name %> <%= city_town %>">
-                        <img src="http://www.panorama-cities.net/<%= city_en_filename %>/photos/<%= pano_filename %>.jpg" alt="<%= panoname %> <%= city_spot %> in <%= city.name %>"></a><br>
+                      <%= pano.alt_name.blank? ? ('<img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>') : (panoname.to_s + " <br>") %>
+                      <%= pano.location + " in"%> <%= city.name %> <%= pano.district %> <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>
+                      <a href="http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>.html" title="Panorama <%= panoname %> <%= pano.location %> in <%= city.name %> <%= pano.district %>">
+                        <img src="http://www.panorama-cities.net/<%= city_en_filename %>/photos/<%= pano_filename %>.jpg" alt="<%= panoname %> <%= pano.location %> in <%= city.name %>"></a><br>
                       <%= (pano.repeative == true) ? ("360° Panorama") : ("") %> <br>                      
                       <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>
                       <a href="http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>_5c.html">Widescreen </a>+ Voll-Format
@@ -50,7 +44,7 @@
                       <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= city_en_filename %>_germany.html" title="<%= city.en_name %> City Panoramas"><img src="http://www.stadtpanoramen.de/navpic/uk-small.jpg" alt=""></a><br>
                       <%= (pano.repeative == true) ? ("360° Panorama") : ("") %> <br>
                       <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= pano_en_filename %>.html"><%= panoenname%></a> <br> 
-                      <%= city.en_name %> Germany  <br>                      
+                      <%= pano.location %> <%= pano.district %> <%= city.en_name %> Germany  <br>                      
                       <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" with="4px"><br>
                     </td>
                       <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= pano_en_filename %>_5c.html">Widescreen </a> + Full Screen
