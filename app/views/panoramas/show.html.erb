@@ -99,7 +99,7 @@
               link.name,
               link.en_name,
               link.path,
-              link.url,
+              (link_to link.url, link.url),
               (link_to "Details", edit_external_link_path(link.id), :class => 'details button'),
               (link_to "Löschen", link, :remote => true, :class => 'delete button', :method => 'delete',
                                           :confirm => "Externen Link '#{link.name}' wirklich löschen?")
