@@ -1,0 +1,17 @@
+<% City.all.each do |city| %>
+  <%= city.name %>
+  <% 
+    panos = Hash.new
+    city.panoramas.each do |pano|
+      panos[pano.district] = [] if panos[pano.district].nil?
+      panos[pano.district].push pano
+    end
+      
+    panos.each do |district, panosInDistrict| 
+      panosInDistrict.sort_by!{ |p| p.name.downcase } %>
+      + <%= district %>
+      <% panosInDistrict.each do |pano| %>
+        - <%= pano.name %>
+      <% end
+    end
+end %>
