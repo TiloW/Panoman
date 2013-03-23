@@ -93,6 +93,7 @@ footer {
 }
 
 header, footer {
+  text-transform: lowercase;
   width: 100%;
   position: fixed;
   z-index: 2;
