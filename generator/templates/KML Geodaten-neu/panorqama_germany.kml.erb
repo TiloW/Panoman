@@ -23,7 +23,6 @@
           city.panoramas.each do |pano|
             panos[pano.district] = [] if panos[pano.district].nil?
              panos[pano.location] = [] if panos[pano.location].nil?
-              panos[pano.location].push pano
              panos[pano.district].push pano
           end   
         %>    
