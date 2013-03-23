@@ -22,26 +22,18 @@
           panos = Hash.new
           city.panoramas.each do |pano|
             panos[pano.district] = [] if panos[pano.district].nil?
-            panos[pano.district].push pano
-            panos[pano.location] = [] if panos[pano.location].nil?
-            panos[pano.location].push pano
+             panos[pano.location] = [] if panos[pano.location].nil?
+              panos[pano.location].push pano
+             panos[pano.district].push pano
           end   
-        %>   
+        %>    
           
         <% panos.each do |district, panosInDistrict| %>
-          <% panosInDistrict.sort_by!{ |p| p.name.downcase } %>               
-          
-        <% panos.each do |location, panosInLocation| %>
-          <% panosInLocation.sort_by!{ |p| p.name.downcase } %>
-          
+          <% panosInDistrict.sort_by!{ |p| p.name.downcase } %>              
+              
           <% unless district.blank? %>
             <Folder>
-              <name><%= district %></name>                
-          <% end %>       
-              
-          <% unless location.blank? %>
-            <Folder>
-              <name><%= location %></name>              
+              <name><%= district %></name>              
           <% end %>
         
           <% panosInDistrict.each do |pano| %>
@@ -97,7 +89,6 @@
           <% unless district.blank? %>
             </Folder>
           <% end %>
-        <% end %>
         <% end %>
       </Folder>  
     <% end %>
