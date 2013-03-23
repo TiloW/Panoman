@@ -78,6 +78,8 @@
             </Point>
           </Placemark>
           
+          
+      <% if not district.blank? %>
         <Folder>
         <name><%= district %></name>
 
@@ -118,10 +120,11 @@
               <coordinates><%= pano.longitude %>,<%= pano.latitude %></coordinates>
             </Point>
           </Placemark>
-         <% end %>       
-         <% end %>
         </Folder>
-      </Folder>
+         <% end %>   
+         <% end %>   
+         <% end %>  
+      </Folder>  
     <% end %>
   </Document>
 </kml>
