@@ -13,117 +13,79 @@
       </ListStyle>
     </Style>
     <% City.order(:name).all.each do |city| %>
-    <% city_filename = FileHelper.to_filename city.name %>
-    <% city_en_filename = FileHelper.to_filename city.en_name %>
+      <% city_filename = FileHelper.to_filename city.name %>
+      <% city_en_filename = FileHelper.to_filename city.en_name %>
       <Folder>        
         <name><%= city.name %> Panoramen</name> 
         
+        <% 
+          panos = Hash.new
+          city.panoramas.each do |pano|
+            panos[pano.district] = [] if panos[pano.district].nil?
+            panos[pano.district].push pano
+          end   
+        %>   
+          
+        <% panos.each do |district, panosInDistrict| %>
+          <% panosInDistrict.sort_by!{ |p| p.name.downcase } %>
+          
+          <% unless district.blank? %>
+            <Folder>
+              <name><%= district %></name>
+          <% end %>
         
-    <% 
-    panos = Hash.new
-    city.panoramas.order(:name).each do |pano|
-      panos[pano.district] = [] if panos[pano.district].nil?
-      panos[pano.district].push pano
-    end      
-    panos.each do |district, panosInDistrict| 
-      panosInDistrict.sort_by!{ |p| p.name.downcase } %>       
-         
-    <% panosInDistrict.each do |pano| %>
-    <% next unless pano.published %>
-                   
-    <% pano_filename = FileHelper.to_filename pano.name %>
-    <% pano_en_filename = FileHelper.to_filename( pano.en_name.blank? ? pano.name : pano.en_name ) %>
-          <Placemark id="<%= pano_filename %>">   
-
+          <% panosInDistrict.each do |pano| %>
+            <% next unless pano.published %>
+                       
+            <% pano_filename = FileHelper.to_filename pano.name %>
+            <% pano_en_filename = FileHelper.to_filename( pano.en_name.blank? ? pano.name : pano.en_name ) %>
+            <Placemark id="<%= pano_filename %>">   
     
-    <% panoenname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
-    <% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
-           
-    
-            <name><center><%= pano.name %> </center></name>
-            <description>
-              <![CDATA[<center> 
-                      <a href="http://www.stadtpanoramen.de/<%= city_filename %>/index.html" title="StadtPanoramen <%= city.name %>"><img src="http://www.stadtpanoramen.de/navpic/de_ico-small.gif" alt=""></a><br>
-                      <%= pano.alt_name.blank? ? ('<img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>') : (panoname.to_s + " <br>") %>
-                      <%= "pano.location" + " in"%> <%= city.name %> <%= "pano.location" %> <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>
-                      <a href="http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>.html" title="Panorama <%= panoname %> <%= "pano.location" %> in <%= city.name %> <%= "pano.location" %>">
-                        <img src="http://www.panorama-cities.net/<%= city_en_filename %>/photos/<%= pano_filename %>.jpg" alt="<%= panoname %> <%= "pano.location" %> in <%= city.name %>"></a><br>
-                      <%= (pano.repeative == true) ? ("360° Panorama") : ("") %> <br>                      
-                      <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>
-                      <a href="http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>_5c.html">Widescreen </a>+ Voll-Format
-                      <br>____________________<br><br>
-                      <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= city_en_filename %>_germany.html" title="<%= city.en_name %> City Panoramas"><img src="http://www.stadtpanoramen.de/navpic/uk-small.jpg" alt=""></a><br>
-                      <%= (pano.repeative == true) ? ("360° Panorama") : ("") %> <br>
-                      <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= pano_en_filename %>.html"><%= panoenname%></a> <br> 
-                      <%= "pano.location" %> <%= "pano.location" %> <%= city.en_name %> Germany  <br>                      
-                      <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" with="4px"><br>
-                    </td>
-                      <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= pano_en_filename %>_5c.html">Widescreen </a> + Full Screen
-                      <br>____________________<br>                    
-              </center>]]>
-            </description>
-            <LookAt>
-              <longitude><%= pano.longitude %></longitude>
-              <latitude><%= pano.latitude %></latitude>
-              <altitude>0</altitude>
-              <heading>0</heading>
-              <tilt>0</tilt>
-              <range>1200</range>
-              <altitudeMode>relativeToGround</altitudeMode>
-              <gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
-          </LookAt>
-            <styleUrl>#styleCamera</styleUrl>
-            <Point>
-              <coordinates><%= pano.longitude %>,<%= pano.latitude %></coordinates>
-            </Point>
-          </Placemark>
-          
-          
-      <% if not district.blank? %>
-        <Folder>
-        <name><%= district %></name>
-
-          <Placemark id="<%= pano_filename %>"> 
-            <name><center><%= pano.name %> </center></name>
-        <description><![CDATA[<center> 
-                      <a href="http://www.stadtpanoramen.de/<%= city_filename %>/index.html" title="StadtPanoramen <%= city.name %>"><img src="http://www.stadtpanoramen.de/navpic/de_ico-small.gif" alt=""></a><br>
-                      <%= pano.alt_name.blank? ? ('<img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>') : (panoname.to_s + " <br>") %>
-                      <%= "pano.location" + " in"%> <%= city.name %> <%= "pano.location" %> <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>
-                      <a href="http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>.html" title="Panorama <%= panoname %> <%= "pano.location" %> in <%= city.name %> <%= "pano.location" %>">
-                        <img src="http://www.panorama-cities.net/<%= city_en_filename %>/photos/<%= pano_filename %>.jpg" alt="<%= panoname %> <%= "pano.location" %> in <%= city.name %>"></a><br>
-                      <%= (pano.repeative == true) ? ("360° Panorama") : ("") %> <br>                      
-                      <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>
-                      <a href="http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>_5c.html">Widescreen </a>+ Voll-Format
-                      <br>____________________<br><br>
-                      <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= city_en_filename %>_germany.html" title="<%= city.en_name %> City Panoramas"><img src="http://www.stadtpanoramen.de/navpic/uk-small.jpg" alt=""></a><br>
-                      <%= (pano.repeative == true) ? ("360° Panorama") : ("") %> <br>
-                      <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= pano_en_filename %>.html"><%= panoenname%></a> <br> 
-                      <%= "pano.location" %> <%= "pano.location" %> <%= city.en_name %> Germany  <br>                      
-                      <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" with="4px"><br>
-                    </td>
-                      <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= pano_en_filename %>_5c.html">Widescreen </a> + Full Screen
-                      <br>____________________<br>                    
-              </center>]]>
-            </description>
-            <LookAt>
-              <longitude><%= pano.longitude %></longitude>
-              <latitude><%= pano.latitude %></latitude>
-              <altitude>0</altitude>
-              <heading>0</heading>
-              <tilt>0</tilt>
-              <range>1200</range>
-              <altitudeMode>relativeToGround</altitudeMode>
-              <gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
-          </LookAt>
-            <styleUrl>#styleCamera</styleUrl>
-            <Point>
-              <coordinates><%= pano.longitude %>,<%= pano.latitude %></coordinates>
-            </Point>
-          </Placemark>
-        </Folder>
-         <% end %>   
-         <% end %>   
-         <% end %>  
+              <% panoenname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
+              <% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
+              
+              <name><center><%= pano.name %></center></name>
+              <description>
+                <![CDATA[<center>
+                <a href="http://www.stadtpanoramen.de/<%= city_filename %>/index.html" title="StadtPanoramen <%= city.name %>"><img src="http://www.stadtpanoramen.de/navpic/de_ico-small.gif" alt=""></a><br>
+                <%= pano.alt_name.blank? ? ('<img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>') : (panoname.to_s + " <br>") %>
+                <%= "pano.location" + " in"%> <%= city.name %> <%= "pano.location" %> <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>
+                <a href="http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>.html" title="Panorama <%= panoname %> <%= "pano.location" %> in <%= city.name %> <%= "pano.location" %>">
+                  <img src="http://www.panorama-cities.net/<%= city_en_filename %>/photos/<%= pano_filename %>.jpg" alt="<%= panoname %> <%= "pano.location" %> in <%= city.name %>"></a><br>
+                <%= (pano.repeative == true) ? ("360° Panorama") : ("") %> <br>                      
+                <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" width="4px"><br>
+                <a href="http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>_5c.html">Widescreen </a>+ Voll-Format
+                <br>____________________<br><br>
+                <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= city_en_filename %>_germany.html" title="<%= city.en_name %> City Panoramas"><img src="http://www.stadtpanoramen.de/navpic/uk-small.jpg" alt=""></a><br>
+                <%= (pano.repeative == true) ? ("360° Panorama") : ("") %> <br>
+                <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= pano_en_filename %>.html"><%= panoenname%></a> <br> 
+                <%= "pano.location" %> <%= "pano.location" %> <%= city.en_name %> Germany  <br>                      
+                <img src="http://www.panorama-cities.net/navpic/pan.gif" alt="" height="4px" with="4px"><br>
+                </td>
+                <a href="http://www.panorama-cities.net/<%= city_en_filename %>/<%= pano_en_filename %>_5c.html">Widescreen </a> + Full Screen
+                <br>____________________<br>                    
+                </center>]]>
+              </description>
+              <LookAt>
+                <longitude><%= pano.longitude %></longitude>
+                <latitude><%= pano.latitude %></latitude>
+                <altitude>0</altitude>
+                <heading>0</heading>
+                <tilt>0</tilt>
+                <range>1200</range>
+                <altitudeMode>relativeToGround</altitudeMode>
+                <gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+              </LookAt>
+              <styleUrl>#styleCamera</styleUrl>
+              <Point>
+                <coordinates><%= pano.longitude %>,<%= pano.latitude %></coordinates>
+              </Point>
+            </Placemark>
+          <% end %>
+          <% unless district.blank? %>
+            </Folder>
+          <% end %>
+        <% end %>
       </Folder>  
     <% end %>
   </Document>
