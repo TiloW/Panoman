@@ -1,5 +1,5 @@
 <a href="<%= edit_panorama_path(@panorama) %>">Datensatz</a>
-<h1><%= @panorama.name %> &nbsp;&nbsp;&nbsp; <%= @panorama.alt_name %></h1>
+<h1><%= @panorama.name %> &nbsp;&nbsp;&nbsp; <%= @panorama.alt_name %> &nbsp;&nbsp;&nbsp; <%= @panorama.location %> <%= @panorama.district %></h1>
 <% 
   subTitle = []
   subTitle.push @panorama.en_name unless @panorama.en_name.blank?
