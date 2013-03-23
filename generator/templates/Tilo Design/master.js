@@ -1,4 +1,4 @@
-var updateSize = function() {
+$(window).on('resize', function() {
   innerDist = $('#grid ul').outerWidth() - $('#grid ul').width();
   width = $('#grid').parent().innerWidth() - innerDist;
   singleWidth = $('#grid li').outerWidth(true);
@@ -17,9 +17,26 @@ var updateSize = function() {
     'margin-left': singleDist,
     'margin-right': singleDist
   });
-};
+});
 
 $(function() {
-  $(window).on('resize', updateSize);
-  updateSize();
+  $(window).trigger('resize');
+
+  $('#grid li').on('click', function(event) {
+    $('.overlay').fadeIn(function() {
+      new SimplePanorama({
+        elem: $('.panoContainer'),
+        imagePath: $(event.currentTarget).find('img').attr('src').replace('_3.jpg', '_5.jpg'),
+        modules: ['move_mousedown']
+      });
+    });
+  });
+
+  $('.overlay').on('click', function(event) {
+    if(event.target === $('.overlay')[0]) {
+      $('.overlay').stop();
+      $('.overlay').hide();
+      $('.panoContainer').empty();
+    }
+  });
 });
