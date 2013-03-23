@@ -11,7 +11,7 @@ var updateSize = function() {
     
   singleDist = Math.floor(dist/2) + 'px';
   
-  $('header, footer').css('width', ($('header').outerWidth(true) - dist) + 'px');
+  $('header, footer').css('width', ($('header').parent().width() - dist) + 'px');
     
   $('#grid, header, footer').css({
     'margin-left': singleDist,
