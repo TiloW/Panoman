@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% imgRoot = "../../../public/panoramas" %>
+  <meta charset=utf-8 />
+  <title>Stadtpanoramen - <%= @city.name %></title>
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" media="screen" href="master.css" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="master.js"></script>
+</head>
+<body>
+  <header>
+    <a href="#"><img src="logo.png" alt="Stadtpanoramen" /></a><br />
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Städte</a></li>
+        <li><a href="#">Kontakt</a></li>
+      </ul>
+    </nav>
+    <span class="breadcrumb"><a href="#">Berlin</a></span>
+  </header>
+  <div id="grid">
+    <ul>
+      <% @city.panoramas.sort_by{ |p| p.priority }.each do |pano| %>
+        <li>
+          <a href="#">
+            <div class="wrapper">
+              <img src="<%= imgRoot %>/<%= @city.get_filename %>/<%= pano.get_filename %>_3.jpg" />
+            </div>
+            <%= pano.name %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+    <div class="bottom"></div>
+  </div>
+  <footer>
+    <span class="copy">All rights reserved to Helmut Kölbach.</span>
+    <a href="#">Impressum</a>
+  </footer>
+</body>
+</html>

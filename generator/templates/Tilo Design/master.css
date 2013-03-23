@@ -1,0 +1,157 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background: url(bg.png) fixed;
+}
+
+* {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+body {
+  margin-bottom: 50px;
+  margin-top: 150px;
+  padding: 0;
+}
+#grid {
+  margin: 0 2em;
+  padding: .5em 0;
+}
+
+#grid ul {
+  padding: 0 .5em;
+  margin: 0;
+  list-style: none;
+}
+
+#grid .bottom {
+  clear: both;
+}
+
+#grid li {
+  float: left;  
+  width: 300px;
+  height: 300px;
+  background: rgba(255,255,255,.05);
+  border-radius: 5px;
+  margin: .2em;
+  -webkit-transition: background-color 0s;
+}
+
+#grid a {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  color: #AAA;
+  text-decoration: none;
+  display: block;
+  width: 290px;
+  height: 100%;
+  margin: 0 auto;
+  letter-spacing: .1em;
+}
+
+#grid li:hover {
+  background: #666;
+  background: rgba(255,255,255,.75);
+  -webkit-transition: background-color .25s;
+}
+
+#grid li a:hover {
+  color: #111;
+}
+
+#grid div.wrapper {
+  height: 270px;
+  width: 290px;
+  margin-top: 5px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: .35em;
+}
+
+#grid img {
+  border: none;
+  height: 270px;
+}
+
+header {
+  height: 150px;
+  top: 0;
+  text-align: center;
+  border-bottom: 1px solid #AAA;
+}
+
+header img {
+  margin: 2em auto;
+  border: none;
+}
+
+footer {
+  border-top: 1px solid #AAA;
+  height: 50px;
+  bottom: 0;
+}
+
+header, footer {
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+  background: url(bg.png);
+}
+
+header nav {
+  float: right;
+  position: relative;
+  left: -50%;
+  text-align: left;
+}
+
+header ul {
+  list-style: none;
+  position:relative;
+  padding: 0;
+  top: -16px;
+  left:50%;
+}
+
+header li {
+  position: relative;
+  float: left;
+  padding: 0 .75em;
+}
+
+header a {
+  font-weight: bold;
+  color: #AAA;
+  text-decoration: none;
+  letter-spacing: .1em;
+}
+
+header a:hover {
+  color: #FFF;
+}
+
+header .breadcrumb {
+  position: absolute;
+  left: 0;
+}
+
+footer {
+  padding-top: .25em;
+  text-align: center;
+  font-size: 0.8em;
+  color: #AAA;
+}
+
+footer a {
+  position: absolute;
+  right: 0;
+  color: #AAA;
+  font-weight: bold;
+  text-decoration: none;
+  float: right;
+}
+
+footer a:hover {
+  color: #FFF;
+}
