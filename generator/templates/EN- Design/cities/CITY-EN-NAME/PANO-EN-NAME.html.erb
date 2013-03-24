@@ -4,7 +4,7 @@
    <meta charset=utf-8> 
    <meta http-equiv="content-language" content="de">   
    <meta name="viewport" content="height=device-height"> 
-   <meta name="copyright" content="Helmut Koelbach"> <% location_en = @pano.location.blank? ? ("") : ((@pano.location == "Botanischer Garten") ? ("Botanic Garden") : ((@pano.location == "Burg Vischering") ? ("Vischering Castle") : (@pano.location))) %> 
+   <meta name="copyright" content="Helmut Koelbach"> <% location_en = @pano.location.blank? ? ("") : ((@pano.location == "Botanischer Garten") ? ("Botanic Garden") : ((@pano.location == "Burg Vischering") ? ("Vischering Castle") : ((@pano.location == "Festung Ehrenbreitstein") ? ("Ehrenbreitstein Fortress") : (@pano.location)))) %>
    <meta name="description" content="<% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %> <%= pano_enname %> <%= location_en %> in <%= @city.en_name + " Germany" %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
     <link rel="stylesheet" href="../css/s-panorama.css"> 
     <link rel="stylesheet" href="../css/panosmall.css"> 
