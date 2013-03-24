@@ -79,6 +79,11 @@ class GeneratorController < ApplicationController
         end
       end
     end
+    
+    # compile sass and coffescript
+    logger.debug GeneratorHelper.processFiles 'sass', @out_path, 'sass -C "${file}":"${filename}.css"'
+    logger.debug GeneratorHelper.processFiles 'scss', @out_path, 'sass -C "${file}":"${filename}.css"'
+    logger.debug GeneratorHelper.processFiles 'coffee', @out_path, 'coffee -c "${file}"'
   end
 
   def choose

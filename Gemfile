@@ -9,6 +9,7 @@ gem 'rake'
 gem 'sqlite3'
 gem 'acts-as-taggable-on', '~>2.2.0'
 gem 'mongrel', '>= 1.2.0.pre2'
+gem 'sass'
 
 # Use unicorn as the web server
 # gem 'unicorn'

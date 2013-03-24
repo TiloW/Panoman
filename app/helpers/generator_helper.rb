@@ -2,6 +2,20 @@
 
 module GeneratorHelper
   require 'fileutils'
+  
+  def self.processFiles fileType, dir, singleCommand
+    result = Hash.new
+    Dir[dir + '/**/*.' + fileType].each do |file|
+      basename = File.basename file
+      command = singleCommand.gsub('${file}', basename).gsub('${filename}', basename.gsub('.' + fileType, ''))
+      wd = Dir.getwd()
+      Dir.chdir(File.dirname file)
+      result[command] = %x[#{command} 2>&1]
+      Dir.chdir(wd)
+      File.delete(file)
+    end
+    result
+  end
 
   def self.generate_from_erb file_in, file_out, binding
     # Verzeichnis erstellen (Windows)
