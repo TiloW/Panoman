@@ -23,17 +23,16 @@ $(function() {
   $(window).trigger('resize');
 
   $('#grid li').on('click', function(event) {
-    $('.overlay').fadeIn(function() {
-      new SimplePanorama({
-        elem: $('.panoContainer'),
-        imagePath: $(event.currentTarget).find('img').attr('src').replace('_3.jpg', '_5.jpg'),
-        modules: ['move_mousedown']
-      });
+    new SimplePanorama({
+      elem: $('.panoContainer'),
+      imagePath: $(event.currentTarget).find('img').attr('src').replace('_3.jpg', '_5.jpg'),
+      modules: ['move_mousedown']
     });
+    $('.overlay').fadeIn();
   });
 
-  $('.overlay').on('click', function(event) {
-    if(event.target === $('.overlay')[0]) {
+  $('.overlay, .panoWrapper').on('click', function(event) {
+    if(event.target === $('.overlay')[0] || event.target === $('.panoWrapper')[0]) {
       $('.overlay').stop();
       $('.overlay').hide();
       $('.panoContainer').empty();
