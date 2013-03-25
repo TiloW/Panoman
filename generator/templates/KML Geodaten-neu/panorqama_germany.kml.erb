@@ -25,11 +25,11 @@
              panos[pano.location] = [] if panos[pano.location].nil?
              panos[pano.district].push pano
           end   
-        %>    
+        %>
           
         <% panos.each do |district, panosInDistrict| %>
-          <% panosInDistrict.sort_by!{ |p| p.name.downcase } %>              
-              
+          <% panosInDistrict.sort_by!{ |p| p.name.downcase } %> 
+           
           <% unless district.blank? %>
             <Folder>
               <name><%= district %></name>              
