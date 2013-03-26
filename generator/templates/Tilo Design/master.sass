@@ -1,0 +1,226 @@
+html, body
+  margin: 0
+  padding: 0
+  background: url(bg.jpg) fixed 50% 0
+  
+html
+  min-height: 600px
+
+*
+  font-family: 'Roboto Condensed', sans-serif
+
+body
+  min-width: 500px
+  margin-bottom: 50px
+  margin-top: 150px
+  padding: 0
+
+
+#grid
+  margin: 0 2em
+  padding: .5em 0
+
+  .bottom
+    clear: both
+
+  ul
+    padding: 0 .5em
+    margin: 0
+    list-style: none
+
+    li
+      cursor: pointer
+      float: left
+      width: 300px
+      padding: 3px
+      height: 140px
+      background: rgba(255,255,255,.05)
+      margin: .2em
+      -webkit-transition: background-color 0s
+      
+      text-transform: uppercase
+      letter-spacing: .09em
+      color: #AAA
+      font-size: 0.7em
+
+      &:hover
+        background: rgba(255,255,255,.8)
+        -webkit-transition: background-color .35s
+        color: #000
+
+  div.wrapper
+    height: 125px
+    width: 100%
+    overflow: hidden
+    position: relative
+    margin-bottom: 0
+
+    img
+      border: none
+      height: 100%
+
+header, footer
+  background: url(bg.jpg) 50% 0
+  text-transform: lowercase
+  width: 100%
+  position: fixed
+  z-index: 2
+
+header
+  height: 150px
+  top: 0
+  text-align: center
+  border-bottom: 1px solid #AAA
+
+  img
+    margin: 2em auto
+    border: none
+
+  nav
+    float: right
+    position: relative
+    left: -50%
+    text-align: left
+
+    ul
+      list-style: none
+      position: relative
+      padding: 0
+      top: -16px
+      left: 50%
+
+      li
+        position: relative
+        float: left
+        padding: 0 .75em
+
+  a 
+    font-weight: bold
+    color: #AAA
+    text-decoration: none
+    letter-spacing: .1em
+
+    &:hover 
+      color: #FFF
+
+  .breadcrumb 
+    position: absolute
+    left: 0
+
+footer 
+  padding-top: .25em
+  text-align: center
+  font-size: 0.8em
+  color: #AAA
+  border-top: 1px solid #AAA
+  height: 50px
+  bottom: 0
+
+  a 
+    position: absolute
+    right: 0
+    color: #AAA
+    font-weight: bold
+    text-decoration: none
+    float: right
+
+    &:hover 
+      color: #FFF
+
+.overlay 
+  cursor: pointer
+  display: none
+  position: fixed
+  top: 0
+  left: 0
+  height: 100%
+  width: 100%
+  background: rgba(0,0,0,.7)
+  z-index: 999
+
+  .panoWrapper 
+    position: relative
+    top: 50%
+    margin-top: -250px
+    height: 500px
+    z-index: 1000
+    background: #000
+    box-shadow: 0 0 20px #000
+
+    .panoContainer 
+      cursor: default
+      background: red
+      width: 100%
+      height: 100%
+      background: url(loader.gif) no-repeat center center
+      
+    .panoPopup
+      cursor: default
+      width: 26px
+      height: 26px
+      overflow: hidden
+      background: #FFF
+      position: absolute
+      bottom: 75px
+      box-shadow: 1px 1px 3px #111
+      -webkit-transition: width .1s, height .1s
+      
+      &:hover
+        -webkit-transition: width .5s, height .5s
+        
+      &.controls
+        right: 50px
+        &:hover
+          width: 85px
+          height: 55px
+          
+      &.infos
+        right: 150px
+        &:hover
+          width: 200px
+          height: 400px
+          
+        .content
+          padding: 1em
+          display: block
+          overflow: hidden
+          height: 100%
+
+.sp-container 
+  margin: auto
+
+@mixin icon-image($x,$y)
+  $posX: 5px+26px*$x
+  $posY: 5px+26px*$y
+  background-position-x: -$posX 
+  background-position-y: -$posY
+  
+.icon
+  background: url(icons.png)
+  display: inline-block
+  height: 26px
+  width: 26px
+  opacity: .5
+  
+  &.gear
+    @include icon-image(13, 4)
+    
+  &.placemark
+    @include icon-image(12,7)
+    
+  &.chain
+    @include icon-image(19,3)
+    
+  &.text
+    @include icon-image(3,0)
+    
+  &.camera
+    @include icon-image(8,7)
+    
+  &.star
+    @include icon-image(6,19)
+    
+  &.link
+    cursor: pointer
+    &:hover
+      opacity: .8
