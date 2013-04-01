@@ -145,7 +145,7 @@ footer
     height: 500px
     z-index: 1000
     background: #000
-    box-shadow: 0 0 20px #000
+    box-shadow: 0 0 20px 10px #000
 
     .panoContainer 
       cursor: default
@@ -161,34 +161,39 @@ footer
       overflow: hidden
       background: #FFF
       position: absolute
-      bottom: 75px
+      bottom: 50px
       box-shadow: 1px 1px 3px #111
       -webkit-transition: width .1s, height .1s
       
-      &:hover
+      &:hover, &.locked
         -webkit-transition: width .5s, height .5s
+          
+      .lock
+        float: right
         
       &.controls
         right: 50px
-        &:hover
+        &:hover, &.locked
           width: 85px
           height: 55px
           
       &.infos
         right: 150px
-        &:hover
-          width: 200px
-          height: 400px
           
         .content
-          padding: 1em
+          padding: 10px
           display: block
           overflow: hidden
-          height: 100%
+          height: 340px
+          width: 180px
+          
+        &:hover, &.locked
+          width: 200px
+          height: 400px
 
 .sp-container 
   margin: auto
-
+  
 @mixin icon-image($x,$y)
   $posX: 5px+26px*$x
   $posY: 5px+26px*$y
@@ -220,7 +225,13 @@ footer
   &.star
     @include icon-image(6,19)
     
+  &.lock
+    @include icon-image(2,12)
+    
+  &.active
+    opacity: .8
+    
   &.link
     cursor: pointer
     &:hover
-      opacity: .8
+      opacity: .75

@@ -38,3 +38,6 @@ $ () ->
       $('.overlay').hide()
       $('.panoContainer').empty()
       
+  $('.panoPopup .lock').on 'click', (event) ->
+    $(event.currentTarget).parent().toggleClass 'locked'
+    $(event.currentTarget).toggleClass 'active'
