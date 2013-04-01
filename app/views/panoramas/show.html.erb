@@ -82,7 +82,8 @@
             row_data = [
               link.id,
               (link_to "Details", edit_internal_link_path(link.id), :class => 'details button'),
-              dest_pano.name,
+              (dest_pano.alt_name.blank? ? dest_pano.name : ""),
+              dest_pano.alt_name,
               link.path,
               link.alt_name,
               link.alt_en_name,
