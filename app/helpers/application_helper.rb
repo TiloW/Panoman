@@ -25,7 +25,7 @@ module ApplicationHelper
       elsif spot.is_a? ExternalLink
         generateHotspotFunctionCall(pano, objName, spot, '<span class="title">' + spot.name + '</span>', 'extern')
       else
-        generateHotspotFunctionCall(pano, objName, spot, "<a href=\"" + panorama_path(spot.get_dest) + "\"><span class=\"title\">#{spot.alt_name.blank? ? spot.get_dest.name : spot.alt_name}</span></a>", 'intern')
+        generateHotspotFunctionCall(pano, objName, spot, "<a href=\"" + panorama_path(spot.get_dest) + "\"><span class=\"title\">#{spot.alt_name.blank? ? (spot.get_dest.alt_name.blank? ? spot.get_dest.name : spot.get_dest.alt_name) : spot.alt_name}</span></a>", 'intern')
       end
     end
     
