@@ -183,7 +183,7 @@
      <a href="javascript:street()" onMouseOut="tauschstr(strname,stra)" onMouseOver="tauschstr(strname,stra2)"><img src="../navpic/strasse.gif" width="11" height="9" name="strname" title=" Straßennamen einblenden " alt="" border="0"  onMouseOver="status='Straßennamen einblenden';return true" onMouseUp="layeronoff('str','','show','tour','','hide','info','','hide','txt','','hide','gps','','hide')"></a>
     </div>  
 
-    <div class="button_right">
+    <div style="width: 23px;height: 10px; float:left;<%= @pano.get_latitude == "0.000000" ? "display:none;" : "" %>">
      <a href="#"><img src="../navpic/gps.gif" width="12" height="9" name="gpsname" title=" Standort anzeigen " alt="" border="0" onMouseOver="status='Standort anzeigen';return true" onMouseUp="layeronoff('gps','','show','tour','','hide','info','','hide','str','','hide')"></a>
     </div>
 
