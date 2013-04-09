@@ -14,10 +14,7 @@
 
   <div id="tab-fields" class="section">
     <%= form_for(@panorama) do |f| %>
-      <div class="field">
-        <%= f.label :published, "Veröffentlicht" %>
-        <%= f.check_box :published %>
-      </div>
+      <div class="field">      
       <div class="field">
         <%= f.label :name, "Name" %>
         <%= f.text_field :name, :size => 45 %>
@@ -59,14 +56,17 @@
          <%= render 'layouts/panorama' %>
       </div>
       
-      <div class="field">
         <%= f.label :latitude, "Breitengrad" %>
         <%= f.text_field :latitude, :value => f.object.get_latitude %>
       </div>
       <div class="field">
         <%= f.label :longitude, "Längengrad" %>
-        <%= f.text_field :longitude, :value => f.object.get_longitude %>
-      </div>
+        <%= f.text_field :longitude, :value => f.object.get_longitude %>      </div>
+      
+      <div class="field">
+        <%= f.label :published, "Veröffentlicht" %>
+        <%= f.check_box :published %>
+      </div>      
       <div class="field">
         <%= f.label :rotation, "Standard-Rotation" %>
         <%= f.number_field :rotation %>
