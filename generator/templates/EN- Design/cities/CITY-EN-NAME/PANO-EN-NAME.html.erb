@@ -203,7 +203,7 @@ google_language = "en";
      <a href="javascript:street()" onMouseOut="tauschstr(strname,stra)" onMouseOver="tauschstr(strname,stra2)"><img src="../navpic/strasse.gif" width="11" height="9" name="strname" title=" Fade in Streets " alt="" border="0" onMouseUp="layeronoff('str','','show','tour','','hide','info','','hide','txt','','hide','gps','','hide')"></a>
     </div>  
 
-    <div class="button_right">
+    <div style="width: 23px;height: 10px; float:left;<%= @pano.get_latitude == "0.000000" ? "display:none;" : "" %>">
      <a href="#"><img src="../navpic/gps.gif" width="12" height="9" name="gpsname" title=" Show Location " alt="" border="0" onMouseUp="layeronoff('gps','','show','tour','','hide','info','','hide','str','','hide')"></a>
     </div>
 
