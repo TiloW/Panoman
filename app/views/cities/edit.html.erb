@@ -22,11 +22,15 @@
         <%= f.text_field :en_name %>
       </div>
       <div class="field">
-        <%= f.label :html_content, "Zusätliches HTML"  %>
-        <%= f.text_area :html_content, :cols => 75 %>
+        <%= f.label :map_id, "G-Map City-ID" %>
+        <%= f.text_field :map_id %>
       </div>
       <div class="actions">
         <%= f.submit "Speichern" %>
+      </div>
+      <div class="field">
+        <%= f.label :html_content, "Zusätliches HTML"  %>
+        <%= f.text_area :html_content, :cols => 75 %>
       </div>
     <% end %>
   </div>

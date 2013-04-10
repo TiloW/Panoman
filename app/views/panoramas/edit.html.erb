@@ -40,6 +40,10 @@
         <%= f.text_field :district %>
       </div>
       <div class="field">
+        <%= f.label :map_id, "G-Map Pano-ID" %>
+        <%= f.text_field :map_id %>
+      </div>
+      <div class="field">
         <%= f.label :date_of_recording, "Datum der Aufnahme" %>
         <%= f.date_select :date_of_recording, {:order => [:month, :year], :discard_day => true, 
           :start_year => 2000, :end_year => Time.now.year} %>

@@ -7,7 +7,7 @@
    <meta name="copyright" content="Helmut Kölbach">    
    <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= @pano.location %> in <%= @city.name %> <%= @pano.district %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
     <link rel="stylesheet" href="../css/s-panorama.css"> 
-    <link rel="stylesheet" href="../css/panosmall.css"> 
+    <link rel="stylesheet" href="../css/pano_small.css"> 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="../js/s-panorama.js"></script>
     <script type="text/javascript" src="../js/j-panorama.js"></script>
@@ -184,7 +184,7 @@
     </div>  
 
     <div style="width: 23px;height: 10px; float:left;<%= @pano.get_latitude == "0.000000" ? "display:none;" : "" %>">
-     <a href="#"><img src="../navpic/gps.gif" width="12" height="9" name="gpsname" title=" Standort anzeigen " alt="" border="0" onMouseOver="status='Standort anzeigen';return true" onMouseUp="layeronoff('gps','','show','tour','','hide','info','','hide','str','','hide')"></a>
+     <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= pano.map_id %>" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../navpic/gps.gif" width="12" height="9" alt="" border="0" ></a>
     </div>
 
     <div class="button_right">
@@ -267,21 +267,22 @@
       </div>
      </div>
      <div class="allbuttons">
-      <div id="panoramaControls">
-        <ul>
+       <div id="hotsp">
+        <img src="../navpic/hotsp.jpg" width="17" height="17" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0"> 
+       </div>
+       <div id="panoramaControls">
+         <ul>
           <li><img id="pc-left-fast" src="../img/pc/left-fast.png" title="Schnell links drehen" alt="button_fast_left"/></li>
           <li><img id="pc-left" src="../img/pc/left.png" title="Links drehen" alt="button_left"/></li>
           <li><img id="pc-pause" src="../img/pc/pause.png" title="Stop" alt="button_stop"/></li>
           <li><img id="pc-right" src="../img/pc/right.png" title="Rechts drehen" alt="button_right"/></li>
           <li><img id="pc-right-fast" src="../img/pc/right-fast.png" title="Schnell rechts drehen" alt="button_fast_right"/></li>
         </ul>
-      </div>
-      <div class="buttons">
-        <div id="hotsp" style=" width:17px;  height:20px; margin:0 auto; padding-top:4px; <%= @pano.internal_links.empty? ? "display:none;" : "" %>">
-        <img src="../navpic/hotsp.jpg" width="17" height="17" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0"> 
-      </div>
-     </div>
-    </div>     
+       </div>
+       <div id="gps">
+        <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../navpic/gps_map.png" width="20" height="15" alt="" border="0"></a> 
+       </div>
+     </div>      
     <div style="clear: left;">
     </div>       
     </div>  
