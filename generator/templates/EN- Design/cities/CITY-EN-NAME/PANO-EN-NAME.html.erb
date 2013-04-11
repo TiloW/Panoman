@@ -149,16 +149,6 @@
       <%= hotspot.name %><br>
     <% end %> 
    </div> 
-  
-   <div id="gps" class="textlayer">
-    <span style="font: bold 9pt Arial, Helvetica, sans-serif; color: #FFFFFF;  letter-spacing: 2px">Camera <br>Location <br><%= pano.en_name.blank? ? (pano.name) : (pano.en_name) %> </span><br>
-    <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>            
-    
-    <%= @pano.get_latitude_degree %> N (<%= @pano.get_latitude 4 %>)<br>
-    <%= @pano.get_longitude_degree %> E (<%= @pano.get_longitude 4 %>)
-
-    <br> <br><a href="http://maps.google.de/maps?q=<%= @pano.latitude %>+<%= @pano.longitude %>" class="white" target="_blank">Show in <br>Google Maps <img src="../navpic/pfeil_rr.gif" width="8" height="8"  alt="" border="0"></a><br>(Green Marker)
-   </div>    
   </div>
 
    <div class="adv">
@@ -283,9 +273,10 @@ google_language = "en";
       </div>
       <div class="rahmen_wur"><a href="http://www.panorama-cities.net/html/st_kontakt_index.html" target="_blank" onMouseOver="status='Kontakt';return true"><img src="../navpic/tphk.gif" alt="" width="119" height="8" border="0"></a><img src="../navpic/pan.gif" alt="" width="26" height="12" border="0">
       </div>
-      <div class="rahmen_wum"> <%= pano.get_english_month %>
+      <div class="rahmen_wum"> <% unless @pano.date_of_recording.nil? %><%= pano.get_english_month %><% end %>
       </div>
-     </div><div class="allbuttons">
+     </div>
+     <div class="allbuttons">
        <div id="hotsp">
         <img src="../navpic/hotsp.jpg" width="17" height="17" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0"> 
        </div>

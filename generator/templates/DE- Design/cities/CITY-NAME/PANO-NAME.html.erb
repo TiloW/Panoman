@@ -133,8 +133,7 @@
     <br>Virtueller Rundgang <br>im Bild gelb markiert 
     <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>
     <br>Nächstes Panorama: <br>
-    <% 
-    counter = -1 
+    <% counter = -1 
     @pano.internal_links.each do |link|      
       dest = link.get_dest %>
       <% altnam = link.alt_name %>
@@ -149,16 +148,6 @@
       <%= hotspot.name %> <br>
     <% end %> 
    </div> 
-  
-   <div id="gps" class="textlayer">
-    <span style="font: bold 9pt Arial, Helvetica, sans-serif; color: #FFFFFF;  letter-spacing: 2px">Kamera-<br>Standort <br><%= @pano.name %> </span><br>
-    <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>            
-    
-    <%= @pano.get_latitude_degree %> N (<%= @pano.get_latitude 4 %>)<br>
-    <%= @pano.get_longitude_degree %> E (<%= @pano.get_longitude 4 %>)
-
-    <br> <br><a href="http://maps.google.de/maps?q=<%= @pano.latitude %>+<%= @pano.longitude %>" class="white" target="_blank">In Karte bei <br>Google Maps <br>anzeigen <img src="../navpic/pfeil_rr.gif" width="8" height="8"  alt="" border="0"></a><br>(Grüner Pfeil)
-   </div>    
   </div>
 
    <div class="adv">
@@ -184,7 +173,7 @@
     </div>  
 
     <div style="width: 23px;height: 10px; float:left;<%= @pano.get_latitude == "0.000000" ? "display:none;" : "" %>">
-     <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= pano.map_id %>" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../navpic/gps.gif" width="12" height="9" alt="" border="0" ></a>
+     <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../navpic/gps.gif" width="12" height="9" alt="" border="0" ></a>
     </div>
 
     <div class="button_right">
