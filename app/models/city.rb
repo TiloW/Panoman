@@ -5,7 +5,7 @@ class City < ActiveRecord::Base
   
   after_initialize :default_values
 
-  attr_accessible :name, :en_name, :html_content
+  attr_accessible :name, :en_name, :map_id, :html_content
   
   validates :name, :presence => true, :uniqueness => true
 

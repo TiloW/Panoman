@@ -19,6 +19,7 @@ class Panorama < ActiveRecord::Base
                   :tag_list,
                   :description,
                   :date_of_recording,
+                  :map_id,
                   :latitude,
                   :longitude,
                   :rotation,
