@@ -14,11 +14,10 @@
 
   <div id="tab-fields" class="section">
     <%= form_for(@panorama) do |f| %>
-      <div class="field">      
       <div class="field">
         <%= f.label :name, "Name" %>
         <%= f.text_field :name, :size => 45 %>
-      </div>
+      </div> 
       <div class="field">
         <%= f.label :alt_name, "Alternativer Name (Lang)" %>
         <%= f.text_field :alt_name, :size => 45 %>
@@ -40,10 +39,6 @@
         <%= f.text_field :district %>
       </div>
       <div class="field">
-        <%= f.label :map_id, "G-Map Pano-ID" %>
-        <%= f.text_field :map_id, :size => 65 %>
-      </div>
-      <div class="field">
         <%= f.label :date_of_recording, "Datum der Aufnahme" %>
         <%= f.date_select :date_of_recording, {:order => [:month, :year], :discard_day => true, 
           :start_year => 2000, :end_year => Time.now.year} %>
@@ -54,19 +49,24 @@
       </div>
       <div class="actions">
         <%= f.submit "Speichern" %>
-      </div>  
+      </div> 
       
       <div>
          <%= render 'layouts/panorama' %>
       </div>
       
+      <div class="field">      
         <%= f.label :latitude, "Breitengrad" %>
         <%= f.text_field :latitude, :value => f.object.get_latitude %>
       </div>
       <div class="field">
         <%= f.label :longitude, "Längengrad" %>
-        <%= f.text_field :longitude, :value => f.object.get_longitude %>      </div>
-      
+        <%= f.text_field :longitude, :value => f.object.get_longitude %>
+      </div>
+      <div class="field">
+        <%= f.label :map_id, "G-Map Pano-ID" %>
+        <%= f.text_field :map_id, :size => 45 %>
+      </div>      
       <div class="field">
         <%= f.label :published, "Veröffentlicht" %>
         <%= f.check_box :published %>
