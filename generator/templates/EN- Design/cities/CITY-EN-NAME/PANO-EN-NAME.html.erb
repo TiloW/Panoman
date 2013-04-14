@@ -194,7 +194,7 @@ google_language = "en";
     </div>  
 
     <div style="width: 23px;height: 10px; float:left;<%= @pano.get_latitude == "0.000000" ? "display:none;" : "" %>">
-     <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= pano.map_id %>" title=" Show Location on <%= @city.en_name %> Map "><img src="../navpic/gps.gif" width="12" height="9" alt="" border="0" ></a>
+     <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= pano.map_id %>" target="top" title=" Show Panorama Location on <%= @city.en_name %> Map "><img src="../navpic/gps.gif" width="12" height="9" alt="" border="0" ></a>
     </div>
 
     <div class="button_right">
@@ -290,7 +290,7 @@ google_language = "en";
         </ul>
        </div>
        <div id="gps">
-        <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" title="  Show Location on <%= @city.en_name %> Map "><img src="../navpic/gps_map.png" width="20" height="15" alt="" border="0"></a> 
+        <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" target="top" title="  Show Panorama Location on <%= @city.en_name %> Map "><img src="../navpic/gps_map.png" width="20" height="15" alt="" border="0"></a> 
        </div>
      </div>  
     <div style="clear: left;">
