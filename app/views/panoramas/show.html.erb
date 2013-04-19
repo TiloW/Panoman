@@ -121,7 +121,7 @@
         %>
         
     </div>
-        <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<% unless @city.map_id.nil? %><%= @city.map_id %><% end %><&msa=0&ll=<%= @panorama.get_latitude %>,<%= @panorama.get_longitude %>&spn=0.003000,0.003000&iwloc=<%= @panorama.map_id %>" target="top">Show on G-Map</a>
+        <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @panorama.city.map_id %>&msa=0&ll=<%= @panorama.get_latitude %>,<%= @panorama.get_longitude %>&spn=0.003000,0.003000&iwloc=<%= @panorama.map_id %>" target="top">Show on G-Map</a>
     </div>
     </div>
     <%= render 'layouts/panorama' %>
