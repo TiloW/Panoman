@@ -29,7 +29,8 @@ class Panorama < ActiveRecord::Base
                   :published,
                   :location,
                   :district,
-                  :priority
+                  :priority,
+                  :exclusive
                   
   validates :name, :presence => true, :uniqueness => {:scope => :city_id}
   
