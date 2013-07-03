@@ -1,0 +1,13 @@
+<%=
+  result = {}
+  Panorama.all.each do |p|
+    result[p.id] = {
+      name: p.name,
+      city: {
+        id: p.city.id,
+        name: p.city.name
+      }
+    }
+  end
+  result.to_json
+%>

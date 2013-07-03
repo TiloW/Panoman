@@ -1,0 +1,15 @@
+<%=
+  result = {}
+  @cities.each do |c| 
+    p = c.panoramas.sort_by{ |p| p.priority }.first
+    result[c.id] = {
+      name: c.name,
+      thumb: 'http://panorama-cities.net/' + c.get_filename + '/panoramas/' + p.get_filename + '_3.jpg',
+      position: {
+        latitude:  c.panoramas.keep_if{ |p| p.latitude }.map{ |p| p.latitude }.reduce(0, :+) / c.panoramas.keep_if{ |p| p.latitude }.size,
+        longitude:  c.panoramas.keep_if{ |p| p.longitude }.map{ |p| p.longitude }.reduce(0, :+) / c.panoramas.keep_if{ |p| p.longitude }.size
+      }
+    }
+  end
+  result.to_json
+%>

@@ -1,0 +1,28 @@
+Übersicht-Layout anpassen:
+
+Wieviele Bilder kann ein smartphone oder tablet anzeigen?
+Wie funktioniert das bei Google-Bilder? Wird immer nur der Teil geladen, der gerade sichtbar ist?
+Alternative thumbs für schwache tablets?
+
+Centerwerte beim Generieren der thumbs berücksichtigen
+Leerschritt vor Motiv-Untertitel
+
+A-Z Auflistung aller Panos einer Stadt als Textlinks
+sub-menu A-Z etwas tiefer + ABC-Reihenfolge umkehren
+
+Städte-Links nach links
+
+Suchfeld
+
+wo sind Linien header und footer definiert
+
+Layout noch nicht optimal bei Fensterverkleinerung
+
+Links zu panorama-Dateien damit diese bei Google gefunden werden - keine overlays!
+
+_______________________
+
+simple-pano:
+
+Straßen 0,0,3000
+Striche im Safari

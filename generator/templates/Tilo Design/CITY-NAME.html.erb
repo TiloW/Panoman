@@ -16,16 +16,16 @@
     <a href="#"><img src="logo.png" alt="Stadtpanoramen" /></a><br />
     <nav>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Städte</a></li>
-        <li><a href="#">Kontakt</a></li>
+        <li><a href="#">Thumbs</a></li>
+        <li><a href="#">Map</a></li>
+        <li><a href="#">Liste</a></li>
       </ul>
     </nav>
-    <span class="breadcrumb"><a href="#">Berlin</a></span>
+    <h1 class="cityTitle"><%= @city.name %></h1>
   </header>
   <div id="grid">
     <ul>
-      <% @city.panoramas.sort_by{ |p| p.priority }.each do |pano| %>
+      <% @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority }.each do |pano| %>
         <li 
           data-repeative="<%= pano.repeative %>" 
           data-imagePath="<%= imgRoot %>/<%= @city.get_filename %>/<%= pano.get_filename %>_5.jpg"
@@ -50,7 +50,7 @@
   </div>
   <footer>
     <span class="copy">All rights reserved to Helmut Kölbach</span>
-    <a href="#">Impressum</a>
+    <a href="#">Kontakt</a>
   </footer>
   <div class="overlay">
     <div class="panoWrapper">

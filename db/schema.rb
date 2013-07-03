@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410172702) do
+ActiveRecord::Schema.define(:version => 20130703141429) do
 
   create_table "cities", :force => true do |t|
     t.text     "en_name"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20130410172702) do
     t.integer  "priority"
     t.boolean  "published"
     t.string   "map_id"
+    t.boolean  "exclusive"
   end
 
   create_table "taggings", :force => true do |t|

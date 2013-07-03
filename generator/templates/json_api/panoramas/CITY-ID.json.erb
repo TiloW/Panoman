@@ -1,0 +1,30 @@
+<%=
+  FACTOR = 5/3.5
+  result = {}
+  @city.panoramas.each do |p| 
+    result[p.id] = {
+      name: p.name,
+      thumb: 'http://panorama-cities.net/' + @city.get_filename + '/panoramas/' + p.get_filename + '_3.jpg',
+      rotation: p.rotation,
+      repeative: p.repeative,
+      priority: p.priority,
+      image: 'http://panorama-cities.net/' + @city.get_filename + '/panoramas/' + p.get_filename + '_5.jpg',
+      date: p.date_of_recording,
+      position: {
+        latitude:  p.latitude,
+        longitude:  p.longitude
+      },
+      links: []
+    }
+    p.internal_links.each do |l|
+      path = l.path.split(/,/).map{ |x| x.strip.to_i * FACTOR }
+      result[p.id][:links].push({
+        panorama_id: l.destination_id,
+        x: path[0],
+        y: path[1],
+        r: path[2]
+      })
+    end
+  end
+  result.to_json
+%>
