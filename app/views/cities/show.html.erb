@@ -43,7 +43,7 @@
     <% end %>
     
     <%= 
-      generate_table(nil, ["Bild", "Details", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "360°", "Datum", "imNetz", "Löschen"], @panoramas) do |pano|
+      generate_table(nil, ["Bild", "Details", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "360°", "Datum", "imNetz", "Exkl", "Löschen"], @panoramas) do |pano|
         row_data = [
           pano.id,
           "<img title=\"Pfad: #{FileHelper.get_default_thumbnail_location pano}\"" +
@@ -56,6 +56,7 @@
           generate_chkbtn(:panoramas, pano.id, :repeative, pano.repeative),
           pano.date_of_recording.nil? ? "[Unbekannt]" : (l pano.date_of_recording, :format => :month),
           generate_chkbtn(:panoramas, pano.id, :published, pano.published),
+          generate_chkbtn(:panoramas, pano.id, :exclusive, pano.exclusive),
             (link_to "Löschen", pano, :remote => true, :class => 'delete button', :method => 'delete',
                                       :confirm => "Panorama '#{pano.name}' wirklich löschen?")
         ]
