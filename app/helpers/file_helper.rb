@@ -30,6 +30,19 @@ module FileHelper
     end
   end
   
+  def self.get_big_thumb_location pano
+    (get_base_path pano) + "_" + to_filename(pano.city.name) + ".jpg"
+  end  
+    
+  def self.get_big_thumb pano
+    result = get_big_thumb_location pano
+    if File.exists?(Dir.getwd + "/public" + result)
+      result
+    else
+      "/images/error.png"
+    end
+  end
+  
   def self.get_image pano
     (get_base_path pano) + "_3.jpg"
   end
