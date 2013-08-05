@@ -43,11 +43,13 @@
     <% end %>
     
     <%= 
-      generate_table(nil, ["Bild", "Details", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "360°", "Datum", "imNetz", "Exkl", "Löschen"], @panoramas) do |pano|
+      generate_table(nil, ["Bild", "Vorschau", "Details", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "360°", "Datum", "imNetz", "Exkl", "Löschen"], @panoramas) do |pano|
         row_data = [
           pano.id,
           "<img title=\"Pfad: #{FileHelper.get_default_thumbnail_location pano}\"" +
               "class=\"thumbnail\" src=\"#{FileHelper.get_thumbnail pano}\" alt=\"nicht gefunden\" />",
+          "<img title=\"Pfad: #{FileHelper.get_big_thumb_location pano}\"" +
+              "class=\"thumbnail\" src=\"#{FileHelper.get_big_thumb pano}\" alt=\"nicht gefunden\" />",
           (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
           (link_to pano.name, panorama_path(pano.id)),
            pano.alt_name,
