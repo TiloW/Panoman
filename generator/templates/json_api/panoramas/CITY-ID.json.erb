@@ -1,14 +1,15 @@
 <%=
   FACTOR = 5/3.5
   result = {}
-  @city.panoramas.each do |p| 
+  @city.panoramas.keep_if{ |p| p.published && !p.exclusive }.each do |p| 
+    cityPath = 'http://panorama-cities.net/' + FileHelper.to_filename(@city.en_name && @city.en_name != "" ? @city.en_name : @city.name ) + '/panoramas/'
     result[p.id] = {
       name: p.name,
-      thumb: 'http://panorama-cities.net/' + @city.get_filename + '/panoramas/' + p.get_filename + '_3.jpg',
+      thumb:  cityPath + p.get_filename + '_3.jpg',
       rotation: p.rotation,
       repeative: p.repeative,
       priority: p.priority,
-      image: 'http://panorama-cities.net/' + @city.get_filename + '/panoramas/' + p.get_filename + '_5.jpg',
+      image: cityPath + p.get_filename + '_5.jpg',
       date: p.date_of_recording,
       position: {
         latitude:  p.latitude,
