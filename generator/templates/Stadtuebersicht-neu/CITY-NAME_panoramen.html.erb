@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head><% imgRoot = "../../../public/panoramas" %>
+  <meta charset=utf-8 />
+  <title><%= @city.name %> Panoramen </title>
+  <meta http-equiv="content-language" content="de">
+  <meta name="description" content="360&deg; Stadtpanoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen im Panoramaformat">
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+  <link href='simple-panorama.css' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" media="screen" href="master.css" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="simple-panorama.js"></script>
+  <script type="text/javascript" src="master.js"></script>
+</head>
+<body>
+  <header>
+      <a href="http://www.stadtpanoramen.de/"><img src="logo.png" alt="Stadtpanoramen"></a> 
+    <nav>  
+      <a class="city-top">Städte </a><br>
+          <ul>     
+            <li><a href="http://www.stadtpanoramen.de/berlin/">Berlin </a></li>
+            <li><a href="http://www.stadtpanoramen.de/bielefeld/">Bielefeld </a></li>
+            <li><a href="http://www.stadtpanoramen.de/bochum/">Bochum </a></li>
+            <li><a href="http://www.stadtpanoramen.de/bonn/">Bonn </a></li>
+            <li><a href="http://www.stadtpanoramen.de/braunschweig/">Braunschweig </a></li>
+            <li><a href="http://www.stadtpanoramen.de/bremen/">Bremen </a></li>
+            <li><a href="http://www.stadtpanoramen.de/bremerhaven/">Bremerhaven </a></li>
+            <li><a href="http://www.stadtpanoramen.de/darmstadt/">Darmstadt </a></li>
+            <li><a href="http://www.stadtpanoramen.de/dortmund/">Dortmund </a></li>
+            <li><a href="http://www.stadtpanoramen.de/dresden/">Dresden </a></li>
+            <li><a href="http://www.stadtpanoramen.de/duesseldorf/">Düsseldorf </a></li>
+            <li><a href="http://www.stadtpanoramen.de/duisburg/">Duisburg </a></li>
+            <li><a href="http://www.stadtpanoramen.de/erfurt/">Erfurt </a></li>
+            <li><a href="http://www.stadtpanoramen.de/essen/">Essen </a></li>
+            <li><a href="http://www.stadtpanoramen.de/frankfurt/">Frankfurt </a></li>
+            <li><a href="http://www.stadtpanoramen.de/freiburg/">Freiburg </a></li>
+            <li><a href="http://www.stadtpanoramen.de/goslar/">Goslar </a></li>
+            <li><a href="http://www.stadtpanoramen.de/hamburg/">Hamburg </a></li>
+            <li><a href="http://www.stadtpanoramen.de/hannover/">Hannover </a></li>
+            <li><a href="http://www.stadtpanoramen.de/heidelberg/">Heidelberg </a></li>
+            <li><a href="http://www.stadtpanoramen.de/hildesheim/">Hildesheim </a></li>
+            <li><a href="http://www.stadtpanoramen.de/karlsruhe/">Karlsruhe </a></li>
+            <li><a href="http://www.stadtpanoramen.de/kassel/">Kassel </a></li>
+            <li><a href="http://www.stadtpanoramen.de/kiel/">Kiel </a></li>
+            <li><a href="http://www.stadtpanoramen.de/koblenz/">Koblenz </a></li>
+            <li><a href="http://www.stadtpanoramen.de/koeln/">Köln </a></li>
+            <li><a href="http://www.stadtpanoramen.de/leipzig/">Leipzig </a></li>
+            <li><a href="http://www.stadtpanoramen.de/luebeck/">Lübeck </a></li>
+            <li><a href="http://www.stadtpanoramen.de/mainz/">Mainz </a></li>
+            <li><a href="http://www.stadtpanoramen.de/mannheim/">Mannheim </a></li>
+            <li><a href="http://www.stadtpanoramen.de/minden/">Minden </a></li>
+            <li><a href="http://www.stadtpanoramen.de/muenchen/">München </a></li>
+            <li><a href="http://www.stadtpanoramen.de/muenster/">Münster </a></li>
+            <li><a href="http://www.stadtpanoramen.de/nuernberg/">Nürnberg </a></li>
+            <li><a href="http://www.stadtpanoramen.de/oldenburg/">Oldenburg </a></li>
+            <li><a href="http://www.stadtpanoramen.de/osnabrueck/">Osnabrück </a></li>
+            <li><a href="http://www.stadtpanoramen.de/rostock/">Rostock </a></li>
+            <li><a href="http://www.stadtpanoramen.de/rothenburg_ob_der_tauber/">Rothenburg o.d.T.</a></li>
+            <li><a href="http://www.stadtpanoramen.de/schwerin/">Schwerin </a></li>
+            <li><a href="http://www.stadtpanoramen.de/siegen/">Siegen </a></li>
+            <li><a href="http://www.stadtpanoramen.de/stuttgart/">Stuttgart </a></li>
+            <li><a href="http://www.stadtpanoramen.de/trier/">Trier </a></li>
+            <li><a href="http://www.stadtpanoramen.de/tuebingen/">Tübingen </a></li>
+            <li><a href="http://www.stadtpanoramen.de/wernigerode/">Wernigerode </a></li>
+            <li><a href="http://www.stadtpanoramen.de/wiesbaden/">Wiesbaden </a></li>
+            <li><a href="http://www.stadtpanoramen.de/wismar/">Wismar </a></li>
+            <li><a href="http://www.stadtpanoramen.de/wuerzburg/">Würzburg </a></li>
+            <li style="padding-right: 200px;"> &nbsp;</li>
+            <li><a href="http://www.stadtpanoramen.de/muensterland/" class="msland">Münsterland </a></li>
+            <li><a href="http://www.stadtpanoramen.de/ahaus/">Ahaus </a></li>
+            <li><a href="http://www.stadtpanoramen.de/ahlen/">Ahlen </a></li>
+            <li><a href="http://www.stadtpanoramen.de/coesfeld/">Coesfeld </a></li>
+            <li><a href="http://www.stadtpanoramen.de/emsdetten/">Emsdetten </a></li>
+            <li><a href="http://www.stadtpanoramen.de/greven/">Greven </a></li>
+            <li><a href="http://www.stadtpanoramen.de/wernigerode/">Horstmar </a></li>
+            <li><a href="http://www.stadtpanoramen.de/ibbenbueren/">Ibbenbüren </a></li>
+            <li><a href="http://www.stadtpanoramen.de/lengerich/">Lengerich </a></li>
+            <li><a href="http://www.stadtpanoramen.de/luedinghausen/">Lüdinghausen </a></li>
+            <li><a href="http://www.stadtpanoramen.de/rheine/">Rheine </a></li>
+            <li><a href="http://www.stadtpanoramen.de/steinfurt/">Steinfurt </a></li>
+            <li><a href="http://www.stadtpanoramen.de/tecklenburg/">Tecklenburg </a></li>
+            <li><a href="http://www.stadtpanoramen.de/telgte/">Telgte </a></li>
+            <li><a href="http://www.stadtpanoramen.de/warendorf/">Warendorf </a></li>
+        </ul>  
+    </nav>         
+        <h1><%= @city.name %> </h1>  
+      <div class="navtop">
+        <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+      </div>
+  </header>
+  <div id="content"> 
+      <div id="menu">  
+        <h2>Panoramen <%= @city.name %> A-Z</h2>
+          <ul><% @city.panoramas.keep_if{ |p| p.published }.each do |pano| %>
+            <li><a href="<%= pano.get_filename %>.html"><%= pano.name %> </a></li><% end %>
+        </ul>
+      </div>     
+    <div id="box">
+  
+      <script>
+      (function() {
+        var cx = '014086874790278901250:trd61z8lvpu';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+    </script>
+    <gcse:search></gcse:search>
+      <div class="adv">
+      <!--
+      Anzeige <br> <a href="" target="_blank">Hotels in <%= @city.name %> </a>
+      //-->
+      </div>  
+      <script type="text/javascript"><!--
+      google_ad_client = "pub-2069005959740847";
+      /* D-B-SÜ1-o */
+      google_ad_slot = "7897341799";
+      google_ad_width = 125;
+      google_ad_height = 125;
+      //-->
+      </script>
+      <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+    </div> 
+         
+    <div id="grid">
+      <ul> <% @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority }.each do |pano| %>      
+        <li>
+          <div class="wrapper">
+            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html"><img src="<%= imgRoot %>/<%= @city.get_filename %>/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg"></a>
+          </div><%= pano.name %>
+        </li><% end %>
+      </ul>
+    </div>
+      
+    <div class="more">&nbsp;</a>
+    </div>
+    <div class="gmap">
+       Panorama-Aufnahmestandorte <%= @city.name %>
+       <br>
+       <iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" src="http://maps.google.de/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&amp;msa=0&amp;ie=UTF8&amp;t=m&amp;z=14&amp;output=embed"></iframe><br /><a href="http://maps.google.de/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&amp;msa=0&amp;ie=UTF8&amp;t=m&amp;z=14&amp;source=embed" target="_blank"><%= @city.name %> Panorama-Karte </a> &nbsp;(Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen)
+    </div> 
+    <div id="tip"><br>
+      <br>
+        <%= @city.linktips %>
+    </div> 
+      <br>
+    </div> 
+    <div class="adv-down">   
+      <script type="text/javascript"><!--
+      google_ad_client = "ca-pub-2069005959740847";
+      /* D-B-SÜ1-u */
+      google_ad_slot = "8529081997";
+      google_ad_width = 120;
+      google_ad_height = 240;
+      //-->
+      </script>
+      <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+    </div>
+  </div>
+  <footer>
+    <span class="copy"> &copy; Helmut Kölbach</span> 
+    <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
+    <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
+  </footer>
+</body>
+</html>
