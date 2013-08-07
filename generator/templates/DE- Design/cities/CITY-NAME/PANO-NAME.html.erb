@@ -15,31 +15,60 @@
     <!--   
       $(function() {
         pano = new SimplePanorama({
-         'elem': $('#pano'), 
+         'selector': '#pano',
          'imagePath': '../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_3.jpg', 
          'modules': ['move_mousedown', 'move_swipe'],      
          'initialPos':<%= @pano.initial_center %>,
-         'repeative': <%= @pano.repeative %>
-        });        
-        pano.targetSpeed = 0.05;
-        
-        $("#hotsp").click(function() {
-          <% @pano.internal_links.each do |link| 
-            dest = link.get_dest%>          
-            <% if link.is_circle %>
-              pano.createCircleHotspot(
-                '<a href="<%= link.get_dest.get_filename %>.html"><% altnam = link.alt_name %><%= altnam.blank? ? dest.name : altnam  %></a>', 
-                <%= link.path %>
-              );
-            <% else %>
-              pano.createRectHotspot(
-                '<a href="<%= link.get_dest.get_filename %>.html"></a>', 
-                <%= link.get_xywh %>
-              );
+         'repeative': <%= @pano.repeative %>,
+         'callback': function() {
+            <%
+              links = @pano.internal_links
+              links.sort_by! { |l| l.get_area }
+              links.each do |link| 
+                dest = link.get_dest       
+                if link.is_circle
+            %>
+                pano.createCircleHotspot(
+                  "<a href='<%= link.get_dest.get_filename %>.html'><span class='title'><% altnam = link.alt_name %><%= altnam.blank? ? dest.name : altnam  %></span></a>", 
+                  <%= link.path %>,"intern"
+                );
+              <% else %>
+                pano.createRectHotspot(
+                  "<a href='<%= link.get_dest.get_filename %>.html'></a>", 
+                  <%= link.get_xywh %>
+                );
+              <% end %>
             <% end %>
-          <% end %>
-        });
-      });
+                pano.showHotspots("intern",visible = true); 
+                    
+                $('#hotsp_hide').click(function() { 
+                pano.showHotspots("intern",visible = false);
+                $('#hotsp').show();       
+                $('#hotsp_hide').hide();  
+                }); 
+                
+                var spotcss = $('html.no-touch .sp-hotspot');
+                $('#hotsp').click(function() { 
+                pano.showHotspots("intern",visible = true);
+                spotcss.css({'border-width': '2px'}); 
+                spotcss.css({'border-color': 'rgba(255,255,0,1)'});
+                $('#hotsp').hide();       
+                $('#hotsp_hide').show();  
+                }); 
+                
+                var infoElem = $('#linkInfo');
+                $('#pano .sp-hotspot').on('mouseenter', function(event) {
+                  infoElem.text($(event.target).find('.title').text());
+                  infoElem.css({'opacity': 1});
+                });
+
+                $('#pano .sp-hotspot').on('mouseleave', function() {
+                  infoElem.css({'opacity': 0});
+            });
+           }
+        });      
+        pano.targetSpeed = 0.05;
+        });  
      //-->
     </script>
     <script>
@@ -47,11 +76,10 @@
     $(document).ready(function () { 
       if(navigator.javaEnabled())
       {
-        $('#nojava').hide();
+        $('#javapano').show();
       }
       else
       {
-        $('#javapano').hide();
         $('#nojava').show();
         }
     });  
@@ -85,7 +113,8 @@
    <title><%= panoname %> <%= @pano.location %> <%= @city.name %> - StadtPanorama</title>
   </head>
 <body onUnload="panostop()">
- <div id="all" class="all">   
+ <div id="all" class="all">     
+   <noscript style="color:#ff6666;font-size:20pt"><br>Das Panorama "<%= panoname %>" benötigt <a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://ecosia.org/search.php?q=javascript+aktivieren">Javascript-Aktivierung!</a> </noscript> 
   <div id="javapano" class="javapano">  
    <div class="titletext">    
       <%= panoname %> <%= @pano.location %> <br><%= @city.name %> <%= @pano.district %>
@@ -244,9 +273,9 @@
       <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="15">        
       <%= panoname %> <%= @pano.location %> <%= @city.name %> <%= @pano.district %>
       </div>
-     </div>     
-     <div id="pano">
-     </div>   
+     </div>
+     <div id="pano"> </div>   
+     <div id="linkInfo"> </div>
      <div class="rahmen_wu">
       <div class="rahmen_wul"><img src="../navpic/pan.gif" alt="" width="20" height="14"><a href="javascript:history.back()" onMouseOut="panogo();tauschpf(pfname,Bild5)" onMouseOver="panostop();tauschpf(pfname,Bild6);status='zur&uuml;ck';return true"><img src="../navpic/pfeil_r.gif" width="8" height="8" name="pfname" alt="" border="0"><img src="../navpic/pan.gif" alt="" width="5" height="2" border="0"><img src="../navpic/tminib.gif" width="86" height="10" alt="" border="0"></a>
       </div>
@@ -257,7 +286,10 @@
      </div>
      <div class="allbuttons">
        <div id="hotsp">
-        <img src="../navpic/hotsp.jpg" width="17" height="17" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0"> 
+         <img src="../navpic/hotsp.jpg" width="17" height="17" title=" Panorama-Tour einblenden " alt="" border="0">
+       </div>
+       <div id="hotsp_hide">
+         <img src="../navpic/hotsp_hide.jpg" width="17" height="17" title=" Panorama-Tour ausblenden " alt="" border="0">
        </div>
        <div id="panoramaControls">
          <ul>

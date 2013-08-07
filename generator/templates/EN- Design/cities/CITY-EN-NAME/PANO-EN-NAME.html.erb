@@ -15,31 +15,60 @@
     <!--   
       $(function() {
         pano = new SimplePanorama({
-         'elem': $('#pano'), 
-         'imagePath': 'panoramas/<%= @pano.get_filename %>_3.jpg', 
+         'selector': '#pano',
+         'imagePath': '../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_3.jpg', 
          'modules': ['move_mousedown', 'move_swipe'],      
          'initialPos':<%= @pano.initial_center %>,
-         'repeative': <%= @pano.repeative %>
-        });        
-        pano.targetSpeed = 0.05;
-        
-        $("#hotsp").click(function() {
-          <% @pano.internal_links.each do |link| 
-            dest = link.get_dest%>          
-            <% if link.is_circle %>
+         'repeative': <%= @pano.repeative %>,
+         'callback': function() {
+            <%
+              links = @pano.internal_links
+              links.sort_by! { |l| l.get_area }
+              links.each do |link| 
+                dest = link.get_dest       
+                if link.is_circle
+            %>
               pano.createCircleHotspot(
-                '<a href="<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html"><%= link.alt_en_name.blank? ? (dest.en_name.blank? ? (dest.name):(dest.en_name)) : (link.alt_en_name) %></a>', 
-                <%= link.path %>
+                "<a href='<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html'><span class='title'><%= link.alt_en_name.blank? ? (dest.en_name.blank? ? (dest.name):(dest.en_name)) : (link.alt_en_name) %></span></a>", 
+                <%= link.path %>,"intern"
               );
             <% else %>
               pano.createRectHotspot(
-                '<a href="<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html"></a>', 
+                "<a href='<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html'></a>", 
                 <%= link.get_xywh %>
               );
             <% end %>
           <% end %>
-        });
-      });
+                pano.showHotspots("intern",visible = true); 
+                    
+                $('#hotsp_hide').click(function() { 
+                pano.showHotspots("intern",visible = false);
+                $('#hotsp').show();       
+                $('#hotsp_hide').hide();  
+                }); 
+                
+                var spotcss = $('html.no-touch .sp-hotspot');
+                $('#hotsp').click(function() { 
+                pano.showHotspots("intern",visible = true);
+                spotcss.css({'border-width': '2px'}); 
+                spotcss.css({'border-color': 'rgba(255,255,0,1)'});
+                $('#hotsp').hide();       
+                $('#hotsp_hide').show();  
+                }); 
+                
+                var infoElem = $('#linkInfo');
+                $('#pano .sp-hotspot').on('mouseenter', function(event) {
+                  infoElem.text($(event.target).find('.title').text());
+                  infoElem.css({'opacity': 1});
+                });
+
+                $('#pano .sp-hotspot').on('mouseleave', function() {
+                  infoElem.css({'opacity': 0});
+            });
+           }
+        });      
+        pano.targetSpeed = 0.05;
+        });  
      //-->
     </script>
     <script>
@@ -47,11 +76,10 @@
     $(document).ready(function () { 
       if(navigator.javaEnabled())
       {
-        $('#nojava').hide();
+        $('#javapano').show();
       }
       else
       {
-        $('#javapano').hide();
         $('#nojava').show();
         }
     });  
@@ -88,6 +116,7 @@
   </head>
 <body onUnload="panostop()">
  <div id="all" class="all">   
+   <noscript style="color:#ff6666;font-size:20pt"><br><a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://ecosia.org/search.php?q=enable+javascript">Please enable Javascript</a> to view the Panorama! "<%= pano_enname %>"! </noscript> 
   <div id="javapano" class="javapano">  
    <div class="titletext">                   
       <%= pano_enname %> <br><%= location_en %> <%= @pano.district %> <%=@city.en_name %> Germany   
@@ -266,8 +295,8 @@ google_language = "en";
       <%= pano_enname + " " + location_en + " " + @city.en_name + " Germany" %>    
       </div>
      </div>     
-     <div id="pano">
-     </div>   
+     <div id="pano"> </div>   
+     <div id="linkInfo"> </div>
      <div class="rahmen_wu">
       <div class="rahmen_wul"><img src="../navpic/pan.gif" alt="" width="20" height="14"><a href="javascript:history.back()" onMouseOut="panogo();tauschpf(pfname,Bild5)" onMouseOver="panostop();tauschpf(pfname,Bild6);status='zur&uuml;ck';return true"><img src="../navpic/pfeil_r.gif" width="8" height="8" name="pfname" alt="" border="0"><img src="../navpic/pan.gif" alt="" width="5" height="2" border="0"><img src="../navpic/tminib.gif" width="86" height="10" alt="" border="0"></a>
       </div>
@@ -278,7 +307,10 @@ google_language = "en";
      </div>
      <div class="allbuttons">
        <div id="hotsp">
-        <img src="../navpic/hotsp.jpg" width="17" height="17" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0"> 
+        <img src="../navpic/hotsp.jpg" width="17" height="17" title=" Show Panorama Tour Spots " alt="" border="0">
+       </div>
+       <div id="hotsp_hide">
+        <img src="../navpic/hotsp_hide.jpg" width="17" height="17" title=" Hide Panorama Tour Spots " alt="" border="0">
        </div>
        <div id="panoramaControls">
         <ul>
