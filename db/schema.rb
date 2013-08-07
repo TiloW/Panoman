@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703141429) do
+ActiveRecord::Schema.define(:version => 20130806204421) do
 
   create_table "cities", :force => true do |t|
     t.text     "en_name"
@@ -20,6 +20,19 @@ ActiveRecord::Schema.define(:version => 20130703141429) do
     t.datetime "updated_at"
     t.string   "html_content"
     t.string   "map_id"
+    t.string   "linktips"
+    t.string   "map_coord"
+    t.string   "ad_first_page_top"
+    t.string   "ad_more_first_page_top"
+    t.string   "ad_first_page_down"
+    t.string   "ad_sec_page_top"
+    t.string   "ad_sec_page_down"
+    t.string   "en_ad_first_page_top"
+    t.string   "en_ad_more_first_page_top"
+    t.string   "en_ad_first_page_down"
+    t.string   "en_ad_sec_page_top"
+    t.string   "en_ad_sec_page_down"
+    t.boolean  "quiz"
   end
 
   create_table "external_links", :force => true do |t|

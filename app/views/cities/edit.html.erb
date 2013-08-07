@@ -25,12 +25,64 @@
         <%= f.label :map_id, "G-Map City-ID" %>
         <%= f.text_field :map_id %>
       </div>
+      <div class="field">
+        <%= f.label :map_coord, "G-Map Koordinaten" %>
+        <%= f.text_field :map_coord %>
+      </div>
+      <div class="field">
+        <%= f.label :quiz, "Quiz-Link" %>
+        <%= f.check_box :quiz %>
+      </div>
+      <div class="field">
+        <%= f.label :linktipps, "Linktips"  %>
+        <%= f.text_area :linktips, :cols => 199 %>
+      </div>
+      <div class="field">
+        <%= f.label :ad_first_page_top, "Webung Stadtuebersicht top"  %>
+        <%= f.text_area :ad_first_page_top, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :ad_more_first_page_top, "Weitere Webung Stadtuebersicht top"  %>
+        <%= f.text_area :ad_more_first_page_top, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :ad_first_page_down, "Webung Stadtuebersicht unten"  %>
+        <%= f.text_area :ad_first_page_down, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :ad_sec_page_top, "Webung 2.Stadtuebersicht top"  %>
+        <%= f.text_area :ad_sec_page_top, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :ad_sec_page_down, "Webung 2.Stadtuebersicht unten"  %>
+        <%= f.text_area :ad_sec_page_down, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :html_content, "Werbung Pano-Seiten"  %>
+        <%= f.text_area :html_content, :cols => 75, :rows => 12 %>
+      </div>
       <div class="actions">
         <%= f.submit "Speichern" %>
       </div>
       <div class="field">
-        <%= f.label :html_content, "Zusätliches HTML"  %>
-        <%= f.text_area :html_content, :cols => 75 %>
+        <%= f.label :en_ad_first_page_top, "En-Webung Stadtuebersicht top"  %>
+        <%= f.text_area :ad_first_page_top, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :en_ad_more_first_page_top, "En-Weitere Webung Stadtuebersicht top"  %>
+        <%= f.text_area :ad_more_first_page_top, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :en_ad_first_page_down, "En-Webung Stadtuebersicht unten"  %>
+        <%= f.text_area :ad_first_page_down, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :en_ad_sec_page_top, "En-Webung 2.Stadtuebersicht top"  %>
+        <%= f.text_area :ad_sec_page_top, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :en_ad_sec_page_down, "En-Webung 2.Stadtuebersicht unten"  %>
+        <%= f.text_area :ad_sec_page_down, :cols => 75, :rows => 12 %>
       </div>
     <% end %>
   </div>
