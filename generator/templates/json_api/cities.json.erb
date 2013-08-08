@@ -1,15 +1,20 @@
 <%=
   result = {}
   @cities.each do |c| 
-    p = c.panoramas.sort_by{ |p| p.priority }.first
-    result[c.id] = {
-      name: c.name,
-      thumb: 'http://panorama-cities.net/' + c.get_filename + '/panoramas/' + p.get_filename + '_3.jpg',
-      position: {
-        latitude:  c.panoramas.keep_if{ |p| p.latitude }.map{ |p| p.latitude }.reduce(0, :+) / c.panoramas.keep_if{ |p| p.latitude }.size,
-        longitude:  c.panoramas.keep_if{ |p| p.longitude }.map{ |p| p.longitude }.reduce(0, :+) / c.panoramas.keep_if{ |p| p.longitude }.size
+    panos = c.panoramas.keep_if{ |p| p.published && !p.exclusive }
+    p = panos.sort_by{ |p| p.priority }.first
+    posCount = panos.keep_if{ |p| p.latitude }.size
+    if panos.size > 0
+      result[c.id] = {
+        name: c.name,
+        thumb: 'http://panorama-cities.net/' + FileHelper.to_filename(c.en_name && c.en_name != "" ? c.en_name : c.name ) + '/panoramas/' + p.get_filename + '_3.jpg',
+        priority: panos.length,
+        position: {
+          latitude: panos.keep_if{ |p| p.latitude }.map{ |p| p.latitude }.reduce(0, :+) / posCount,
+          longitude: panos.keep_if{ |p| p.longitude }.map{ |p| p.longitude }.reduce(0, :+) / posCount
+        }
       }
-    }
+    end
   end
   result.to_json
 %>

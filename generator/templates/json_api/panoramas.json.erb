@@ -1,6 +1,6 @@
 <%=
   result = {}
-  Panorama.all.each do |p|
+  Panorama.all.keep_if{ |p| p.published && !p.exclusive }.each do |p|
     result[p.id] = {
       name: p.name,
       city: {
