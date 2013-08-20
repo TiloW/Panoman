@@ -1,0 +1,512 @@
+Berlin 00049e5ab75c216bc0102
+Bielefeld 00044a841699d5de2182a
+Bochum 00044e33db091e5a0b312
+Bonn 00044a8414c71995e94de
+Braunschweig 00044a841295093c8822c
+Bremen 00044a84109eaf4830196
+Bremerhaven 000492e3bdd43946313e0
+Köln 00044a840dfdfb87a9c6d
+Darmstadt 00044a840babe2f4508c1
+Dortmund  00044a8408e80be2dd280
+Dresden 00044a840700ba4077b5f
+DÜSSELDORF  00044a84035a906f3764a
+Duisburg 00044a83ff902cdc097c5
+Erfurt  00044a83fe1f019b1dd41
+Essen 00044a83fbe64e392d148
+Frankfurt 00044a83f9ca418aecee0
+Freiburg 000471a5d1fe53aeabc50
+Goslar 0004b9eebc1bd6ce2d245
+Hamburg 00044a83f770d7b6ff83f
+Hanover 00044a83f4cb9587f753d
+Heidelberg 00044a83ef4c51d625eff
+Hildesheim 00044a83ecc26f25db594
+Karlsruhe 000496355cf041568cc15
+Kassel 00044a83e9d0c135737d7
+Kiel  000450df0e1a6e26f717d
+Koblenz 00044a83e7aac3924f1fc
+Leipzig 00044a83e1b1a26d27e0a
+Lübeck  00044ec5452653c59db04
+Mainz 00044a83de9b1f05ffe41
+Mannheim 000480a8a3c84bd7e0cbd
+Minden  00044aec3cc748624f806
+Muenster  00044a83ce7a187c58632
+Munich   00044a83c88aac9412079
+Nuremberg  00044a83b02d778394943
+Oldenburg 0004613b8bc1cc31885b3
+Osnabrueck  00044a83b32a78373386d
+Rostock  000457a635ea979cd43c5
+Rothenburg 00049a84f3afcca6a5de2
+Schwerin  00045a88a0025b5d11ffb
+Siegen  000453b1f48d124eda79d
+Stuttgart 00044a83a8a5dff3b4e67
+Trier  00044a83a57e5b7b44404
+Tuebingen  00049749dfc9ce3231bb5
+Wernigerode  0004baa9e18db51462426
+Wiesbaden 00044a83a1158ccf2747a
+Wismar 00045dee1aee929fb3ec1
+Wuerzburg  00045bd04b24fc6b499f4
+
+MÜNSTERLAND  .00044ac1d067cdaa13660
+Phantasialand 00044b138d7eba762674d
+
+_____________________
+
+MAPS EINBINDEN:
+
+Beispiel:
+Fernblick WI
+http://maps.google.com/maps/ms?msid=204881142368333592551.00044a83a1158ccf2747a&msa=0&ll=50.097277,8.2296092&spn=0.002500,0.002500&iwloc=0004d9fc8bc9266f4aa7b
+
+Stadtcode: 00044a83a1158ccf2747
+Pano-Koordinaten : 50.097277,8.229609
+Kartenhöhe: 0.002500,0.002500
+Location einblenden: iwloc=0004d9fc8bc9266f4aa7b
+
+
+PANO-NAME.html.erb-code:
+<a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= pano.map_id %>" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../navpic/gps.gif" width="12" height="9" alt="" border="0" ></a>
+
+__________
+
+PANO-EN-NAME.html.erb-code:
+<a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= pano.map_id %>" title=" Show Location on <%= @city.en_name %> Map "><img src="../navpic/gps.gif" width="12" height="9" alt="" border="0" ></a>
+
+<div class="allbuttons">
+       <div id="hotsp">
+        <img src="../navpic/hotsp.jpg" width="17" height="17" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0"> 
+       </div>
+       <div id="panoramaControls">
+        <ul>
+          <li><img id="pc-left-fast" src="../img/pc/left-fast.png" title="Pan fast left" alt="button_fast_left"/></li>
+          <li><img id="pc-left" src="../img/pc/left.png" title="Pan left" alt="button_left"/></li>
+          <li><img id="pc-pause" src="../img/pc/pause.png" title="Stop" alt="button_stop"/></li>
+          <li><img id="pc-right" src="../img/pc/right.png" title="Pan right" alt="button_right"/></li>
+          <li><img id="pc-right-fast" src="../img/pc/right-fast.png" title="Pan fast right" alt="button_fast_right"/></li>
+        </ul>
+       </div>
+       <div id="gps">
+        <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" title="  Show Location on <%= @city.en_name %> Map "><img src="../navpic/gps_map.png" width="20" height="15" alt="" border="0"></a> 
+       </div>
+     </div>  
+-------------------------------------------------------------
+
+MÜNSTERLAND STADT-ÜBERSICHTEN
+
+Rheine:
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Rheine
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.279967,7.439396&amp;spn=0.004332,0.005997&amp;z=17&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.279967,7.439396&amp;spn=0.004332,0.005997&amp;z=17&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panoramas</a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+
+Ibb
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Ibbenb&uuml;ren
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.274618,7.717359&amp;spn=0.008665,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.274618,7.717359&amp;spn=0.008665,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panoramas</a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+
+Teckl
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Tecklenburg
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.219978,7.811762&amp;spn=0.004338,0.005997&amp;z=17&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.219978,7.811762&amp;spn=0.004338,0.005997&amp;z=17&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panoramas</a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+
+
+Leng
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Lengerich
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.18797,7.85265&amp;spn=0.008682,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.18797,7.85265&amp;spn=0.008682,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panorama-Karte </a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )<br><br></td>
+        </tr>
+      </table>
+
+
+Emsd
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Emsdetten
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.174155,7.529261&amp;spn=0.008685,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.174155,7.529261&amp;spn=0.008685,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panoramas</a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+Steinf
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Steinfurt<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.134436,7.36702&amp;spn=0.069543,0.095959&amp;z=13&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.134436,7.36702&amp;spn=0.069543,0.095959&amp;z=13&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panorama-Karte </a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+
+
+Greven
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Greven
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.093271,7.60859&amp;spn=0.017402,0.02399&amp;z=15&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.093271,7.60859&amp;spn=0.017402,0.02399&amp;z=15&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panorama-Karte </a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+Ahaus
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Ahaus
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.093271,7.60859&amp;spn=0.017402,0.02399&amp;z=15&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.093271,7.60859&amp;spn=0.017402,0.02399&amp;z=15&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panorama-Karte </a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+Horst
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Horstmar
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.08002,7.302336&amp;spn=0.004352,0.005997&amp;z=17&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.08002,7.302336&amp;spn=0.004352,0.005997&amp;z=17&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panorama-Karte </a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+Telgte
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Telgte
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.98449,7.787751&amp;spn=0.004361,0.005997&amp;z=17&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.98449,7.787751&amp;spn=0.004361,0.005997&amp;z=17&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panorama-Karte </a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+
+Warend
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Warendorf
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.952253,7.991996&amp;spn=0.008728,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.952253,7.991996&amp;spn=0.008728,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panoramas</a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+
+Coesf
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0">Panorama-Aufnahmestandorte Coesfeld
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid==204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.945125,7.169888&amp;spn=0.00873,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.945125,7.169888&amp;spn=0.00873,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panorama-Karte </a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+
+Lüd
+
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte L&uuml;dinghausen
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.773483,7.44328&amp;spn=0.008763,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.773483,7.44328&amp;spn=0.008763,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panorama-Karte </a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+
+
+Ahl
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Panorama-Aufnahmestandorte Ahlen
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.760496,7.891037&amp;spn=0.008766,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.760496,7.891037&amp;spn=0.008766,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Münsterland Panoramas</a></small>&nbsp;( Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen )
+<br><br></td>
+        </tr>
+      </table>
+
+
+_______
+
+
+MÜNSTERLAND EN-STADT-ÜBERSICHTEN
+
+Rheine:
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Rheine
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.279967,7.439396&amp;spn=0.004332,0.005997&amp;z=17&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.279967,7.439396&amp;spn=0.004332,0.005997&amp;z=17&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland</a></small>( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+
+Ibb
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Ibbenb&uuml;ren
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.274618,7.717359&amp;spn=0.008665,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.274618,7.717359&amp;spn=0.008665,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland</a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+
+Teckl
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Tecklenburg
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.219978,7.811762&amp;spn=0.004338,0.005997&amp;z=17&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.219978,7.811762&amp;spn=0.004338,0.005997&amp;z=17&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland</a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+
+
+Leng
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Lengerich
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.18797,7.85265&amp;spn=0.008682,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.18797,7.85265&amp;spn=0.008682,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland </a></small>&nbsp;( View larger Map ) <br><br></td>
+        </tr>
+      </table>
+
+
+Emsd
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Emsdetten
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.174155,7.529261&amp;spn=0.008685,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.gogle.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.174155,7.529261&amp;spn=0.008685,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland</a></small>&nbsp;( View larger Map ) 
+<br><br></td>        </tr>
+      </table>
+
+Steinf
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Steinfurt Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.134436,7.36702&amp;spn=0.069543,0.095959&amp;z=13&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.134436,7.36702&amp;spn=0.069543,0.095959&amp;z=13&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland </a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+
+
+Greven
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Greven
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.093271,7.60859&amp;spn=0.017402,0.02399&amp;z=15&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.093271,7.60859&amp;spn=0.017402,0.02399&amp;z=15&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland </a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+Ahaus
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Ahaus
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.093271,7.60859&amp;spn=0.017402,0.02399&amp;z=15&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.093271,7.60859&amp;spn=0.017402,0.02399&amp;z=15&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland </a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+Horst
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Horstmar
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.08002,7.302336&amp;spn=0.004352,0.005997&amp;z=17&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=52.08002,7.302336&amp;spn=0.004352,0.005997&amp;z=17&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland </a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+Telgte
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Telgte
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.98449,7.787751&amp;spn=0.004361,0.005997&amp;z=17&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.98449,7.787751&amp;spn=0.004361,0.005997&amp;z=17&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland </a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+
+Warend
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Warendorf
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.952253,7.991996&amp;spn=0.008728,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.952253,7.991996&amp;spn=0.008728,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland</a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+
+Coesf
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0">Map Coesfeld
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid==204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.945125,7.169888&amp;spn=0.00873,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.945125,7.169888&amp;spn=0.00873,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland </a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+
+Lüd
+
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map L&uuml;dinghausen
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.773483,7.44328&amp;spn=0.008763,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.773483,7.44328&amp;spn=0.008763,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland </a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>
+
+
+
+Ahl
+</table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" class="whitenorm">
+<br>
+<br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<img src="../navpic/gps.gif" alt="" width="12" height="9" border="0"> Map Ahlen
+Panoramas <br><img src="../navpic/pan.gif" alt="" height="20" width="41">
+<iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.760496,7.891037&amp;spn=0.008766,0.011995&amp;z=16&amp;output=embed"></iframe><br /><img src="../navpic/pan.gif" alt="" height="16" width="41"><small><a href="https://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.0004da425c9f05f247e60&amp;ie=UTF8&amp;t=m&amp;ll=51.760496,7.891037&amp;spn=0.008766,0.011995&amp;z=16&amp;source=embed" style="color:#FFFFFF;text-align:left">Panoramas of M&uuml;nsterland</a></small>&nbsp;( View larger Map ) 
+<br><br></td>
+        </tr>
+      </table>

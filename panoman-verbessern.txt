@@ -1,0 +1,43 @@
+﻿s i m p l e P a n o r a m a  
+ touch-Richtung ändern
+schwarze Striche bei  Panos im Safari-Browser  (Elbe-Pano)
+Kreise bei 0,0,3000
+Cursor + Hotspot-Koordinatenfeld unter das Pano anstelle über Pano
+Startposition wie Center-Werte
+
+werden Links zu nicht veröffentlichten Panos deaktiviert?
+_________________
+
+Besonderheiten:
+Webcam-Link und andere Polygone (vermutlich bei panoman/app/models/external_link.rb)
+Komma im Link=%2C
+vertikales Panorama
+Links zu Nahaufnahmen (Fotos)
+Cine-Panos ohne Rotation
+
+
+
+production.sqlite funtioniert evt. nicht mehr
+
+txt im ANSI-Format speichern
+
+EN Panotitel Feld könnte leer sein wenn gleicher Name wie DE Feld (engl. Dateiname wird nicht generiert wenn EN-Feld leer ist - nur .html)
+
+Beim Löschen der Hotspots muss danach Seite aktualisiert werden
+
+Start und Zielpanorama werden falsch angezeigt bei Internen Links
+
+
+- Felder für Werbung 3 bei Panoramen und 5  bei Städte
+- Pfad zu Bilddateien - wie am besten ändern damit es auf dem Server und offline funktioniert.
+- pmvr Unregistered Version Pfad ändern:
+
+___________________
+Webseiten:
+Panorama im Kopfteil der Stadtübersicht
+Städte-Button und Auflistung
+transparenter Hintergrund  nicht im IE 8
+Beide Karten bei Stadtübersichten + evt. Werbung + Linktipps
+---------
+Beteiligung von Dritten für historische Aufnahmen
+
