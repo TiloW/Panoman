@@ -43,11 +43,9 @@
     <% end %>
     
     <%= 
-      generate_table(nil, ["Bild", "Vorschau", "Details", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "360°", "Datum", "imNetz", "Exkl", "Löschen"], @panoramas) do |pano|
+      generate_table(nil, ["Vorschau", "Details", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "360°", "Datum", "imNetz", "Exkl", "Löschen"], @panoramas) do |pano|
         row_data = [
           pano.id,
-          "<img title=\"Pfad: #{FileHelper.get_default_thumbnail_location pano}\"" +
-              "class=\"thumbnail\" src=\"#{FileHelper.get_thumbnail pano}\" alt=\"nicht gefunden\" />",
           "<img title=\"Pfad: #{FileHelper.get_big_thumb_location pano}\"" +
               "class=\"thumbnail\" src=\"#{FileHelper.get_big_thumb pano}\" alt=\"nicht gefunden\" />",
           (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
@@ -76,8 +74,8 @@
           @tag.nil? ? (link_to "hoch", shift_panorama_path(pano, :dest => "up"), :remote => true, :class => "button up") : "",
           @tag.nil? ? (link_to "runter", shift_panorama_path(pano, :dest => "down"), :remote => true, :class => "button down") : "",
           (link_to "an Ende verschieben", shift_panorama_path(pano, :dest => "bottom"), :remote => true, :class => "button bottom"),
-          "<img title=\"Pfad: #{FileHelper.get_default_thumbnail_location pano}\"" +
-              "class=\"thumbnail\" src=\"#{FileHelper.get_thumbnail pano}\" alt=\"nicht gefunden\" />"
+          "<img title=\"Pfad: #{FileHelper.get_big_thumb_location pano}\"" +
+              "class=\"thumbnail\" src=\"#{FileHelper.get_big_thumb pano}\" alt=\"nicht gefunden\" />"
         ]
       end
     %>
