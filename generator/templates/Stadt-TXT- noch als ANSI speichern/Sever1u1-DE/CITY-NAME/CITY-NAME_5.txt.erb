@@ -1,0 +1,58 @@
+<%=
+  
+  #coding: ISO-8859-1
+  @counter = 0
+  
+  def generate_internal_links(pano)
+    result = ""
+    pano.internal_links.each do |link|
+      dest = Panorama.find(link.destination_id);
+      lipath = link.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',');
+      result += "link" + @counter.to_s + "=" + lipath + "," + 
+          (FileHelper.to_filename dest.name) + ".html," + 
+          (link.alt_name.blank? ? (dest.alt_name.blank? ? (dest.name) : (dest.alt_name)) : (link.alt_name)) + "\n"
+      @counter += 1
+    end
+    result
+  end
+  
+  
+  def generate_external_links(pano)
+    result = ""
+    pano.external_links.each do |link|
+      linpath = link.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',');
+      result += "link" + @counter.to_s + "=" + linpath + "," + link.url + "," + link.name +
+          " - Info Link (" + (link.url.split("/")[2]) + ")\n" 
+      @counter += 1
+    end
+    result
+  end
+  
+  def generate_hotspot_infos(pano)
+    result = ""
+    pano.hotspot_infos.each do |spot|
+      spopath = spot.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',');
+      result += "link" + @counter.to_s + "=" + spopath + ",-," + spot.name + "\n"
+      @counter += 1
+    end
+    result
+  end
+
+  result = ""
+  @city.panoramas.each do |pano|
+    panoname = FileHelper.to_filename pano.name
+    
+    result += "[" + panoname + "]\n"
+    @counter = 0
+    result += generate_internal_links(pano) + "\n"
+    
+    result += "[" + panoname + "i]\n"
+    @counter = 0
+    result += generate_external_links(pano) + "\n"
+    
+    result += "[" + panoname + "s]\n"
+    @counter = 0
+    result += generate_hotspot_infos(pano) + "\n\n"
+  end
+  result
+%>
