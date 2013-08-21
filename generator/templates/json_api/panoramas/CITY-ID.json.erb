@@ -1,14 +1,17 @@
 <%=
   FACTOR = 5/3.5
   result = {}
-  @city.panoramas.keep_if{ |p| p.published && !p.exclusive }.each do |p| 
-    cityPath = 'http://panorama-cities.net/' + FileHelper.to_filename(@city.en_name && @city.en_name != "" ? @city.en_name : @city.name ) + '/panoramas/'
+  @city.panoramas.keep_if{ |p| p.published && !p.exclusive }.each do |p|
+    cityNameTrans = FileHelper.to_filename(@city.en_name && @city.en_name != "" ? @city.en_name : @city.name )
+    cityPath = 'http://panorama-cities.net/' + cityNameTrans + '/panoramas/'
+    cityName = FileHelper.to_filename(@city.name)
     result[p.id] = {
       name: p.name,
-      thumb:  cityPath + p.get_filename + '_3.jpg',
-      rotation: p.rotation,
+      thumb: 'http://www.panorama-cities.net/' + cityNameTrans + '/panoramas/' + p.get_filename + '_' + cityName + '.jpg',
+      initial_direction: p.rotation < 0 ? -1 : 1,
       repeative: p.repeative,
       priority: p.priority,
+      initial_position: p.initial_center,
       image: cityPath + p.get_filename + '_5.jpg',
       date: p.date_of_recording,
       position: {
@@ -17,6 +20,7 @@
       },
       links: []
     }
+    result[p.id]['date'] = p.date_of_recording if p.date_of_recording
     p.internal_links.each do |l|
       path = l.path.split(/,/).map{ |x| x.strip.to_i * FACTOR }
       result[p.id][:links].push({
