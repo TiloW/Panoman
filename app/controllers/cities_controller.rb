@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class CitiesController < ApplicationController
-  before_filter :get_city, :only => [:show, :edit, :update, :destroy, :tag, :location, :sort_panoramas]
+  before_filter :get_city, :only => [:show, :edit, :update, :destroy, :tag, :sort_panoramas]
   include ErrorHelper
   
   def get_city
@@ -23,15 +23,8 @@ class CitiesController < ApplicationController
     unless @tag.nil?
       @panoramas = @panoramas.tagged_with(@tag)
     end
+    @panoramas_priorized = @panoramas.sort_by { |pano| pano.priority }
     
-    @loc_list = @panoramas.tag_counts_on(:locations)
-    @loc_list.sort_by! { |location| location.name.downcase }
-    @location = params[:location]
-    unless @location.nil?
-      @panoramas = @panoramas.tagged_with(@location)
-    end
-    
-    @panoramas_priorized = @panoramas.sort_by { |pano| pano.priority }    
     @panoramas.sort_by! { |pano| pano.name.downcase }
   end
   

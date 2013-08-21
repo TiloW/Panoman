@@ -42,21 +42,6 @@
       <p><%= link_to "Filter löschen", city_path(@city.id), :class => :button %></p>
     <% end %>
     
-    
-    <h3>Locations</h3>
-    <p>
-    <% @loc_list.each do |tag| %>
-      <%= link_to location.name, city_path(@city.id, { :location => location.name }) %> 
-      <% unless @loc_list.last == location %>
-        /
-      <% end %>
-    <% end %>
-    </p>
-    <% unless @location.nil? %>
-      <p>Es werden nur mit "<%= @location %>" assoziierte Panoramen angezeigt.</p>
-      <p><%= link_to "Filter löschen", city_path(@city.id), :class => :button %></p>
-    <% end %>
-    
     <%= 
       generate_table(nil, ["Vorschau", "Details", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "360°", "Datum", "imNetz", "Exkl", "Löschen"], @panoramas) do |pano|
         row_data = [
