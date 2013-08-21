@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806204421) do
+ActiveRecord::Schema.define(:version => 20130821120843) do
 
   create_table "cities", :force => true do |t|
     t.text     "en_name"
@@ -67,6 +67,23 @@ ActiveRecord::Schema.define(:version => 20130806204421) do
     t.string   "alt_name"
     t.integer  "linked_panorama_center"
   end
+
+  create_table "locations", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "loctaggings", :force => true do |t|
+    t.integer  "location_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       :limit => 128
+    t.datetime "created_at"
+  end
+
+  add_index "loctaggings", ["location_id"], :name => "index_loctaggings_on_location_id"
+  add_index "loctaggings", ["taggable_id", "taggable_type", "context"], :name => "index_loctaggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "panoramas", :force => true do |t|
     t.text     "location"
