@@ -80,3 +80,37 @@
       end
     %>
   </div>
+    
+  <div id="tab-table" class="section">
+    <table>
+    <tr>
+      <th>Locations</th>
+      <th>Panorama</th>
+    <tr>
+    <% @panoramas.order(:location).each do |pano| %>
+    <% unless pano.location.empty? %>
+        <tr>                  
+          <td><%= pano.location %></td>
+          <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>/edit"><%= pano.name %></a></td> 
+        <tr>
+    <% end %>
+    <% end %>
+  </table>
+  </div>
+      
+  <div id="tab-table" class="section">
+    <table>
+    <tr>
+      <th>Ortsteil</th>
+      <th>Panorama</th>
+    <tr>
+    <% @panoramas.order(:district).each do |pano| %>
+    <% unless pano.district.empty? %>
+        <tr>                  
+          <td><%= pano.district %></td>
+          <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>/edit"><%= pano.name %></a></td> 
+        <tr>
+    <% end %>
+    <% end %>
+  </table>
+  </div>
