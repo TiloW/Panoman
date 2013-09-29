@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806204421) do
+ActiveRecord::Schema.define(:version => 20130929180238) do
 
   create_table "cities", :force => true do |t|
     t.text     "en_name"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20130806204421) do
     t.string   "en_ad_sec_page_top"
     t.string   "en_ad_sec_page_down"
     t.boolean  "quiz"
+    t.string   "citytext"
   end
 
   create_table "external_links", :force => true do |t|
