@@ -69,6 +69,7 @@
       generate_table(nil, nil, @panoramas_priorized) do |pano|
         row_data = [
           pano.id,
+          (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
           pano.name,
           (link_to "an Anfang verschieben", shift_panorama_path(pano, :dest => "top"), :remote => true, :class => "button top"),
           @tag.nil? ? (link_to "hoch", shift_panorama_path(pano, :dest => "up"), :remote => true, :class => "button up") : "",
@@ -88,7 +89,7 @@
       <th>Panorama</th>
     <tr>
     <% @panoramas.order(:location).each do |pano| %>
-    <% unless pano.location.empty? %>
+    <% unless pano.location.blank? %>
         <tr>                  
           <td><%= pano.location %></td>
           <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>"><%= pano.name %></a></td> 
@@ -105,7 +106,7 @@
       <th>Panorama</th>
     <tr>
     <% @panoramas.order(:district).each do |pano| %>
-    <% unless pano.district.empty? %>
+    <% unless pano.district.blank? %>
         <tr>                  
           <td><%= pano.district %></td>
           <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>"><%= pano.name %></a></td> 
