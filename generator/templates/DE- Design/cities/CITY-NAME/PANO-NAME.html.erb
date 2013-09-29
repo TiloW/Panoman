@@ -7,7 +7,7 @@
    <meta name="copyright" content="Helmut Kölbach">    
    <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= @pano.location %> in <%= @city.name %> <%= @pano.district %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
     <link rel="stylesheet" href="../css/s-panorama.css"> 
-    <link rel="stylesheet" href="../css/pano_small.css">
+    <link rel="stylesheet" href="../css/panosmall.css">
     <!--[if lt IE 9]>
       <style type="text/css">@import url(../css/pan_ie.css);</style>
     <![endif]-->   
@@ -117,8 +117,8 @@
   <header>
       <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen"></a> 
     <nav>  
-      <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">
-        <ul>     
+      <a class="city-top">Städte </a><br>
+          <ul>     
             <li><a href="../berlin/">Berlin </a></li>
             <li><a href="../bielefeld/">Bielefeld </a></li>
             <li><a href="../bochum/">Bochum </a></li>
@@ -182,7 +182,7 @@
             <li><a href="../tecklenburg/">Tecklenburg </a></li>
             <li><a href="../telgte/">Telgte </a></li>
             <li><a href="../warendorf/">Warendorf </a></li>
-        </ul>  
+        </ul> 
     </nav>         
         <div  class="city"><a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/"><%= @city.name %> </a></div>  
       <div class="navtop">
@@ -204,7 +204,7 @@
    <img src="../navpic/st_detail_bsp_07.jpg" alt="" width="10px" height="301px"><br>
    </div>
    <div class="applet">
-    <applet MAYSCRIPT archive="pmvr.jar" codebase=".." name="pmvr" code="pmvr.class" width="786" height="300">
+    <applet  archive="pmvr.jar" mayscript codebase=".." code="pmvr.class" name="pmvr"  width="786" height="300" >
      <param name="image" value="../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_3.jpg">
      <param name="zMax" value="150">
      <param name="delay" value="15000">
@@ -231,8 +231,8 @@
       <% @pano.external_links.each do |link| %> <%= link.name %> <br> <% end %> 
      </div>   
      <div id="tour" class="tourlayer">
-      <span style="letter-spacing: 2px">Panorama-Tour</span><br>
-      <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>
+      <span style="letter-spacing: 2px">Panorama-Tour</span>
+      <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0">
       Virtueller Rundgang <br>im Bild gelb markiert 
       <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>
       <br>Nächstes Panorama: <br>
@@ -250,8 +250,8 @@
      </div> 
    </div>
 
-   <div class="adv"> <% if !@pano.exclusive %>     
-    <%= @city.html_content %><% end %>
+   <div class="adv">
+    <%= @pano.tag_list == "Airport F"||@pano.tag_list.to_s == "Botanischer Garten"||@pano.tag_list.to_s == "Palmengarten"||@pano.tag_list.to_s == "Großer Garten"||@pano.tag_list.to_s == "Kleines Fest im Großen Garten"||@pano.tag_list.to_s == "BUGA 2009" ? "" : @city.html_content %>
    </div>
      <div class="rahmen_wu">
       <div class="rahmen_wul"><img src="../navpic/pan.gif" alt="" width="119" height="14">
@@ -293,7 +293,7 @@
       Foto: <a href="http://www.stadtpanoramen.de/html/kontakt.html" class="greysmall">H. Kölbach</a> <br>
     </div>   
     <div class="w_screen">   
-     <a href="<%= pano.get_filename %>_5c.html" onMouseOut="tauschc(cname,Bild7)" onMouseOver="tauschc(cname,Bild8)"><img src="../navpic/bcine.gif" width="108" height="20" title="Panorama in voller Breite" alt="" name="cname" border="0"></a> 
+     <a href="javascript:cine()" onMouseOut="tauschc(cname,Bild7)" onMouseOver="tauschc(cname,Bild8)"><img src="../navpic/bcine.gif" width="108" height="20" title="Panorama in voller Breite" alt="" name="cname" border="0"></a> 
     </div>   
    </div>  
    <map name="tastennameMap">  
@@ -326,8 +326,7 @@
     </div>  
    <div id="info" class="infotext">  
    </div> 
-   <div class="noj-adv"><% if !@pano.exclusive %>     
-    <%= @city.html_content %><% end %>
+   <div class="noj-adv"><%= @pano.tag_list == "Airport F"||@pano.tag_list.to_s == "Botanischer Garten"||@pano.tag_list.to_s == "Palmengarten"||@pano.tag_list.to_s == "Großer Garten"||@pano.tag_list.to_s == "Kleines Fest im Großen Garten"||@pano.tag_list.to_s == "BUGA 2009" ? "" : @city.html_content %>
    </div>
      <div id="linkInfo"> </div> 
      <div class="rahmen_wu">
@@ -339,7 +338,7 @@
       </div>
      </div>
      <div class="allbuttons">
-       <div id="hotsp" style="margin-top:-10px; width:30%; height:20px; padding-top:20px; float:left; text-align:right; cursor:pointer;"<%= @pano.internal_links.empty? ? "display:none;" : "" %>">
+       <div id="hotsp">
          <img src="../navpic/hotsp.gif" width="17" height="17" title=" Panorama-Tour einblenden " alt="" border="0">
        </div>
        <div id="hotsp_hide">
@@ -354,7 +353,7 @@
           <li><img id="pc-right-fast" src="../img/pc/right-fast.png" title="Schnell rechts drehen" alt="button_fast_right"/></li>
         </ul>
        </div>
-       <div id="gps" <%= @pano.get_latitude == "0.000000" ? "style='display:none;'" : "" %>>
+       <div id="gps">
         <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" target="top" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../navpic/gps_map.png" width="20" height="15" alt="" border="0"></a> 
        </div>
     <div class="noj-foto">
@@ -378,7 +377,7 @@
       </div>    
     <div class="pad">&nbsp;
     </div> 
-     <div class="advrow"><% if !@pano.exclusive %>   
+     <div class="advrow">
    <script type="text/javascript"><!--
    google_ad_client = "pub-2069005959740847";
    google_alternate_color = "000000";
@@ -397,7 +396,7 @@
    </script>
    <script type="text/javascript"
    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-   </script><% end %>
+   </script>
     </div>
     </div>    
     <div class="foot">&nbsp;>
@@ -409,8 +408,6 @@
   <footer>
     <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
     <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
-    <div class="mail"> <a href="mailto:?subject=StadtPanorama%20<%= panoname %> <%= @pano.location %> <%= @city.name %> <%= @pano.district %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20interessantes%20Panorama%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2F<%= @pano.get_filename %>%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AA%20n%20l%20e%20i%20t%20u%20n%20g%0D%0AEmailadresse%20des%20Empf%C3%A4ngers%20eingeben%2c%0D%0Aden%20Text%20nach%20Belieben%20erg%C3%A4nzen%20und%0D%0Adiesen%20Anleitungsabschnitt%20vor%20dem%20Absenden%20entfernen%2E" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite weiterempfehlen </a>
-    </div>
   </footer>
 </body>
 </html>

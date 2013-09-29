@@ -5,7 +5,7 @@
   <title><%= @city.name %> Panoramen </title>
   <meta http-equiv="content-language" content="de">  
   <meta name="copyright" content="Helmut Kölbach">    
-  <meta name="description" content="360° Stadtpanoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen im Panoramaformat">
+  <meta name="description" content="360&deg; Stadtpanoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen im Panoramaformat">
   <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" media="screen" href="../css/allcities.css" />
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -120,9 +120,8 @@
         <li><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
           <div class="wrapper">
             <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <%= pano.location %> in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg"></a>
-            <% unless pano.rotation == 60 %>
-            <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>_5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
-            </div><% end %>
+            <div class="widescreen"><a href="javascript:cindex('http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>_5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
+            </div>
           </div><%= pano.name %>
         </li><% end %>
       </ul>
