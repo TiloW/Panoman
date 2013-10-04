@@ -92,7 +92,7 @@
     <% unless pano.location.blank? %>
         <tr>                  
           <td><%= pano.location %></td>
-          <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>"><%= pano.name %></a></td> 
+          <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>/edit"><%= pano.name %></a></td> 
         <tr>
     <% end %>
     <% end %>
@@ -107,9 +107,9 @@
     <tr>
     <% @panoramas.order(:district).each do |pano| %>
     <% unless pano.district.blank? %>
-        <tr>                  
+        <tr>                    
           <td><%= pano.district %></td>
-          <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>"><%= pano.name %></a></td> 
+          <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>/edit"><%= pano.name %></a></td> 
         <tr>
     <% end %>
     <% end %>
