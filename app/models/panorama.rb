@@ -28,6 +28,7 @@ class Panorama < ActiveRecord::Base
                   :repeative,
                   :published,
                   :location,
+                  :en_location,
                   :district,
                   :priority,
                   :exclusive
