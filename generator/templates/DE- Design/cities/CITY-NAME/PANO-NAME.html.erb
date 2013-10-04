@@ -117,7 +117,7 @@
   <header>
       <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen"></a> 
     <nav>  
-      <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">
+      <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
         <ul>     
             <li><a href="../berlin/">Berlin </a></li>
             <li><a href="../bielefeld/">Bielefeld </a></li>
@@ -218,7 +218,7 @@
        <% altnam = link.alt_name %>
        <param name="link<%= counter+=1 %>" value="<%= link.path %>,http://stadtpanoramen.de/<%= @city.get_filename %>/<%= dest.get_filename %>.html,<%= altnam.blank? ? dest.name : altnam  %>">
      <% end %>       
-     <table width="780" height="300" bgcolor="#000000"><tr><td align=center><font size="+1" color=red>Zum Betrachten der interaktiven Panoramen <br>muss die Java-Unterstützung <br>installiert und aktiviert sein. </font><br><br>Infos dazu finden Sie auf den <a href="http://www.stadtpanoramen.de/html/st_hilfe_3.html">Hilfe-Seiten</a><br><br>Alternativ können die Panoramabilder <br> hier bei den <a href="http://www.stadtpanoramen.de/stadt/bilder_staedte.html" target="_blank">Städte-Bilder</a> auch <br>ohne Java-Aktivierung betrachtet werden.</td></tr></table> 
+     <table width="780" height="300" bgcolor="#000000"><tr><td align="center"><font size="+1" color=red>Zum Betrachten der interaktiven Panoramen <br>muss die Java-Unterstützung <br>installiert und aktiviert sein. </font><br><br>Infos dazu finden Sie auf den <a href="http://www.stadtpanoramen.de/html/st_hilfe_3.html">Hilfe-Seiten</a><br><br>Alternativ können die Panoramabilder <br> hier bei den <a href="http://www.stadtpanoramen.de/stadt/bilder_staedte.html" target="_blank">Städte-Bilder</a> auch <br>ohne Java-Aktivierung betrachtet werden.</td></tr></table> 
     </applet><br>   
    </div>  
    <div class="bord_right">
@@ -258,7 +258,7 @@
       </div>
       <div class="rahmen_wur"><img src="../navpic/pan.gif" alt="" width="145" height="8" border="0">
       </div>
-      <div class="rahmen_wum"><%= @pano.get_german_month %>
+      <div class="rahmen_wum"><% unless @pano.date_of_recording.nil? %><%= @pano.get_german_month %><% end %>
       </div>
      </div>
    <div class="buttons_j">
@@ -335,18 +335,18 @@
       </div>
       <div class="rahmen_wur"><img src="../navpic/pan.gif" alt="" width="145" height="8" border="0">
       </div>
-      <div class="rahmen_wum"> <% unless @pano.date_of_recording.nil? %><%= l @pano.date_of_recording, :format => :month %><% end %>
+      <div class="rahmen_wum"><% unless @pano.date_of_recording.nil? %><%= @pano.get_german_month %><% end %>
       </div>
      </div>
      <div class="allbuttons">
-       <div id="hotsp" style="margin-top:-10px; width:30%; height:20px; padding-top:20px; float:left; text-align:right; cursor:pointer;"<%= @pano.internal_links.empty? ? "display:none;" : "" %>">
+       <div id="hotsp" style="margin-top:-10px; width:30%; height:20px; padding-top:20px; float:left; text-align:right; cursor:pointer;<%= @pano.internal_links.empty? ? "display:none;" : "" %>">
          <img src="../navpic/hotsp.gif" width="17" height="17" title=" Panorama-Tour einblenden " alt="" border="0">
        </div>
        <div id="hotsp_hide">
          <img src="../navpic/hotsp_hide.gif" width="17" height="17" title=" Panorama-Tour ausblenden " alt="" border="0">
        </div>
        <div id="panoramaControls">
-         <ul>
+        <ul>
           <li><img id="pc-left-fast" src="../img/pc/left-fast.png" title="Schnell links drehen" alt="button_fast_left"/></li>
           <li><img id="pc-left" src="../img/pc/left.png" title="Links drehen" alt="button_left"/></li>
           <li><img id="pc-pause" src="../img/pc/pause.png" title="Stop" alt="button_stop"/></li>
