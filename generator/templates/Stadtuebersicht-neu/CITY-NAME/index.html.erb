@@ -6,8 +6,9 @@
   <meta http-equiv="content-language" content="de">  
   <meta name="copyright" content="Helmut Kölbach">    
   <meta name="description" content="360° Panoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen in voller Bildschirmbreite">
+  <link rel="shortcut icon" href="icon.ico">
   <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/allcities.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/all_cities.css" />
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" language="javascript" src="../ind.js"></script> 
   <script type="text/javascript" src="../js/s-panorama.js"></script>
@@ -88,12 +89,14 @@
         <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
       </div>
   </header>
-  <div id="content"> 
+<div id="content">
       <div id="menu">  
         <h2>Panoramen <%= @city.name %> A-Z</h2>
+        <nav>
           <ul><% @city.panoramas.keep_if{ |p| p.published }.sort_by{ |n| n.name }.each do |pano| %><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
             <li><a href="<%= pano.get_filename %>.html" title="<%= panoname %> <%= pano.location %> <%= pano.district %>"><%= pano.name %> </a></li><% end %>
-        </ul>
+          </ul>
+        </nav>
       </div>     
     <div id="box">      
       <% if @city.map_id == "0004da425c9f05f247e60" %>
@@ -102,7 +105,7 @@
             <%= @city.ad_more_first_page_top %>
           </div>  
           <% else %> 
-          <iframe src="http://www.stadtpanoramen.de/maps/map_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
+          <iframe src="http://www.stadtpanoramen.de/karten/karte_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
         <% end %>
         <% else %>  
         <script>
@@ -137,19 +140,24 @@
       <ul> <% @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority }.first(10).each do |pano| %>      
         <li><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
           <div class="wrapper">
-            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <%= pano.location %> in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg"></a>             <% unless pano.rotation == 60 %>
+            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <%= pano.location %> in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg" alt="<%= pano.name %> <%= pano.location %> <%= @city.name %><%= pano.district %>"></a>    <% unless pano.rotation == 60 %>
             <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>_5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
             </div><% end %>
           </div><%= pano.name %>
         </li><% end %>
       </ul>
     </div>
-      
+    <% if @city.linktips.blank? %>
+    <div id="notip">&nbsp;
+    </div><% else %>
+    <div id="tip">
+      <div style="height:50px;"><a name="<%= @city.get_filename %>-tipps"></a></div>
+      <%= @city.linktips %>
+    </div><% end %>           
     <div class="more">  
-      <a name="<%= @city.get_filename %>-tipps"></a>
       <% @city.panoramas.keep_if{ |p| p.published }.count %>
-        <% if @city.panoramas.count > 10 %>
-      <a href="<%= @city.get_filename %>_panoramen.html">weitere Panoramen von <%= @city.name %> </a> <br><br>
+        <% if @city.panoramas.count > 11 %>
+      <span style="font-size: 1.1em;"><a href="<%= @city.get_filename %>_panoramen.html">weitere Panoramen von <%= @city.name %> </a></span> <br><br>
       <% end %>
       <% districts = Hash.new
       @city.panoramas.each { |p| districts[p.district] = true if p.district }
@@ -168,23 +176,21 @@
       <% if @city.quiz == true %>
       <a href="http://www.stadtpanoramen.de/staedtequiz/quiz_<%= @city.get_filename %>.html"><%= @city.name %>-Quiz  </a> 
       <% end %>    
-    </div>
+    </div> 
     <div class="gmap">
        Panorama-Aufnahmestandorte <%= @city.name %>
        <br>
-       <iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" src="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;output=embed"></iframe><br /><a href="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;source=embed" target="_blank"><%= @city.name %> Panorama-Karte </a> &nbsp;(Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen)
+       <iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" src="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;output=embed"></iframe><br /><a href="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;source=embed" target="_blank"><%= @city.name %> Panorama-Karte </a> &nbsp;<span style="font-size:0.9em;">(Panoramen auf einer größeren Karte anzeigen)</span>
     </div> 
-    <% if @city.linktips.blank? %>
-    <div id="notip">&nbsp;
-    </div><% else %>
-    <div id="tip">
-      <%= @city.linktips %>
-    </div><% end %> <br> 
+     <br> 
+    <div class="adtext">
     <%= @city.citytext %>
+      <br>
+    </div>  
     <div class="adv1-down">
       <%= @city.ad_first_page_down %>
       <br>
-    </div>
+    </div>  
   </div>
   <footer>
     <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
