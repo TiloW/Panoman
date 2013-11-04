@@ -143,6 +143,7 @@
      </div>
      <div class="applet">
       <applet  archive="pmvr.jar" mayscript codebase="../.." code="pmvr.class" name="pmvr"  width="786" height="300" >
+       <param name="permissions" value="sandbox">
        <param name="image" value="../../en/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @pano.location %>/panoramas/<%= @pano.get_filename %>_3.jpg">
        <param name="zMax" value="150">
        <param name="delay" value="15000">

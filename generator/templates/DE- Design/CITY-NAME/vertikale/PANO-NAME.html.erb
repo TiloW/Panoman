@@ -113,7 +113,7 @@
     </script>
    <title><%= panoname %> <%= @pano.location %> <%= @city.name %> - StadtPanorama</title>
   </head>
-<body onUnload="panostop()">
+<body>
   <header>
       <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen"></a> 
     <nav>  
@@ -205,6 +205,7 @@
    </div>
    <div style=" height:500px; width:786px; float:left; box-shadow:0px 45px 6px #000; color:#aaa;">
     <applet  archive="pmvr.jar" mayscript codebase=".." code="pmvr.class" name="pmvr"  width="786" height="500" >
+     <param name="permissions" value="sandbox">
      <param name="image" value="../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_5.jpg">
      <param name="zMax" value="150">
      <param name="delay" value="15000">

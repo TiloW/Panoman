@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset=utf-8> 
+    <meta charset=utf-8>
+    <meta name="description" content="Image Archive <%= @city.en_name + " Germany" %> - Thumbs City Panoramas">  
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     <script>!window.jQuery && document.write(unescape('%3Cscript src="jquery/jquery-1.7.2.min.js"%3E%3C/script%3E'))</script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
@@ -19,31 +20,19 @@
     $(anc).addClass("active");
       });
     })(jQuery);
-    </script>   
-    <script> 
-    function load() {
-      anc = window.location.hash;
-      archiv = ("bildarchiv_<%= @city.get_filename %>_ie.html"+anc);
-      if (navigator.appName == "Microsoft Internet Explorer")
-      location.replace(archiv);
-    }
-    </script>      
+    </script>  
     <link href="../css/bildarchiv.css" rel="stylesheet" type="text/css">  
     <link href="../css/jquery.mCustomScrollbar_h.css" rel="stylesheet" type="text/css">  
-   <title>Bildarchiv - <%= @city.name %></title>
-   <meta name="description" content="Bildarchiv <%= @city.name %> - Bilder zum Anklicken für Panoramapräsentationen">
+   <title>Image Archive- <%= @city.en_name + " Germany" %></title>
   </head>
-  <body onload="load()">
+  <body>
       <div id="cont" class="wrapper">
           <div id="thumbnails"> 
             <% @city.panoramas.sort_by!{ |pano| pano.priority }.each do |pano| %>
              <% next unless pano.published %>
-              <div id="anch" class="anch"><a name="<%= pano.get_filename %>"> </a>
-              </div> 
-              <% city_name = @city.get_filename %>    
-              <div id="<%= pano.get_filename %>" class="thumbWrapper" style="background-image: url(http://stadtpanoramen.de/en/<%= city_name.to_s == "koeln" ? "cologne" : (city_name.to_s == "muenchen" ? "munich" :(city_name.to_s == "nuernberg" ? "nuremberg" : city_name)) %>/photos/<%= pano.get_filename %>.jpg)">
-                <a href="<%= pano.get_filename %>.html" title="<%= pano.alt_name.blank? ? (pano.name) : (pano.alt_name) %>" target="_top">
-                  <span class="title"><%= (pano.name) %> </span></a>
+              <div id="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>" class="thumbWrapper" style="background-image: url(photos/<%= FileHelper.to_filename pano.name %>.jpg)">
+                <a href="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>.html" title="<%= pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name):(pano.en_name)) : (pano.alt_en_name) %>" target="_top">
+                  <span class="title"><%= pano.en_name.blank? ? (pano.name):(pano.en_name) %> </span></a>
               </div>
             <% end %> 
               <div class="thumbWrapper" style="background-color: rgba(34, 34, 34, 0.7)">
