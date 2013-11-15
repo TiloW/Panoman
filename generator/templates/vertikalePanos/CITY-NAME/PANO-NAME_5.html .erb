@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+   <meta charset=utf-8> 
+   <meta http-equiv="content-language" content="de">
+   <meta name="viewport" content="height=device-height">    
+   <meta name="copyright" content="Helmut Kölbach">    
+   <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= @pano.location %> in <%= @city.name %> <%= @pano.district %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
+    <link rel="stylesheet" href="../css/s-panorama.css"> 
+    <link rel="stylesheet" href="../css/vpano.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/s-panorama.js"></script>
+    <script type="text/javascript" src="../js/j-pano.js"></script>
+    <script  type="text/javascript">
+    <!--    
+    
+    function street()
+    {
+      document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>s');
+    }
+    function inf()
+    {
+      document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>i');
+    }
+    function haus()
+    {
+      document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>h');
+    }
+    function hausaus()
+    {
+       document.pmvr.set('showlinks','no');
+       document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>');
+    }
+    function spot_on()
+    {
+       document.pmvr.set('script','<%= @city.get_filename %>.txt:<%= @pano.get_filename %>');
+       document.pmvr.set('showlinks','yes');
+    }
+     //-->
+    </script>
+   <title><%= panoname %> <%= @pano.location %> <%= @city.name %> - vertikales Panorama</title>
+  </head>
+<body>
+  <header>
+     <div class="logo">
+      <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen"></a>
+     </div>                                                   
+     <div class="city">
+      <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a>
+     </div>   
+     <div class="service">
+      <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+     </div>                                         
+     <div class="cities">  
+      <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
+     </div>           
+  </header>
+ <div class="all">      
+  <div id="javapano" style="margin:90px auto; width:1150px;height:570px;color:#000000;text-align:left;">      
+     <div class="rahmen_w">
+      <div class="rahmen_wol">
+      </div>
+      <div class="rahmen_wor">
+      </div>
+      <div class="rahmen_wom">
+        <h1><%= panoname %> - vertikales Panorama </h1>
+      </div>
+     </div>
+   <div style="clear:left;margin-right:-2px; width:10px; height:501px; float:left;">
+   <img src="../navpic/st_detail_bsp_07.jpg" alt="" width="10px" height="501px"><br>
+   </div>
+   <div style=" height:500px; width:786px; float:left; box-shadow:0px 45px 6px #000; color:#aaa;">
+    <applet  archive="pmvr.jar" mayscript codebase=".." code="pmvr.class" name="pmvr" width="786" height="500">
+     <param name="permissions" value="sandbox">
+     <param name="image" value="../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_5.jpg">
+     <param name="zMax" value="150">
+     <param name="delay" value="15000">
+     <param name='vauto' value="<%= @pano.rotation %>">
+     <param name="center" value="<%= @pano.initial_center { |s| (s.to_i*5/3.5).to_i } %>"> 
+     <% if @pano.repeative %><param name='view' value='360'><% end %>
+     <param name="hover" value="yes">
+     <% counter = -1 
+     @pano.internal_links.each do |link|      
+       dest = link.get_dest %>
+       <% altnam = link.alt_name %>
+       <param name="link<%= counter+=1 %>" value="<%= link.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,http://stadtpanoramen.de/<%= @city.get_filename %>/<%= dest.get_filename %>_5c.html,<%= dest.name %>">
+     <% end %>       
+     <table width="780" height="300" bgcolor="#000000"><tr><td align=center><font size="+1" color=red>Zum Betrachten der interaktiven Panoramen <br>muss die Java-Unterstützung <br>installiert und aktiviert sein. </font><br><br>Infos dazu finden Sie auf den <a href="http://www.stadtpanoramen.de/html/st_hilfe_3.html">Hilfe-Seiten</a><br><br>Alternativ können die Panoramabilder <br> hier bei den <a href="http://www.stadtpanoramen.de/stadt/bilder_staedte.html" target="_blank">Städte-Bilder</a> auch <br>ohne Java-Aktivierung betrachtet werden.</td></tr></table> 
+    </applet><br>   
+   </div>  
+   <div style=" width:7px; height:501px; overflow:hidden; float:left;">
+    <img src="../navpic/st_detail_bsp_09.jpg" alt="" width="9px" height="501px"><br>
+   </div>  
+   <div id="all_inf" class="all_info">
+     <div id="infolink" class="infolayer">
+      <span style="letter-spacing: 2px">Info-Links <br>im Bild: </span><br>
+      <img src="../navpic/pan.gif" alt="" width="1px" height="3px" border="0"><br>         
+      <% @pano.external_links.each do |link| %> <%= link.name %> <br> <% end %> 
+     </div>   
+     <div id="tour" class="tourlayer">
+      <span style="letter-spacing: 2px">Panorama-Tour</span><br>
+      <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>
+      Virtueller Rundgang <br>im Bild gelb markiert 
+      <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>
+      <br>Nächstes Panorama: <br>
+      <% counter = -1 
+      @pano.internal_links.each do |link|      
+        dest = link.get_dest %> <% altnam = link.alt_name %>
+        <a href="http://stadtpanoramen.de/<%= @city.get_filename %>/<%= dest.get_filename %>.html" class="yellow"><%= dest.name %> </a> <br>
+      <% end %> 
+     </div> 
+     <div id="str" class="steetlayer">
+      <span style="letter-spacing: 2px">Straßen </span><br>
+      <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>        
+      <% @pano.hotspot_infos.each do |hotspot| %> <%= hotspot.name %> <br>
+      <% end %> 
+     </div> 
+   </div>
+
+   <div class="adv">
+    <%= @pano.tag_list == "Airport F"||@pano.tag_list.to_s == "Botanischer Garten"||@pano.tag_list.to_s == "Palmengarten"||@pano.tag_list.to_s == "Großer Garten"||@pano.tag_list.to_s == "Kleines Fest im Großen Garten"||@pano.tag_list.to_s == "BUGA 2009" ? "" : @city.html_content %>
+   </div>
+     <div class="rahmen_wu">
+      <div class="rahmen_wul"><img src="../navpic/pan.gif" alt="" width="119" height="14">
+      </div>
+      <div class="rahmen_wur"><img src="../navpic/pan.gif" alt="" width="145" height="8" border="0">
+      </div>
+      <div class="rahmen_wum"><%= @pano.get_german_month %>
+      </div>
+     </div>
+   <div class="buttons_j">
+    <div class="button_left"><a href="javascript:index()" onMouseOut="tauschpf(pfname,Bild5)" onMouseOver="tauschpf(pfname,Bild6);"><img src="../navpic/pfeil_r.gif" width="8" height="8" name="pfname" title=" Zur Übersicht " alt="" border="0"></a>
+    </div>
+
+    <div style="width: 23px; height: 10px; float: left;<%= @pano.internal_links.empty? ? "display:none;" : "" %>"> 
+     <a href="javascript:spot_on()"><img src="../navpic/hotsp.gif" width="10" height="10" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0" onMouseUp="layeronoff('tour','','show','infolink','','hide','str','','hide','txt','','hide','gps','','hide')"></a>
+    </div>
+
+    <div style="width: 23px; height: 10px; float: left;<%= @pano.external_links.empty? ? "display:none;" : "" %>"> 
+     <a href="javascript:inf()" onMouseOut="tauschin(inname,inf1)" onMouseOver="tauschin(inname,inf2)"><img src="../navpic/in.gif" width="10" height="10" name="inname" title=" Info-Links einblenden " alt="" border="0" onMouseUp="layeronoff('infolink','','show','tour','','hide','str','','hide','txt','','hide','gps','','hide')"></a>
+    </div>
+
+    <div style="width: 23px; height: 10px; float: left;<%= @pano.hotspot_infos.empty? ? "display:none;" : "" %>">
+     <a href="javascript:street()" onMouseOut="tauschstr(strname,stra)" onMouseOver="tauschstr(strname,stra2)"><img src="../navpic/strasse.gif" width="11" height="9" name="strname" title=" Straßennamen einblenden " alt="" border="0" onMouseUp="layeronoff('str','','show','tour','','hide','infolink','','hide','txt','','hide','gps','','hide')"></a>
+    </div>  
+
+    <div style="width: 23px;height: 10px; float:left;<%= @pano.get_latitude == "0.000000" ? "display:none;" : "" %>">
+     <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" target="top" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../navpic/gps.gif" width="12" height="9" alt="" border="0" ></a>
+    </div>
+
+    <div style="width: 23px;height: 10px; float:left;<%= @pano.internal_links.empty? ? (@pano.external_links.empty? ? (@pano.hotspot_infos.empty? ? (@pano.get_latitude == "0.000000" ? "display:none;" : "") : "") : "") : "" %>">
+     <a href="javascript:hausaus()" onMouseOut="tauschaus(ausname,aus)" onMouseOver="tauschaus(ausname,aus2)"><img src="../navpic/aus.gif" width="8" height="8" name="ausname" title=" Infos im Bild ausblenden " alt="" border="0" onMouseUp="layeronoff('infolink','','show','infolink','','hide','tour','','show','tour','','hide','str','','show','str','','hide','txt','','show','txt','','hide','gps','','show','gps','','hide')"></a>
+    </div>  
+    </div>
+  
+    <div class="rotatbut">&nbsp;
+    </div>
+    <div class="foto">
+      Foto: <a href="http://www.stadtpanoramen.de/html/kontakt.html" class="greysmall">H. Kölbach</a> <br>
+    </div>  
+   </div>  
+   </div> 
+  <footer>
+    <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
+    <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
+  </footer>
+</body>
+</html>
