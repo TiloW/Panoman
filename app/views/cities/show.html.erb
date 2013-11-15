@@ -43,17 +43,17 @@
     <% end %>
     
     <%= 
-      generate_table(nil, ["Vorschau", "Details", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "360°", "Datum", "imNetz", "Exkl", "Löschen"], @panoramas) do |pano|
+      generate_table(nil, ["Vorschau", "Details", "360°", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "Datum", "imNetz", "Exkl", "Löschen"], @panoramas) do |pano|
         row_data = [
           pano.id,
           "<img title=\"Pfad: #{FileHelper.get_big_thumb_location pano}\"" +
               "class=\"thumbnail\" src=\"#{FileHelper.get_big_thumb pano}\" alt=\"nicht gefunden\" />",
           (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
+          generate_chkbtn(:panoramas, pano.id, :repeative, pano.repeative),
           (link_to pano.name, panorama_path(pano.id)),
            pano.alt_name,
            pano.en_name,
            pano.alt_en_name,
-          generate_chkbtn(:panoramas, pano.id, :repeative, pano.repeative),
           pano.date_of_recording.nil? ? "[Unbekannt]" : (l pano.date_of_recording, :format => :month),
           generate_chkbtn(:panoramas, pano.id, :published, pano.published),
           generate_chkbtn(:panoramas, pano.id, :exclusive, pano.exclusive),
