@@ -19,11 +19,13 @@
   <table>
     <tr>
       <th>Name</th>
-      <th>vertikale Panos</th>
+      <th>Alt Name</th>
+      <th>Rot</th>
     </tr>
     <% Panorama.order(:rotation).all.each do |pano| %>
         <tr>
           <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>/edit"><%= pano.name %></a></td>
+          <td><%= pano.alt_name %></td>          
           <td><%= pano.rotation %></td>
         </tr>
     <% end %>

@@ -5,7 +5,7 @@
    <meta http-equiv="content-language" content="en">   
    <meta name="viewport" content="height=device-height"> 
    <meta name="copyright" content="Helmut Koelbach"> <% location_en = (@pano.en_location.blank? ? (@pano.location) : (@pano.en_location)) %>
-   <meta name="description" content="<% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %> <%= pano_enname %> <%= location_en %> in <%= @city.en_name + " Germany" %> - vertical Panorama ">
+   <meta name="description" content="<% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %> <%= pano_enname %> <%= location_en %> in <%= @city.en_name + " Germany" %> - Portrait Format Panorama") : ("Panorama") %>">
    <link rel="stylesheet" href="../css/s-panorama.css"> 
    <link rel="stylesheet" href="../css/vpano_en.css">
    <link rel="shortcut icon" href="../icon.ico">
@@ -65,7 +65,7 @@
       <div class="rahmen_wor">
       </div>
       <div class="rahmen_wom">
-        <h1><%= pano_enname %> - vertical Panorama</h1>
+        <h1><%= pano_enname %> - Portrait Format Panorama</h1>
       </div>
      </div>
    <div style="clear:left;margin-right:-2px; width:10px; height:501px; float:left;">

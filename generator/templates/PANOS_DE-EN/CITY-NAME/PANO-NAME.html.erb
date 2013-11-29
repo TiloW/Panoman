@@ -2,16 +2,15 @@
 <html>
 <head>
    <meta charset=utf-8> 
-   <meta http-equiv="content-language" content="de">
-   <meta name="viewport" content="height=device-height">    
+   <meta http-equiv="content-language" content="de">  
    <meta name="copyright" content="Helmut Kölbach">    
-   <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= @pano.location %> in <%= @city.name %> <%= @pano.district %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
+   <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %><%= panoname %> <%= @pano.location %> in <%= @city.name %> <%= @pano.district %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
    <link rel="stylesheet" href="../css/s-panorama.css"> 
    <link rel="stylesheet" href="../css/panosmall.css">
    <link rel="shortcut icon" href="../icon.ico">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="../js/s-panorama.js"></script>
-    <script type="text/javascript" src="../js/j_pano.js"></script>
+    <script type="text/javascript" src="../js/jpano.js"></script>
     <script>
     <!--   
       $(function() {
@@ -53,10 +52,11 @@
                 );
               <% else %>            
                 pano.createRectHotspot(
-                  "<a href='<%= exurl %>'><span class='title'><% linkname = (exlink.name + " - Info Link (") %><% camname = ("Webcam (") %><%= (exlink.name == "." ? camname : linkname) + (exurl.split("/")[2]) + ")" %></span></a>", 
+                  "<a href='<%= exurl %>'><span class='title'><% linkname = (exlink.name + " - Info-Link (") %><% camname = ("Webcam (") %><%= (exlink.name == "." ? camname : linkname) + (exurl.split("/")[2]) + ")" %></span></a>", 
                   <%= exlink.get_xywh %>,"extern"
                 );
-            <% end %> <% end %>   
+            <% end %> 
+            <% end %>   
                                 
               <%
               spots = @pano.hotspot_infos
@@ -85,8 +85,9 @@
                 pano.showHotspots("intern",true);
                 pano.showHotspots("extern",false);
                 pano.showHotspots("info",false); 
+                pano.showHotspots("screen",false);
                 spotcss.css({'border-width': '2px'}); 
-                spotcss.css({'border-color': 'rgba(255,255,0,1)'});
+                spotcss.css({'border-color': 'rgba(210,210,110,1)'});
                 $('#hotsp').hide();       
                 $('#hotsp_hide').show();  
                 }); 
@@ -103,30 +104,39 @@
                 pano.showHotspots("info",false); 
                 pano.showHotspots("screen",false); 
                 spotcss.css({'border-width': '2px'}); 
-                spotcss.css({'border-color': 'rgba(255,255,0,1)'});
+                spotcss.css({'border-color': 'rgba(210,210,110,1)'});  <% links = @pano.internal_links
+                    links.first(1).each do |link| 
+                    if link %>
                 $('#hotsp').show();       
                 $('#hotsp_hide').hide();  
-                });     
+                <% end %><% end %>
+                }); 
+                
                 
                 $('#streets').click(function() { 
                 pano.showHotspots("info",true); 
                 pano.showHotspots("screen",true); 
                 pano.showHotspots("extern",false);
                 pano.showHotspots("intern",false);
-                spotcss.css({'border-width': '0px'}); 
-                spotcss.css({'border-color': 'rgba(255,255,0,1)'});
+                spotcss.css({'border-width': '0px'});   <% links = @pano.internal_links
+                    links.first(1).each do |link| 
+                    if link %>
                 $('#hotsp').show();       
-                $('#hotsp_hide').hide();   
-                });       
+                $('#hotsp_hide').hide();  
+                <% end %><% end %>
+                }); 
                 
                 $('#off').click(function() { 
                 pano.showHotspots("intern",false);
                 pano.showHotspots("extern",false);
                 pano.showHotspots("info",false); 
-                pano.showHotspots("screen",false); 
+                pano.showHotspots("screen",false);   <% links = @pano.internal_links
+                    links.first(1).each do |link| 
+                    if link %>
                 $('#hotsp').show();       
                 $('#hotsp_hide').hide();  
-                });           
+                <% end %><% end %>
+                }); 
                 
                 var infoElem = $('#linkInfo');
                 $('#pano .sp-hotspot').on('mouseenter', function(event) {
@@ -140,56 +150,103 @@
            }
         }); 
          $("#pano").mousedown(function() { 
-          button(bus,Bildstop2)
+          button(bus,Bildstop2) 
         });        
         <%= @pano.rotation == 0 ? "pano.targetSpeed = 0;" : @pano.rotation == -20 ? "pano.targetSpeed = 0.05; button(bus,Bildl2);" : "pano.targetSpeed = -0.05; button(bus,Bildr2);" %>  
-        });  
+        });
+        var scrl=setInterval("window.scrollTo(0,0)",10);
+        window.setTimeout("clearInterval(scrl)", 1000); 
+        $( document ).ready(function() {    
+          window.setTimeout("clearInterval(scrl)", 1000); 
+        });    
      //-->
     </script>
    <title><%= panoname %> <%= @pano.location %> <%= @city.name %> - StadtPanorama</title>
   </head>
-<body>
+  <body>
   <header>
      <div class="logo">
       <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen"></a>
      </div>                                                   
      <div class="city">
       <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a>
-     </div>   
-     <div class="service">
-      <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
-     </div>                                         
+     </div>                            
      <div class="cities">  
       <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
-     </div>           
+     <div class="service">
+      <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+     </div>   
+     </div>          
   </header>
   <div class="all"> 
-    <div id="nojava" class="nojava">
+    <div id="nojava">
       <div id="panoramaWrapper">
        <div class="rahmen_w">
         <div class="rahmen_wol">
         </div>
         <div class="rahmen_wor">
         </div>
-        <div class="rahmen_wom">
+        <div id="rahmen_wom">
           <%= panoname %> <%= @pano.location %> <%= @city.name %> <%= @pano.district %>
         </div>
        </div>
-     <div class="bord_l">
-     <img src="../navpic/st_detail_bsp_07.jpg" alt="" width="10" height="351">
-     </div>
-       <div id="pano"> </div>
-     <div class="bord_r">
-      <img src="../navpic/st_detail_bsp_09.jpg" alt="" width="13" height="351"><br>
-     </div>         
+     <div id="panobord">
+       <div class="bord_l">
+        <img src="../navpic/st_detail_bsp_07.jpg" alt="" width="11" height="351">
+       </div>
+       <div class="bord_r">
+        <img src="../navpic/st_detail_bsp_09.jpg" alt="" width="11" height="351"><br>
+       </div>         
+       <div id="pano">
+       </div>
+       <div id="linkInfo"> 
+       </div> 
+     </div> 
+     <div class="rahmen_wu">
+      <div class="rahmen_wul"><img src="../navpic/pan.gif" alt="" width="119" height="14">
+      </div>
+      <div class="rahmen_wur"><img src="../navpic/pan.gif" alt="" width="145" height="8" border="0">
+      </div>
+      <div class="rahmen_wum"><% unless @pano.date_of_recording.nil? %><%= @pano.get_german_month %><% end %>
+      </div>
+     </div>     
+     </div>    
+     <div id="all_buttons">
+     <div id="buttons">
+      <div id="hotsp" style="width: 35px; height: 15px; float: left; cursor:pointer;<%= @pano.internal_links.empty? ? "display:none;" : "" %>"> 
+       <img src="../navpic/hotspot.jpg" width="18" height="15" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0" onClick="layeronoff('tour','','show','noj_infolink','','hide','street','','hide','noj_txt','','hide');$('#noj_all_inf').show()">
+      </div>
+      <div id="hotsp_hide" style="width: 35px; height: 15px; float: left; cursor:pointer;"> 
+        <img src="../navpic/hotspot_hide.jpg" width="18" height="15" title=" Panorama-Tour ausblenden " alt="" border="0" onClick="layeronoff('tour','','hide','noj_infolink','','hide','street','','hide','noj_txt','','hide');$('#noj_all_inf').hide()">
+      </div>   
+      <div id="ext" style="width: 35px; height: 15px; float: left; cursor:pointer;<%= @pano.external_links.empty? ? "display:none;" : "" %>"> 
+       <img src="../navpic/infos.jpg" width="18" height="15" name="inname" title=" Info-Links einblenden " alt="" border="0" onClick="layeronoff('noj_infolink','','show','tour','','hide','street','','hide','noj_txt','','hide');$('#noj_all_inf').show()">
       </div>  
+      <div id="streets" style="width: 35px; height: 15px; float: left; cursor:pointer;<%= @pano.hotspot_infos.empty? ? "display:none;" : "" %>">
+       <img src="../navpic/street.jpg" width="18" height="15" name="strname" title=" Straßennamen einblenden " alt="" border="0" onClick="layeronoff('street','','show','tour','','hide','noj_infolink','','hide','noj_txt','','hide');$('#noj_all_inf').show()">
+      </div>    
+      <div  id="off" style=" width: 35px; height: 15px; float:left; cursor:pointer;<%= @pano.external_links.empty? ? (@pano.hotspot_infos.empty? ? "display:none;" : "") : "" %>">
+       <img src="../navpic/off.jpg" width="18" height="15" name="ausname" title=" Infos im Bild ausblenden " alt="" border="0" onClick="layeronoff('noj_infolink','','show','noj_infolink','','hide','tour','','show','tour','','hide','street','','show','street','','hide','noj_txt','','show','noj_txt','','hide','noj_gps','','show');$('#noj_all_inf').hide()">
+      </div>    
+     </div>
+    <div class="rotatbut" <%= @pano.rotation == 0? 'style="visibility:hidden"' : "" %>>
+     <img src="../navpic/taste-lll.png" alt="" width="26" height="13"><img src="../navpic/tastenaus.jpg" alt="" width="205" height="13" border="0" name="bus" usemap="#busMap"><img src="../navpic/taste-rrr.png" alt="" width="22" height="13" border="0">
+    </div>  
+      <div style="width: 10%; height: 15px; float:left;<%= @pano.get_latitude == "0.000000" ? "visibility:hidden;" : "" %>">
+       <a href="http://maps.google.de/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../navpic/gps.jpg" width="18" height="15" alt="" border="0" ></a>
+      </div>
+      <div class="noj_foto">
+        Foto: <a href="http://www.stadtpanoramen.de/html/kontakt.html" class="greysmall">H. Kölbach</a> <br>
+      </div>  
+      </div>  
+     </div> 
      <div id="noj_all_inf">
-       <div id="noj_infolink" class="infolayer">
+       <div id="noj_infolink">
         <span style="letter-spacing: 2px">Info-Links <br>im Bild: </span><br>
         <img src="../navpic/pan.gif" alt="" width="1px" height="3px" border="0"><br>         
         <% @pano.external_links.each do |link| %> <%= link.name %> <br> <% end %> 
        </div>   
-       <div id="noj_tour" class="tourlayer">
+       <div id="tour">
         <span style="letter-spacing: 2px">Panorama-Tour</span><br>
         <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>
         Virtueller Rundgang <br>im Bild gelb markiert 
@@ -201,57 +258,25 @@
           <a href="http://stadtpanoramen.de/<%= @city.get_filename %>/<%= dest.get_filename %>.html" class="yellow"><%= dest.name %> </a> <br>
         <% end %> 
        </div> 
-       <div id="noj_str" class="steetlayer">
+       <div id="street">
         <span style="letter-spacing: 2px">Straßen </span><br>
         <img src="../navpic/pan.gif" alt="" width="1" height="3" border="0"><br>        
         <% @pano.hotspot_infos.each do |hotspot| %><%= hotspot.name %> <br> <% end %> 
        </div> 
      </div>
-     <div class="noj-adv"><% if !@pano.exclusive %>     
+     <div id="ads"><% if !@pano.exclusive %>     
       <%= @city.html_content %><% end %>
-     </div>
-     <div id="linkInfo"> </div> 
-     <div class="rahmen_wu">
-      <div class="rahmen_wul"><img src="../navpic/pan.gif" alt="" width="119" height="14">
-      </div>
-      <div class="rahmen_wur"><img src="../navpic/pan.gif" alt="" width="145" height="8" border="0">
-      </div>
-      <div class="rahmen_wum"><% unless @pano.date_of_recording.nil? %><%= @pano.get_german_month %><% end %>
-      </div>
-     </div>     
-     <div class="noj_buttons">
-      <div id="hotsp" style="width: 35px; height: 15px; float: left; cursor:pointer;<%= @pano.internal_links.empty? ? "display:none;" : "" %>"> 
-       <img src="../navpic/hotspot.jpg" width="18" height="15" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0" onClick="layeronoff('noj_tour','','show','noj_infolink','','hide','noj_str','','hide','noj_txt','','hide');$('#noj_all_inf').show()">
-      </div>
-      <div id="hotsp_hide" style="width: 35px; height: 15px; float: left; cursor:pointer;"> 
-        <img src="../navpic/hotspot_hide.jpg" width="18" height="15" title=" Panorama-Tour ausblenden " alt="" border="0" onClick="layeronoff('noj_tour','','hide','noj_infolink','','hide','noj_str','','hide','noj_txt','','hide');$('#noj_all_inf').hide()">
-      </div>   
-      <div id="ext" style="width: 35px; height: 15px; float: left; cursor:pointer;<%= @pano.external_links.empty? ? "display:none;" : "" %>"> 
-       <img src="../navpic/infos.jpg" width="18" height="15" name="inname" title=" Info-Links einblenden " alt="" border="0" onClick="layeronoff('noj_infolink','','show','noj_tour','','hide','noj_str','','hide','noj_txt','','hide');$('#noj_all_inf').show()">
-      </div>  
-      <div id="streets" style="width: 35px; height: 15px; float: left; cursor:pointer;<%= @pano.hotspot_infos.empty? ? "display:none;" : "" %>">
-       <img src="../navpic/street.jpg" width="18" height="15" name="strname" title=" Straßennamen einblenden " alt="" border="0" onClick="layeronoff('noj_str','','show','noj_tour','','hide','noj_infolink','','hide','noj_txt','','hide');$('#noj_all_inf').show()">
-      </div>    
-      <div  id="off" style=" width: 35px; height: 15px; float:left; cursor:pointer;<%= @pano.external_links.empty? ? (@pano.hotspot_infos.empty? ? "display:none;" : "") : "" %>">
-       <img src="../navpic/off.jpg" width="18" height="15" name="ausname" title=" Infos im Bild ausblenden " alt="" border="0" onClick="layeronoff('noj_infolink','','show','noj_infolink','','hide','noj_tour','','show','noj_tour','','hide','noj_str','','show','noj_str','','hide','noj_txt','','show','noj_txt','','hide','noj_gps','','show');$('#noj_all_inf').hide()">
-      </div>    
-     </div>
-    <div class="rotatbut"<%= @pano.rotation == 0? 'style="visibility:hidden"' : "" %>>
-     <img src="../navpic/taste-lll.png" alt="" width="26" height="13"><img src="../navpic/tastenaus.jpg" alt="" width="205" height="13" border="0" name="bus" usemap="#busMap"><img src="../navpic/taste-rrr.png" alt="" width="22" height="13" border="0">
-    </div>  
-      <div style="width: 110px; height: 15px; float:left;<%= @pano.get_latitude == "0.000000" ? "visibility:hidden;" : "" %>">
-       <a href="http://maps.google.de/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../navpic/gps.jpg" width="18" height="15" alt="" border="0" ></a>
-      </div>
-      <div class="noj_foto">
-        Foto: <a href="http://www.stadtpanoramen.de/html/kontakt.html" class="greysmall">H. Kölbach</a> <br>
-      </div>  
-      <div class="w_screen">   
+     </div>   
+   </div>           
+      <div id="full">   
        <a href="<%= pano.get_filename %>_5c.html" onMouseOut="tauschc(cname,Bild7)" onMouseOver="tauschc(cname,Bild8)"><img src="../navpic/bcine.gif" width="108" height="20" title="Panorama in voller Breite" alt="" name="cname" border="0"></a> 
-      </div>   
-     </div>       
+      </div> 
       <div class="pad">
       </div>       
-      <div class="content-b">
+      <div id="content-b">
+      <div> 
+        <a name="fotos-<%= @city.get_filename %>"> </a>
+      </div> 
       <div id="menue">
         <ul>
           <li>Weitere <br><a href="<%= @city.get_filename %>_panoramen.html">Panoramen von <%= @city.name %></a></li>
@@ -259,7 +284,8 @@
       </div>
         <div id="thumbframe">
           <iframe width="781" height="144"  frameborder="0" marginheight="0" marginwidth="0" scrolling="no" name="archiv" src="bildarchiv_<%= @city.get_filename %>.html#<%= @pano.get_filename %>"> </iframe>
-        </div>    
+        </div>   
+     </div>   
       <div class="pad">&nbsp;
       </div> 
        <div class="advrow"><% if !@pano.exclusive %>   
@@ -282,8 +308,7 @@
      <script type="text/javascript"
      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
      </script><% end %>
-      </div>
-      </div>    
+      </div> 
       <div class="foot">&nbsp;
       </div>    
       <div>
@@ -302,11 +327,15 @@
       <% end %></map>     
      <noscript style="color:#ff6666;font-size:20pt"><br>Das Panorama benötigt <a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://ecosia.org/search.php?q=javascript+aktivieren">Javascript-Aktivierung! </a> </noscript>
      </div>     
-     </div> 
   <footer>
-    <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
-    <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
-    <div class="mail"> <a href="mailto:?subject=StadtPanorama%20<%= panoname %> <%= @pano.location %> <%= @city.name %> <%= @pano.district %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20interessantes%20Panorama%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2F<%= @pano.get_filename %>%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AA%20n%20l%20e%20i%20t%20u%20n%20g%0D%0AEmailadresse%20des%20Empf%C3%A4ngers%20eingeben%2c%0D%0Aden%20Text%20nach%20Belieben%20erg%C3%A4nzen%20und%0D%0Adiesen%20Anleitungsabschnitt%20vor%20dem%20Absenden%20entfernen%2E" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite weiterempfehlen </a>
+    <div class="f_left"> 
+      <a href="mailto:?subject=StadtPanorama%20<%= panoname %> <%= @pano.location %> <%= @city.name %> <%= @pano.district %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20interessantes%20Panorama%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2F<%= @pano.get_filename %>%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AA%20n%20l%20e%20i%20t%20u%20n%20g%0D%0AEmailadresse%20des%20Empf%C3%A4ngers%20eingeben%2c%0D%0Aden%20Text%20nach%20Belieben%20erg%C3%A4nzen%20und%0D%0Adiesen%20Anleitungsabschnitt%20vor%20dem%20Absenden%20entfernen%2E" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> weiterempfehlen </a>
+    </div>
+    <div id="f_mid">
+      <a href="#fotos-<%= @city.get_filename %>"><%= @city.name %> </a>
+    </div>
+    <div class="f_right">
+      <a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a>
     </div>
   </footer>
 </body>

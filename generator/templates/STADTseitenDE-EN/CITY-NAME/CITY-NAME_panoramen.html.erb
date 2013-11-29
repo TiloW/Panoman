@@ -4,7 +4,8 @@
   <meta charset=utf-8 />
   <title><%= @city.name %> Panoramen </title>
   <meta http-equiv="content-language" content="de">  
-  <meta name="copyright" content="Helmut Kölbach">    
+  <meta name="copyright" content="Helmut Kölbach">
+  <meta name="viewport" content="width=780, initial-scale=1, maximum-scale=1.0">     
   <meta name="description" content="360° Stadtpanoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen im Panoramaformat">
   <link rel="shortcut icon" href="icon.ico">
   <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
@@ -145,18 +146,20 @@
          <br>
          <iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" src="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;output=embed"></iframe><br /><a href="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;source=embed" target="_blank"><%= @city.name %> Panorama-Karte </a> &nbsp;<span style="font-size:0.9em;">(Panoramen auf einer größeren Karte anzeigen)</span>
       </div> 
-      <div class="de-map">
+      <div class="de-map"><% if @city.map_id == "0004da425c9f05f247e60" %> 
         INTERAKTIVE <br>DEUTSCHLANDKARTE
-         <br>   <% if @city.map_id == "0004da425c9f05f247e60" %>  
+         <br>    
           <iframe src="http://www.stadtpanoramen.de/karten/karte_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
           <% else %>          
            <% if @city.map_id == "00044b138d7eba762674d" %> 
-           <div style="width:229; height:312"> &nbsp; </div>
-           <% else %> 
+           <div style="width:229; height:312"> &nbsp; </div>  <% else %>         
+           <% if @city.map_id == "0004df7ee473a37211d4c" %> 
+           <div style="width:229; height:312"> &nbsp; </div><% else %> 
+        INTERAKTIVE <br>DEUTSCHLANDKARTE
+         <br>   
           <iframe src="http://www.stadtpanoramen.de/karten/karte_<%= @city.get_filename %>.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
         <br><a href="http://www.stadtpanoramen.de/html/logos.html#deutschlandkarte"> Deutschlandkarte einbinden <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>
-        <% end %>
-        <% end %>
+        <% end %><% end %><% end %>
       </div>
       <div class="adv2-down"> 
          <%= @city.ad_sec_page_down %>

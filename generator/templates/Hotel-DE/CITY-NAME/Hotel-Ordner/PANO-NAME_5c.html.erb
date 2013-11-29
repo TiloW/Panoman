@@ -3,28 +3,24 @@
 <head>
   <meta charset=utf-8> 
   <meta name="copyright" content="Helmut Kölbach">  
-  <meta name="viewport" content="height=device-height"> 
+   <meta name="viewport" content="height=780, initial-scale=1, maximum-scale=1.0"> 
   <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= pano.location %> ::: - <%= (@pano.repeative == true) ? ("360° Widescreen-Panorama") : ("Widescreen-Panorama") %>">    
   <title><%= @pano.name %> ::: </title>
   <link rel="stylesheet" type="text/css" href="../../css/cinehotel.css">
   <link rel="stylesheet" href="../../css/s-panorama.css">
-   <link rel="shortcut icon" href="../../icon.ico">
-  <!--[if lt IE 9]>
-    <style type="text/css">@import url(../../css/pan_ie.css);</style>
-  <![endif]-->  
+  <link rel="shortcut icon" href="../../icon.ico">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script type="text/javascript" src="../../js/s-panorama.js"></script>
-  <script type="text/javascript" src="../../js/j-panorama.js"></script>
-  <script type="text/javascript" language="javascript" src="../../cinepano.js"></script>
+  <script type="text/javascript" src="../../js/cinepano.js"></script>
   <script>
   <!--   
     $(function() {
       pano = new SimplePanorama({
        'selector': '#pano',
        'imagePath': '../../en/<%= FileHelper.to_filename @city.en_name %>/.../panoramas/<%= @pano.get_filename %>_5.jpg', 
-       'modules': ['move_mousedown', 'move_swipe'],      
-       'initialPos':175,
-       'repeative': <%= @pano.repeative %>,
+       'modules': ['move_mousedown', 'move_swipe', 'move_touch'], 
+       'initialPos':<%= @pano.initial_center.blank? ?  "-300" : (@pano.initial_center*5/3.5-300).to_i %>,
+       'repeative': <%= @pano.repeative.blank? ?  "false" : @pano.repeative %>,
        'callback': function() {
           <%
             links = @pano.internal_links
@@ -34,32 +30,101 @@
               if link.is_circle
           %>
               pano.createCircleHotspot(
-                "<a href='<%= link.get_dest.get_filename %>_5c.html'><span class='title'><% altnam = link.alt_name %><%= altnam.blank? ? dest.name : altnam  %></span></a>",
-                 <%= link.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,"intern"
+                "<a href='<%= dest.get_filename %>_5c.html'><span class='title'><% altnam = link.alt_name %><%= altnam.blank? ? (dest.alt_name.blank? ? dest.name : dest.alt_name) : altnam %></span></a>",
+                <%= link.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,"intern"
               );
-            <% else %>
+            <% else %> 
               pano.createRectHotspot(
-                "<a href='<%= link.get_dest.get_filename %>_5c.html'></a>", 
-                <%= link.get_xywh %>
+                "<a href='<%= dest.get_filename %>_5c.html'><span class='title'><% altnam = link.alt_name %><%= altnam.blank? ? (dest.alt_name.blank? ? dest.name : dest.alt_name) : altnam %></span></a>", 
+                <%= link.get_xywh.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,"intern"
               );
-            <% end %>
-          <% end %>
-              pano.showHotspots("intern",visible = true); 
-                  
-              $('#hotsp_hide').click(function() { 
-              pano.showHotspots("intern",visible = false);
-              $('#hotsp').show();       
-              $('#hotsp_hide').hide();  
-              }); 
-              
-              var spotcss = $('html.no-touch .sp-hotspot');
-              $('#hotsp').click(function() { 
-              pano.showHotspots("intern",visible = true);
-              spotcss.css({'border-width': '2px'}); 
-              spotcss.css({'border-color': 'rgba(255,255,0,1)'});
-              $('#hotsp').hide();       
-              $('#hotsp_hide').show();  
-              }); 
+            <% end %><% end %>
+              <%
+              extlinks = @pano.external_links
+              extlinks.sort_by! { |l| l.get_area }
+              extlinks.each do |exlink| 
+              exurl = exlink.url  
+              if exlink.is_circle
+            %>
+                pano.createCircleHotspot(
+                  "<a href='<%= exurl %>.html'><span class='title'><%= exlink.name %> </span></a>", 
+                  <%= exlink.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,"<%= exlink.name=="Webcam" ? "extern" : "intern" %>"
+                );
+              <% else %>
+                pano.createRectHotspot(
+                  "<a href='<%= exurl %>'><span class='title'><% linkname = (exlink.name + " - Info Link (") %><% camname = ("Webcam (") %><%= (exlink.name == "." ? camname : linkname) + (exurl.split("/")[2]) + ")" %></span></a>",
+                  <%= exlink.get_xywh.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,"extern"
+                );
+            <% end %> <% end %>                                 
+              <%
+              spots = @pano.hotspot_infos
+              spots.sort_by! { |l| -l.get_area }
+              spots.each do |spot|       
+              if spot.is_circle   
+            %>           
+                pano.createCircleHotspot(
+                  "<span class='title'><%= spot.name %></span>", 
+                  <%= spot.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,"screen"
+                );
+            <% else %>
+                pano.createRectHotspot(
+                  "<span class='title'><%= spot.name %></span>", 
+                  <%= spot.get_xywh.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,"info"
+                );
+            <% end %> <% end %>   
+                pano.showHotspots("intern",true); 
+                pano.showHotspots("extern",false); 
+                pano.showHotspots("info",false); 
+                pano.showHotspots("screen",false);                    
+                
+                var spotcss = $('html.no-touch .sp-hotspot');
+                
+                $('#hotsp').click(function() { 
+                pano.showHotspots("intern",true);
+                pano.showHotspots("extern",false);
+                pano.showHotspots("info",false); 
+                spotcss.css({'border-width': '2px'}); 
+                spotcss.css({'border-color': 'rgba(255,255,0,1)'});
+                $('#hotsp').hide();       
+                $('#hotsp_hide').show();  
+                }); 
+                    
+                $('#hotsp_hide').click(function() { 
+                pano.showHotspots("intern",false);
+                $('#hotsp').show();       
+                $('#hotsp_hide').hide();  
+                }); 
+                
+                $('#ext').click(function() { 
+                pano.showHotspots("extern",true);
+                pano.showHotspots("intern",false);
+                pano.showHotspots("info",false); 
+                pano.showHotspots("screen",false); 
+                spotcss.css({'border-width': '2px'}); 
+                spotcss.css({'border-color': 'rgba(255,255,0,1)'});
+                $('#hotsp').show();       
+                $('#hotsp_hide').hide();  
+                });     
+                
+                $('#streets').click(function() { 
+                pano.showHotspots("info",true); 
+                pano.showHotspots("screen",true); 
+                pano.showHotspots("extern",false);
+                pano.showHotspots("intern",false);
+                spotcss.css({'border-width': '0px'}); 
+                spotcss.css({'border-color': 'rgba(255,255,0,1)'});
+                $('#hotsp').show();       
+                $('#hotsp_hide').hide();   
+                });       
+                
+                $('#off').click(function() { 
+                pano.showHotspots("intern",false);
+                pano.showHotspots("extern",false);
+                pano.showHotspots("info",false); 
+                pano.showHotspots("screen",false); 
+                $('#hotsp').show();       
+                $('#hotsp_hide').hide();  
+                });           
               
               var infoElem = $('#linkInfo');
               $('#pano .sp-hotspot').on('mouseenter', function(event) {
@@ -71,207 +136,120 @@
                 infoElem.css({'opacity': 0});
           });
          }
-      });      
-      <%= @pano.rotation == 0 ? "pano.targetSpeed = 0;" : "pano.targetSpeed = -0.05;" %>
+      });   
+         $("#pano").mousedown(function() { 
+          button(bus,Bildstop2)
+        });           
+        <%= @pano.rotation == 0 ? "pano.targetSpeed = 0;" : @pano.rotation == -20 ? "pano.targetSpeed = 0.05; button(bus,Bildl2)" : "pano.targetSpeed = -0.05; button(bus,Bildr2)" %>  
       });  
-   //-->
-  </script>
-  <script>
-  <!--    
+  winwidth=window.screen.availWidth;
+  mid=(500-winwidth)/-2;
   $(document).ready(function () { 
-    if(navigator.javaEnabled())
-    {
-      $('#javapano').show(); 
-      rand();
-    }
-    else
-    {
-      $('#nojava').show();
-      }
-  });  
-  
-  function street()
-  {
-    document.pmvr.set('script','<%= @city.get_filename %>_5.txt:<%= @pano.get_filename %>s');
-  }
-  function inf()
-  {
-    starts();
-    document.pmvr.set('script','<%= @city.get_filename %>_5.txt:<%= @pano.get_filename %>i');
-  }
-  function haus()
-  {
-    starts();
-    document.pmvr.set('script','<%= @city.get_filename %>_5.txt:<%= @pano.get_filename %>h');
-  }
-  function hausaus()
-  {
-     document.pmvr.set('showlinks','no');
-     document.pmvr.set('script','<%= @city.get_filename %>_5.txt:<%= @pano.get_filename %>');
-  }
-  function spot_on()
-  {
-     document.pmvr.set('script','<%= @city.get_filename %>_5.txt:<%= @pano.get_filename %>');
-     document.pmvr.set('showlinks','yes');
-  }
+      if (winwidth <= 650) {
+        $('#all').css({"top": "0", "padding-top": "0"}); 
+        if (winwidth <= 499) {
+          $('#all').css({"margin-top": "mid"});
+          $('#f_city a').show();
+        };
+      };
+      if (winwidth >= 1850) {
+        $('#panoramaWrapper').css({"max-width": "1850px"});
+      };      
+      if (window.name == "cinepano"){
+        $('#close').show();
+      };
+      if ( $.browser.webkit ) {
+        $('#nojava').css({"min-width": "780px"});
+      }      
+  });
    //-->
   </script>
 </head>
-<body onUnload="panostop()">
+<body>
   <header>
-      <a href="http://www.stadtpanoramen.de/"><img src="../../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen"> </a>        
-      <div style="padding:0 10px; margin-left:40%; margin-top:10px; color:#ddd; font-size:1.1em; letter-spacing:0.1em; float:left; max-width:330px; position:absolute;"><a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%=FileHelper.to_filename @pano.location %>/index.html"><%= @pano.location %> </a>
-      </div>  
-      <div class="navtop">
-        &nbsp;
-      </div>
+     <div class="logo">
+      <a href="http://www.stadtpanoramen.de/"><img src="../../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen"></a>
+     </div>                                                    
+     <div class="city">
+      <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/.../index.html">::: </a>
+     </div>   
+     <div class="service">
+       &nbsp;
+     </div>                                           
+     <div class="cities">  
+      &nbsp;
+     </div>   
   </header>
- <div class="all">      
-  <div id="javapano" class="javapano">      
-     <div class="rahmen_w">
-      <div class="rahmen_wol">
-      </div>
-      <div class="rahmen_wor">
-      </div>
-      <div class="rahmen_wom">
-        <%= panoname %> :::
-      </div>
-     </div>
-   <div class="screen">
-   <div class="bord_left">
-   <img src="../../navpic/st_detail_bsp_07.jpg" alt="" width="10px" height="501px"><br>
-   </div>
-   <div class="applet">
-      <applet archive="pmvr.jar" mayscript codebase="../.." code="pmvr.class" name="pmvr"  width="99%" height="500" >
-  <param name="permissions" value="sandbox">
-  <param name="image" value="../../en/<%= FileHelper.to_filename @city.en_name %>/.../panoramas/<%= @pano.get_filename %>_5.jpg">
-  <param name="zmax" value="150">
-  <param name="zoom" value="no"> 
-  <param name="delay" value="15000"> 
-  <param name="auto" value="<%= @pano.rotation %>">
-  <param name="center" value="<%= @pano.initial_center %>"> 
-  <% if @pano.repeative %><param name='view' value='360'><% end %>
-  <param name="hover" value="yes"> 
-    <% 
-    counter = -1 
-    @pano.internal_links.each do |link|
-    dest = Panorama.find(link.destination_id)%>
-    <param name="link<%= counter+=1 %>" value="<%= link.path.split(',').map! { |s| (s.to_i*5/3.5).to_i }.join(',') %>,<%= dest.get_filename %>_5c.html,<%= dest.name %>">
-    <% end %>  
-    <br><br><br><br><font size="+1" color="red">Zum Betrachten der interaktiven Panoramen <br>muss die Java-Unterstützung installiert und aktiviert sein.</font><br><br><font color="#aaaaaa">Infos dazu finden Sie hier auf den <a href="http://www.stadtpanoramen.de/html/st_hilfe_3.html" class="white">Hilfe-Seiten. </a><br><br>Alternativ können die Panoramabilder <br>hier bei den <a href="http://www.stadtpanoramen.de/stadt/bilder_staedte.html" class="white">Städte-Bilder</a> auch <br>ohne Java-Aktivierung betrachtet werden.<br><br> 
-  </applet><br>  
-   </div>  
-   <div class="bord_right">
-    <img src="../../navpic/st_detail_bsp_09.jpg" alt="" width="13px" height="501px"><br>
-   </div>   
-   </div>   
-     <div class="rahmen_wu">
-      <div class="rahmen_wul"><img src="../../navpic/pan.gif" alt="" width="20" height="2"><a href="javascript:end()" onMouseOut="panogo();tauschpf(pfname,Bild5)" onMouseOver="panostop();tauschpf(pfname,Bild6);status='zurück';return true"><img src="../../navpic/pfeil_r.gif" width="8" height="8" name="pfname" alt="" border="0"><img src="../../navpic/pan.gif" alt="" width="5" height="2" border="0">zurück</a>
-      </div>
-      <div class="rahmen_wur"><a  href="http://www.stadtpanoramen.de/html/st_kontakt_index.html" target="_blank" onMouseOver="status='Kontakt';return true">Panorama H. Kölbach </a><img src="../../navpic/pan.gif" alt="" width="26" height="8" border="0">
-      </div>
-      <div class="rahmen_wum">
-        &nbsp;
-      </div>
-     </div>  
-   <div class="buttons_j">
-
-    <div style="width: 23px;height: 10px; float:right;<%= @pano.internal_links.empty? ? (@pano.external_links.empty? ? (@pano.hotspot_infos.empty? ? (@pano.get_latitude == "0.000000" ? "display:none;" : "") : "") : "") : "" %>">
-     <a href="javascript:hausaus()" onMouseOut="tauschaus(ausname,aus)" onMouseOver="tauschaus(ausname,aus2)"><img src="../../navpic/aus.gif" width="8" height="8" name="ausname" title=" Infos im Bild ausblenden " alt="" border="0" onMouseUp="layeronoff('infolink','','show','infolink','','hide','tour','','show','tour','','hide','str','','show','str','','hide','txt','','show','txt','','hide','gps','','show','gps','','hide')"></a>
-    </div>
-
-    <div style="width: 33px;height: 10px; float:right;<%= @pano.get_latitude == "0.000000" ? "display:none;" : "" %>">
-     <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" target="top" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../../navpic/gps.gif" width="12" height="9" alt="" border="0" ></a>
-    </div>
-
-    <div style="width: 33px; height: 10px; float:right;<%= @pano.hotspot_infos.empty? ? "display:none;" : "" %>">
-     <a href="javascript:street()" onMouseOut="tauschstr(strname,stra)" onMouseOver="tauschstr(strname,stra2)"><img src="../../navpic/strasse.gif" width="11" height="9" name="strname" title=" Straßennamen einblenden " alt="" border="0"  onMouseOver="status='Straßennamen einblenden';return true" onMouseUp="layeronoff('str','','show','tour','','hide','info','','hide','txt','','hide','gps','','hide')"></a>
-    </div>
-    
-    <div style="width: 33px; height: 10px; float:right;<%= @pano.external_links.empty? ? "display:none;" : "" %>"> 
-     <a href="javascript:inf()" onMouseOut="tauschin(inname,inf1)" onMouseOver="tauschin(inname,inf2)"><img src="../../navpic/in.gif" width="10" height="10" name="inname" title=" Info-Links einblenden " alt="" border="0" onMouseOver="status='Info-Links im Panorama einblenden';return true" onMouseUp="layeronoff('info','','show','tour','','hide','str','','hide','txt','','hide','gps','','hide')"></a>
-    </div>
-
-    <div style="width: 33px; height: 10px; float:right;<%= @pano.internal_links.empty? ? "display:none;" : "" %>"> 
-     <a href="javascript:spot_on()"><img src="../../navpic/hotsp.gif" width="10" height="10" name="hotname" title=" Panorama-Tour einblenden - &#13; auch mit Leertaste ein- und ausblenden " alt="" border="0" onMouseUp="layeronoff('tour','','show','info','','hide','str','','hide','txt','','hide','gps','','hide')"></a>
-    </div>
-    </div>
-    <div class="rotatbut"<%= @pano.rotation == 0? 'style="visibility:hidden"' : "" %>>
-     <img src="../../navpic/taste-lll.png" alt="" width="26" height="13"><img src="../../navpic/tastenaus.jpg" alt="" width="205" height="13" border="0" name="tastenname" usemap="#tastennameMap5"><img src="../../navpic/taste-rrr.png" alt="" width="22" height="13" border="0">
-    </div>  
-  <div class="fullscreen"><a href="javascript:full()"><br>
-    <img src="../../navpic/fullscreen.gif" width="85" height="23" title="Vergößerung auf Vollbild" alt="Full Screen" name= "fsname" border="0" onMouseOut="tauschfs(fsname,BildKfs)" onMouseOver="tauschfs(fsname,BildKfsc)"></a> <br>Vollbild-Ansicht <br>(mit Esc-Taste wieder ausschalten)
-  </div> 
-   </div>  
- <map name="tastennameMap5">
-  <area shape="rect" coords="0,0,41,13" href="javascript:ll()" title="Schnell links drehen"  alt="" onMouseUp="tastell(tastenname,Bildll2)" onMouseDown="tastell(tastenname,Bildll)">
-  <area shape="rect" coords="42,0,81,13" href="javascript:l()" title="Links drehen"  alt="" onMouseUp="tastel(tastenname,Bildl2)" onMouseDown="tastel(tastenname,Bildl)">
-  <area shape="rect" coords="82,0,123,13" href="javascript:stop()" title="Stop"  alt="" onMouseUp="tastestop(tastenname,Bildstop2)" onMouseDown="tastestop(tastenname,Bildstop)">
-  <area shape="rect" coords="124,0,164,13" href="javascript:r()" title="Rechts drehen"  alt="" onMouseUp="taster(tastenname,Bildr2)" onMouseDown="taster(tastenname,Bildr)">
-  <area shape="rect" coords="165,0,210,13" href="javascript:rr()" title="Schnell rechts drehen"  alt="" onMouseUp="tasterr(tastenname,Bildrr2)"  onmousedown="tasterr(tastenname,Bildrr)">
- </map>
-   
-   
-  <div id="nojava" class="nojava">
+ <div id="all"> 
     <div id="panoramaWrapper">
      <div class="rahmen_w">
       <div class="rahmen_wol">
       </div>
       <div class="rahmen_wor">
       </div>
-      <div class="rahmen_wom"><img src="../../navpic/pan.gif" alt="" width="8" height="15">        
-          <%= panoname %> :::
+      <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="15">   
+        <%= panoname %> :::
       </div>
      </div>
      <div class="screen">
-     <div class="bord_l">
-     <img src="../../navpic/st_detail_bsp_07.jpg" alt="" width="10px" height="501px"><br>
-     </div>
-     <div id="pano"> </div>  
-     <div class="bord_r">
-        <img src="../../navpic/st_detail_bsp_09.jpg" alt="" width="13px" height="501px"><br>
-     </div>
+     <div id="pano"> </div>
      <div id="linkInfo"> </div>   
     </div>  
      <div class="rahmen_wu">
-      <div class="rahmen_wul"><img src="../../navpic/pan.gif" alt="" width="20" height="2"><a href="javascript:end()" onMouseOut="panogo();tauschpf(pfname,Bild5)" onMouseOver="panostop();tauschpf(pfname,Bild6);status='zurück';return true"><img src="../../navpic/pfeil_r.gif" width="8" height="8" name="pfname" alt="" border="0"><img src="../../navpic/pan.gif" alt="" width="5" height="2" border="0">zurück</a>
+      <div class="rahmen_wul"><img src="../navpic/pan.gif" alt="" width="20" height="2"><a href="javascript:end()" onMouseOut="panogo();tauschpf(pfname,Bild5)" onMouseOver="panostop();tauschpf(pfname,Bild6);status='zurück';return true"><img src="../../navpic/pfeil_r.gif" width="8" height="8" name="pfname" alt="" border="0"><img src="../navpic/pan.gif" alt="" width="5" height="2" border="0">zurück</a>
       </div>
-      <div class="rahmen_wur"><a  href="http://www.stadtpanoramen.de/html/st_kontakt_index.html" target="_blank" onMouseOver="status='Kontakt';return true"><img src="../../navpic/tphk.gif" alt="" width="119" height="8" border="0"></a><img src="../../navpic/pan.gif" alt="" width="26" height="8" border="0">
+      <div class="rahmen_wur"><a  href="http://www.stadtpanoramen.de/html/st_kontakt_index.html" target="_blank" onMouseOver="status='Kontakt';return true"><img src="../../navpic/tphk.gif" alt="" width="119" height="8" border="0"></a><img src="../navpic/pan.gif" alt="" width="26" height="8" border="0">
       </div>
       <div class="rahmen_wum">
-        &nbsp;
       </div>
-     </div>  
-     <div class="allbuttons">
-       <div id="hotsp" style="margin-top:-10px; width:30%; height:20px; padding-top:20px; float:left; text-align:right; cursor:pointer;"<%= @pano.internal_links.empty? ? "display:none;" : "" %>">
-         <img src="../../navpic/hotsp.gif" width="17" height="17" title=" Panorama-Tour einblenden " alt="" border="0">
-       </div>
-       <div id="hotsp_hide">
-         <img src="../../navpic/hotsp_hide.gif" width="17" height="17" title=" Panorama-Tour ausblenden " alt="" border="0">
-       </div>
-       <div id="panoramaControls"<%= @pano.rotation == 0? 'style="visibility:hidden"' : "" %>>
-         <ul>
-          <li><img id="pc-left-fast" src="../../img/pc/left-fast.png" title="Schnell links drehen" alt="button_fast_left"/></li>
-          <li><img id="pc-left" src="../../img/pc/left.png" title="Links drehen" alt="button_left"/></li>
-          <li><img id="pc-pause" src="../../img/pc/pause.png" title="Stop" alt="button_stop"/></li>
-          <li><img id="pc-right" src="../../img/pc/right.png" title="Rechts drehen" alt="button_right"/></li>
-          <li><img id="pc-right-fast" src="../../img/pc/right-fast.png" title="Schnell rechts drehen" alt="button_fast_right"/></li>
-        </ul>
-       </div><% if @pano.get_latitude != "0.000000" %>
-       <div id="gps">
-        <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" title="  Show Panorama Location on <%= @city.en_name %> Map "><img src="../navpic/gps_map.png" width="20" height="15" alt="" border="0"></a>
-       </div><% else %>
-       <div id="gps">
-        <img src="../navpic/pan.gif" width="20" height="15" alt="" border="0">
-       </div><% end %>
-     </div> 
-   </div>   
+     </div>         
+     <div class="all_buttons">   
+     <div class="noj_buttons">  
+      <div id="hotsp" style="width: 20%; height: 15px; float: left; cursor:pointer;<%= @pano.internal_links.empty? ? " display:none;" : "" %>"> 
+       <img src="../../navpic/hotspot.jpg" width="18" height="15" name="hotname" title=" Panorama-Tour einblenden " alt="" border="0">
+      </div>
+      <div id="hotsp_hide" style="width: 20%; height: 15px; float: left; cursor:pointer;"> 
+        <img src="../../navpic/hotspot_hide.jpg" width="18" height="15" title=" Panorama-Tour ausblenden " alt="" border="0">
+      </div>   
+      <div id="ext" style="width: 20%; height: 15px; float: left; cursor:pointer;<%= @pano.external_links.empty? ? " display:none;" : "" %>"> 
+       <img src="../../navpic/infos.jpg" width="18" height="15" name="inname" title=" Info-Links einblenden " alt="" border="0">
+      </div>  
+      <div id="streets" style="width: 20%; height: 15px; float: left; cursor:pointer;<%= @pano.hotspot_infos.empty? ? " display:none;" : "" %>">
+       <img src="../../navpic/street.jpg" width="18" height="15" name="strname" title=" Straßennamen einblenden " alt="" border="0">
+      </div>    
+      <div  id="off" style=" width: 20%; height: 15px; float:left; cursor:pointer;<%= @pano.external_links.empty? ? (@pano.hotspot_infos.empty? ? " display:none;" : "") : "" %>">
+       <img src="../../navpic/off.jpg" width="18" height="15" name="ausname" title=" Infos im Bild ausblenden " alt="" border="0">
+      </div>    
+     </div>
+    <div class="gps">  
+      <div style="width:20%<%= @pano.get_latitude == "0.000000" ? "; visibility:hidden" : "" %>">
+       <a href="http://maps.google.com/maps/ms?msid=204881142368333592551.<%= @city.map_id %>&msa=0&ll=<%= @pano.get_latitude %>,<%= @pano.get_longitude %>&spn=0.002500,0.002500&iwloc=<%= @pano.map_id %>" title=" Aufnahme-Standort auf <%= @city.name %>-Karte anzeigen "><img src="../../navpic/gps.jpg" width="18" height="15" alt="" border="0" ></a>
+      </div>
+     </div>
+    <div class="noj_rotatbut" <%= @pano.rotation == 0? ' style="visibility:hidden"' : "" %>>
+     <img src="../../navpic/taste-lll.png" alt="" width="26" height="13"><img src="../../navpic/tastenaus.jpg" alt="" width="205" height="13" border="0" name="bus" usemap="#busMap"><img src="../../navpic/taste-rrr.png" alt="" width="22" height="13" border="0">
+    </div> 
+    </div>  
+     <map name="busMap"><% if @pano.repeative %>  
+      <area shape="rect" coords="0,0,41,13" href="javascript:ll()" title="Schnell links drehen"  alt="" onMouseUp="button(bus,Bildll2)" onMouseDown="button(bus,Bildll)">
+      <area shape="rect" coords="42,0,81,13" href="javascript:l()" title="Links drehen"  alt="" onMouseUp="button(bus,Bildl2)" onMouseDown="button(bus,Bildl)">
+      <area shape="rect" coords="82,0,123,13" href="javascript:stop()" title="Stop"  alt="" onMouseUp="button(bus,Bildstop2)" onMouseDown="button(bus,Bildstop)">
+      <area shape="rect" coords="124,0,164,13" href="javascript:r()" title="Rechts drehen"  alt="" onMouseUp="button(bus,Bildr2)" onMouseDown="button(bus,Bildr)">
+      <area shape="rect" coords="165,0,210,13" href="javascript:rr()" title="Schnell rechts drehen"  alt="" onMouseUp="button(bus,Bildrr2)"  onMousedown="button(bus,Bildrr)">
+     <% else %>
+      <area shape="rect" coords="0,0,41,13" href="javascript:ll()" title="Schnell links drehen"  alt="" onMouseUp="button(bus,Bildll)" onMouseDown="button(bus,Bildll2)">
+      <area shape="rect" coords="42,0,81,13" href="javascript:l()"  title="Links drehen" alt="" onMouseUp="button(bus,Bildl)" onMouseDown="button(bus,Bildl2)">
+      <area shape="rect" coords="82,0,123,13" href="javascript:stop()" title="Stop" alt="" onMouseUp="button(bus,Bildstop)" onMouseDown="button(bus,Bildstop2)">
+      <area shape="rect" coords="126,0,166,13" href="javascript:r()"  title="Rechts drehen" alt="" onMouseUp="button(bus,Bildr)" onMouseDown="button(bus,Bildr2)">
+      <area shape="rect" coords="165,0,210,13" href="javascript:rr()"  title="Schnell rechts drehen" alt="" onMouseUp="button(bus,Bildrr)"  onMousedown="button(bus,Bildrr2)">
+      <% end %></map>      
    <noscript style="color:#ff6666;font-size:20pt"><br>Das Panorama benötigt <a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://ecosia.org/search.php?q=javascript+aktivieren">Javascript-Aktivierung! </a> </noscript>     
    </div> 
-    </div>
+  </div>
   <footer>
-    <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
-    <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
+    <div id="f_city">
+     <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/.../index.html">::: </a>
+    </div>
   </footer>
 </body>
 </html>

@@ -5,7 +5,7 @@
    <meta http-equiv="content-language" content="de">
    <meta name="viewport" content="height=device-height">    
    <meta name="copyright" content="Helmut Kölbach">    
-   <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= @pano.location %> in <%= @city.name %> <%= @pano.district %> - Hochformat-Panorama">
+   <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= @pano.location %> in <%= @city.name %> <%= @pano.district %>">
     <link rel="stylesheet" href="../css/s-panorama.css"> 
     <link rel="stylesheet" href="../css/vpano.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -38,7 +38,7 @@
     }
      //-->
     </script>
-   <title><%= panoname %> <%= @pano.location %> <%= @city.name %> - Hochformat-Panorama </title>
+   <title><%= panoname %> <%= @pano.location %> <%= @city.name %> </title>
   </head>
 <body>
   <header>
