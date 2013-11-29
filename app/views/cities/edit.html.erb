@@ -38,14 +38,14 @@
         <%= f.text_area :linktips, :cols => 199 %>
       </div>
       <div class="field">
-        <%= f.label :ad_first_page_top, "Webung Stadtuebersicht top"  %>
-        <%= f.text_area :ad_first_page_top, :cols => 75, :rows => 12 %>
+        <%= f.label :ad_mobile_banner, "Mobile-Banner Stadtübersicht top"  %>
+        <%= f.text_area :ad_mobile_banner, :cols => 75, :rows => 12 %>
       </div>
       <div class="actions">
         <%= f.submit "Speichern" %>
       </div>
       <div class="field">
-        <%= f.label :ad_more_first_page_top, "Weitere Webung Stadtuebersicht top"  %>
+        <%= f.label :ad_more_first_page_top, "Weitere Werbung Stadtübersicht top"  %>
         <%= f.text_area :ad_more_first_page_top, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
@@ -53,15 +53,15 @@
         <%= f.text_area :citytext, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :ad_first_page_down, "Webung Stadtuebersicht unten"  %>
+        <%= f.label :ad_first_page_down, "Werbung Stadtübersicht unten"  %>
         <%= f.text_area :ad_first_page_down, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :ad_sec_page_top, "Webung 2.Stadtuebersicht top"  %>
+        <%= f.label :ad_sec_page_top, "Werbung 2.Stadtübersicht top"  %>
         <%= f.text_area :ad_sec_page_top, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :ad_sec_page_down, "Webung 2.Stadtuebersicht unten"  %>
+        <%= f.label :ad_sec_page_down, "Werbung 2.Stadtübersicht unten"  %>
         <%= f.text_area :ad_sec_page_down, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
@@ -69,28 +69,39 @@
         <%= f.text_area :html_content, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :en_ad_first_page_top, "En-Webung Stadtuebersicht top"  %>
+        <%= f.label :en_ad_mobile_banner, "En-Mobile-Banner (Stadtübersicht top)"  %>
+        <%= f.text_area :en_ad_mobile_banner, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :en_ad_first_page_top, "En-Werbung Stadtübersicht top"  %>
         <%= f.text_area :en_ad_first_page_top, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :en_ad_more_first_page_top, "En-Weitere Webung Stadtuebersicht top"  %>
+        <%= f.label :en_ad_more_first_page_top, "En-Weitere Werbung Stadtübersicht top"  %>
         <%= f.text_area :en_ad_more_first_page_top, :cols => 75, :rows => 12 %>
       </div>
+      <div class="actions">
+        <%= f.submit "Speichern" %>
+      </div>
       <div class="field">
-        <%= f.label :en_ad_first_page_down, "En-Webung Stadtuebersicht unten"  %>
+        <%= f.label :en_ad_first_page_down, "En-Werbung Stadtübersicht unten"  %>
         <%= f.text_area :en_ad_first_page_down, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :en_ad_sec_page_top, "En-Webung 2.Stadtuebersicht top"  %>
+        <%= f.label :en_ad_sec_page_top, "En-Werbung 2.Stadtübersicht top"  %>
         <%= f.text_area :en_ad_sec_page_top, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :en_ad_sec_page_down, "En-Webung 2.Stadtuebersicht unten"  %>
+        <%= f.label :en_ad_sec_page_down, "En-Werbung 2.Stadtübersicht unten"  %>
         <%= f.text_area :en_ad_sec_page_down, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :en_ad_panos, "En-Webung Panoramen"  %>
+        <%= f.label :en_ad_panos, "En-Werbung Panoramen"  %>
         <%= f.text_area :en_ad_panos, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :ad_first_page_top, "125x125 Google-Werbung (Stadtübersicht alt)"  %>
+        <%= f.text_area :ad_first_page_top, :cols => 75, :rows => 12 %>
       </div>
     <% end %>
   </div>

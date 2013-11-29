@@ -31,7 +31,8 @@ class Panorama < ActiveRecord::Base
                   :en_location,
                   :district,
                   :priority,
-                  :exclusive
+                  :exclusive,
+                  :fotograf
                   
   validates :name, :presence => true, :uniqueness => {:scope => :city_id}
   
