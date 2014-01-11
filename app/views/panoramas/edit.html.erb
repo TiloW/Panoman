@@ -48,8 +48,12 @@
           :start_year => 1999, :end_year => Time.now.year} %>
       </div>  
       <div class="field">
-        <%= f.label :repeative, "Panorama wiederholt sich (360°)" %>
+        <%= f.label :repeative, "360°oder mehr" %>
         <%= f.check_box :repeative %>
+      </div>
+      <div class="field">
+        <%= f.label :hdpano, "HD-Bild (1080px Bildhöhe)" %>
+        <%= f.check_box :hdpano %>
       </div>
       <div class="actions">
         <%= f.submit "Speichern" %>

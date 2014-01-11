@@ -32,7 +32,8 @@ class Panorama < ActiveRecord::Base
                   :district,
                   :priority,
                   :exclusive,
-                  :fotograf
+                  :fotograf,
+                  :hdpano
                   
   validates :name, :presence => true, :uniqueness => {:scope => :city_id}
   
@@ -46,6 +47,8 @@ class Panorama < ActiveRecord::Base
                             :priority, 
                             :allow_nil => true
                             
+    
+    
   private
     def default_values
       self.name ||= ""
@@ -55,6 +58,7 @@ class Panorama < ActiveRecord::Base
       self.published = true if self.published.nil?
       self.priority ||= self.id
     end
+    
     
     def destroy_internal_links
       InternalLink.where(:destination_id => self.id).each { |l| l.destroy }
