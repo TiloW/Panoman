@@ -3,12 +3,11 @@
 <head>
   <meta charset=utf-8 />
   <title><%= @city.name %> Germany - 360° City Panoramas </title>
-  <meta name="copyright" content="Helmut Koelbach"> 
-  <meta name="viewport" content="width=780, initial-scale=1, maximum-scale=1.0">    
+  <meta name="copyright" content="Helmut Koelbach">   
+  <meta name="viewport" content="width=device-width"> 
   <meta name="description" content="City Panoramas of <%= @city.en_name %> 360° City Views and Virtual Tours of <%= @city.en_name %> in Germany">
-  <link rel="shortcut icon" href="icon.ico">
-  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/all_cities-en.css" />
+  <link rel="shortcut icon" href="../icon.ico">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/cities.css" />
   <link rel="shortcut icon" href="../icon.ico">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" language="javascript" src="../ind.js"></script> 
@@ -19,7 +18,7 @@
       <div class="logo">   
       <a href="http://www.panorama-cities.net/"><img src="../navpic/logo.png" height="50px" alt="City Panoramas"></a>
       </div>     
-      <h1><%= @city.en_name %> </h1> 
+      <h1><br><%= @city.en_name %> </h1> 
     <nav>  
       <a href="http://panorama-cities.net/german_cities/" class="city-top">German Cities</a><br>
           <ul>     

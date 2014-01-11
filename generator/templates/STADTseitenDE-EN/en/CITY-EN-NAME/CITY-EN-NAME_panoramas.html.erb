@@ -3,12 +3,11 @@
 <head>
   <meta charset=utf-8 />
   <title><%= @city.en_name %> Panoramas </title>
-  <meta name="copyright" content="Helmut Koelbach"> 
-  <meta name="viewport" content="width=780, initial-scale=1, maximum-scale=1.0">    
+  <meta name="copyright" content="Helmut Koelbach">   
+  <meta name="viewport" content="width=device-width"> 
   <meta name="description" content="360° City Panoramas of <%= @city.en_name %> - Panoramic City Views and Virtual Tours">
-  <link rel="shortcut icon" href="icon.ico">
-  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/all_cities-en.css">
+  <link rel="shortcut icon" href="../icon.ico">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/cities.css">
   <link rel="shortcut icon" href="../icon.ico">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" language="javascript" src="../ind.js"></script>     
@@ -19,7 +18,7 @@
       <div class="logo">   
       <a href="http://www.panorama-cities.net/"><img src="../navpic/logo.png" height="50px" alt="City Panoramas"></a>
       </div>    
-      <h1><%= @city.en_name %> </h1> 
+      <h1><br><%= @city.en_name %> </h1> 
     <nav>  
       <a href="http://panorama-cities.net/german_cities/" class="city-top">German Cities</a><br>
           <ul>     
@@ -143,8 +142,14 @@
           </div><%= pano_subtitle %>
         </li><% end %>
       </ul>
-    </div>      
-      <div class="map_space"> 
+    </div>          
+    <div id="notip">&nbsp;
+    </div>
+      <div class="gmap">
+        <%= @city.en_name %> Panorama Locations
+       <br>
+       <iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" src="http://maps.google.com/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;output=embed"></iframe><br /><a href="http://maps.google.com/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;source=embed" target="_blank">Panoramas of <%= @city.en_name %> </a> &nbsp;<span style="font-size:0.9em;">(View Larger Map)</span>
+      </div> 
       <div class="de-map">   <% if @city.map_id == "0004da425c9f05f247e60" %>  
         MAP OF GERMANY
          <br> 
@@ -159,15 +164,6 @@
           <iframe src="http://www.panorama-cities.net/maps/map_<%= FileHelper.to_filename @city.en_name %>.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
         <br><a href="http://www.panorama-cities.net/html/map_germany.html#map_germany" class="white">This interactive map on your web page <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>
         <% end %><% end %><% end %>
-      </div>
-      </div>
-      <div class="gmap">
-        <%= @city.en_name %> Panorama Locations
-       <br>
-       <iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" src="http://maps.google.com/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;output=embed"></iframe><br /><a href="http://maps.google.com/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;source=embed" target="_blank">Panoramas of <%= @city.en_name %> </a> &nbsp;<span style="font-size:0.9em;">(View Larger Map)</span>
-      </div> 
-      <div class="more">
-        &nbsp;
       </div>
       <div class="adv2-down"> 
           <script type="text/javascript"><!--

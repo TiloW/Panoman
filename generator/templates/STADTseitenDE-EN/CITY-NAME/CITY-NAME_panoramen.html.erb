@@ -4,12 +4,11 @@
   <meta charset=utf-8 />
   <title><%= @city.name %> Panoramen </title>
   <meta http-equiv="content-language" content="de">  
-  <meta name="copyright" content="Helmut Kölbach">
-  <meta name="viewport" content="width=780, initial-scale=1, maximum-scale=1.0">     
+  <meta name="copyright" content="Helmut Kölbach">  
+  <meta name="viewport" content="width=device-width">    
   <meta name="description" content="360° Stadtpanoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen im Panoramaformat">
-  <link rel="shortcut icon" href="icon.ico">
-  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/all_cities.css" />
+  <link rel="shortcut icon" href="../icon.ico">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/cities.css" />
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" language="javascript" src="../ind.js"></script>     
   <script type="text/javascript" src="../js/s-panorama.js"></script>
@@ -19,7 +18,7 @@
       <div class="logo">   
        <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" alt="Stadtpanoramen"></a> 
       </div>   
-      <h1><%= @city.name %> </h1>   
+      <h1><br><%= @city.name %> </h1>   
       <nav>        
       <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte </a><br>
           <ul>     
