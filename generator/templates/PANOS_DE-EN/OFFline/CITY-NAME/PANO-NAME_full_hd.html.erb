@@ -69,12 +69,20 @@
 </head>
 <body>
      <div id="screen">
-     <div id="pano"> </div>
-       <div id="fullscr_button">Vollbild (F11)</div>
-       <div id="back_button"><a href="<%= @pano.get_filename %>_5c.html">x</a></div>
-     <div id="linkInfo">
-        <div class="linkspace"> </div>
-     </div>     
+       <div id="pano">
+         <div class="loadcircle"> 
+           <img src="../navpic/load.gif">
+         </div>
+       </div>
+       <div id="fullscr_button">
+         Vollbild (F11)
+       </div>
+       <div id="back_button">
+         <a href="<%= @pano.get_filename %>_5c.html">x</a>
+       </div>
+       <div id="linkInfo">
+          <div class="linkspace"> </div>
+       </div>     
     </div> 
 </body>
 </html>

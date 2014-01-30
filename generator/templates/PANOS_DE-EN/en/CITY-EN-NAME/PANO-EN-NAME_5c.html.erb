@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../css/simple-panorama.min.css">
   <link rel="stylesheet" type="text/css" href="../css/cine_pano.css">
   <link rel="shortcut icon" href="../icon.ico">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script type="text/javascript" src="../js/modernizr.js"></script>
   <script type="text/javascript" src="../js/simple-panorama.min.js"></script>
   <script type="text/javascript" src="../js/cine_pano_en.js"></script>
@@ -211,6 +211,9 @@
       </div>
      </div>
      <div id="screen">
+     <noscript>
+     <img id="noscr" src="panoramas/<%= @pano.get_filename %>_5.jpg">
+     </noscript>
      <div id="pano"> </div> 
      <div id="linkInfo">
         <div class="linkspace"> </div>
@@ -264,11 +267,11 @@
       <area shape="rect" coords="126,0,166,13" href="javascript:r()"  title="pan right" alt="" onMouseUp="button(bus,Bildr)" onMouseDown="button(bus,Bildr2)">
       <area shape="rect" coords="165,0,210,13" href="javascript:rr()"  title="pan fast right" alt="" onMouseUp="button(bus,Bildrr)"  onmousedown="button(bus,Bildrr2)">
       <% end %></map>
-   <noscript style="color:#ff6666;font-size:20pt"><br>Please enable <a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://www.enable-javascript.com/">Javascript </a> </noscript>
+   <noscript style="color:#ff6666;font-size:20pt"><br>Please enable <a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://www.enable-javascript.com/">Javascript </a> to view the Panorama </noscript>
    </div>
    <div class="center_full">
       <div id="full">
-       <img src="../navpic/fullscreen.gif" title="Fullscreen View" alt="Fullscreen">
+       <%= @pano.hdpano==true ?  '<img src="../navpic/fullscreen.gif" title="Fullscreen View" alt="Fullscreen">' : ' ' %>
       </div>
    </div>
   </div>

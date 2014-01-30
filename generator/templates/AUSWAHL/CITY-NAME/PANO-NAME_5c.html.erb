@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../css/simple-panorama.min.css">
   <link rel="stylesheet" type="text/css" href="../css/cine_pano.css">
   <link rel="shortcut icon" href="../icon.ico">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="../js/modernizr.js"></script>
   <script type="text/javascript" src="../js/simple-panorama.min.js"></script>
   <script type="text/javascript" src="../js/cine_pano.js"></script>
@@ -207,7 +207,7 @@
       </div>
      </div>
      <div id="screen">
-     <noscript>
+     <noscript style="color:#ff6666;font-size:20pt"><br>Das Panorama benötigt <a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://ecosia.org/search.php?q=javascript+aktivieren">Javascript-Aktivierung! </a>
      <img id="noscr" src="../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_5.jpg">
      </noscript>
      <div id="pano"> </div>
@@ -267,7 +267,7 @@
    </div> 
   <div class="center_full">
     <div id="full">
-     <%= @pano.hdpano==true ?  '<img src="../navpic/fullscreen.gif" title="Panorama in Vollbild-Ansicht" alt="Fullscreen">' : ' ' %>
+     <img src="../navpic/fullscreen.gif" title="Panorama in Vollbild-Ansicht" alt="Fullscreen">
     </div>
   </div>
   </div>

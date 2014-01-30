@@ -14,7 +14,7 @@
 </head>
 <body>
   <header>
-      <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" alt="Stadtpanoramen"></a> 
+      <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" alt="Stadtpanoramen" border="0"></a> 
     <nav>  
       <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte </a><br>
           <ul>     
@@ -88,14 +88,7 @@
         <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
       </div>
   </header>
-  <div id="content"> 
-      <div id="menu">   
-        <h2>Panoramen ::: A-Z</h2>
-          <ul><% @city.panoramas.keep_if{ |d| !d.district.blank? }.sort_by{ |n| n.name }.each do |pano| %><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
-            <li><a href="<%= pano.get_filename %>.html" title="<%= panoname %> <%= pano.location %> <%= pano.district %>"><%= pano.name %> </a></li><% end %>
-        </ul>
-      </div>   
-        
+  <div id="content">         
     <div id="box">  
       <script>
       (function() {

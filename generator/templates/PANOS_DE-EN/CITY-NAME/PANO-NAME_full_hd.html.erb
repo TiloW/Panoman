@@ -57,8 +57,8 @@
               $('#pano .sp-hotspot').on('mouseleave', function() {
                 infoElem.css({'opacity': 0});
               });                 
-              $('#fullscr_button').show().delay(5000).fadeOut(3000);    
-              $('#back_button').delay(8000).fadeIn(400);    
+              $('#fullscr_button').show().delay(4000).fadeOut(3000);    
+              $('#back_button').delay(7000).fadeIn(400);    
               $('#fullscr_button').css({'cursor': 'pointer'});
          }
       });          
@@ -69,12 +69,20 @@
 </head>
 <body>
      <div id="screen">
-     <div id="pano"> </div>
-       <div id="fullscr_button">Vollbild (F11)</div>
-       <div id="back_button"><a href="<%= @pano.get_filename %>_5c.html">x</a></div>
-     <div id="linkInfo">
-        <div class="linkspace"> </div>
-     </div>     
+       <div id="pano">
+         <div class="loadcircle"> 
+           <img src="../navpic/load.gif">
+         </div>
+       </div>
+       <div id="fullscr_button">
+         Vollbild (F11)
+       </div>
+       <div id="back_button">
+         <a href="<%= @pano.get_filename %>_5c.html">x</a>
+       </div>
+       <div id="linkInfo">
+          <div class="linkspace"> </div>
+       </div>     
     </div> 
 </body>
 </html>

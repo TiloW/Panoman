@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset=utf-8> 
+  <% location_en = (@pano.en_location.blank? ? (@pano.location) : (@pano.en_location)) %>
+  <meta name="description" content="<% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %> <%= pano_enname %> <%= location_en %> in <%= @pano.district %> <%= @city.en_name + " Germany" %> - <%= (@pano.repeative == true) ? ("360° Fullscreen Panorama") : ("Fullscreen Panorama") %>">
+  <% citytitle = location_en.blank? ? (@pano.district.blank? ? (@city.en_name) : (@pano.district)) : (location_en) %>
+  <meta name="copyright" content="Helmut Koelbach">  
+  <meta name="viewport" content="width=device-width, maximum-scale=1">  
+  <title><%= pano_enname %> <%= citytitle %> Fullscreen</title>
+  <link rel="stylesheet" href="../css/simple-panorama.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/hd_pano.css">
+  <link rel="shortcut icon" href="../icon.ico">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/modernizr.js"></script>
+  <script type="text/javascript" src="../js/fullpanorama.js"></script>
+  <script type="text/javascript" src="../js/hdpano.js"></script>
+  <script>
+  <!--   
+    $(function() {
+      $(window).trigger('resize');
+      pano = new SimplePanorama({
+       'selector': '#pano',
+       'imagePath': 'panoramas/<%= @pano.get_filename %>_hd.jpg', 
+       'modules': ['move_mousedown', 'move_swipe'], 
+       'initialPos':<%= @pano.initial_center.blank? ?  "0" : (@pano.initial_center*10.8/3.5).to_i %>,
+       'repeative': <%= @pano.repeative.blank? ?  "false" : @pano.repeative %>,
+       'callback': function() {
+          <%
+              links = @pano.internal_links
+              links.sort_by! { |l| l.get_area }
+              links.each do |link| 
+                dest = link.get_dest       
+                if link.is_circle
+            %>
+                pano.createCircleHotspot(
+                "<a href='<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %><%= dest.hdpano==true ?  "_full_hd" : "_5c" %>.html'><span class='title'><% altennam = link.alt_en_name %><%= altennam.blank? ? (dest.alt_en_name.blank? ? (dest.en_name.blank? ? dest.name : dest.en_name) : dest.alt_en_name) : altennam %></span></a>", 
+                <%= link.path.split(',').map! { |s| (s.to_i*10.8/3.5).to_i }.join(',') %>,"intern"
+                );
+              <% else %>
+                pano.createRectHotspot(
+                "<a href='<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %><%= dest.hdpano==true ?  "_full_hd" : "_5c" %>.html'><span class='title'><% altennam = link.alt_en_name %><%= altennam.blank? ? dest.name : altennam %></span></a>",  
+                  <%= link.get_xywh.split(',').map! { |s| (s.to_i*10.8/3.5).to_i }.join(',') %>,"intern"
+                );
+              <% end %>  <% end %>  
+                pano.showHotspots("intern",true);                 
+                
+                var spotcss = $('html.no-touch .sp-hotspot');
+                var linkcss = $('html.no-touch #linkInfo');
+                var spottouchcss = $('html.touch .sp-hotspot');
+                var linktouchcss = $('html.touch #linkInfo'); 
+              
+              var infoElem = $('#linkInfo');
+              infoElem.css({'opacity': 0});
+              $('#pano .sp-hotspot').on('mouseenter', function(event) {
+                infoElem.text($(event.target).find('.title').text());
+                infoElem.css({'opacity': 1});
+              });
+              $('#pano .sp-hotspot').on('mouseleave', function() {
+                infoElem.css({'opacity': 0});
+              });   
+              $('#fullscr_button').show().delay(5000).fadeOut(3000);    
+              $('#back_button').delay(8000).fadeIn(400);    
+              $('#fullscr_button').css({'cursor': 'pointer'});
+         }
+      });   
+        <%= @pano.rotation == 0 ? "" : @pano.rotation == -20 ? "pano.setTargetSpeed(0.05);" : "pano.setTargetSpeed(-0.05);" %>  
+      }); 
+   //-->
+  </script>
+</head>
+<body>
+     <div id="screen">
+       <div id="pano">
+         <div class="loadcircle"> 
+           <img src="../navpic/load.gif">
+         </div>
+       </div>
+       <div id="fullscr_button">FullScreen (F11)</div>
+       <div id="back_button">
+         <a href="<%= FileHelper.to_filename @pano.en_name %>_5c.html">x</a>
+       </div>
+       <div id="linkInfo">
+          <div class="linkspace"> </div>
+       </div>     
+    </div> 
+</body>
+</html>

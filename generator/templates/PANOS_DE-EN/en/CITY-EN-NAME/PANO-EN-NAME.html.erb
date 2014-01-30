@@ -201,7 +201,7 @@
   <body>
   <header>
       <div class="logo">
-        <a href="http://www.panorama-cities.net/"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas"></a>
+        <a href="http://www.panorama-cities.net/"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas" border="0"></a>
       </div>                  
       <div  class="city">
         <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<% if !@pano.district.blank? %><%= FileHelper.to_filename @pano.district %>_panoramas.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %><%= FileHelper.to_filename @pano.en_location %>_panoramas.html"><%= @pano.en_location %><% else %><%= FileHelper.to_filename @city.en_name %>_germany.html"><%= @city.en_name %><% end %><% end %> </a>
