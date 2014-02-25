@@ -14,7 +14,7 @@
   <script type="text/javascript" src="../js/fullpanorama.js"></script>
   <script type="text/javascript" src="../js/hdpano.js"></script>
   <script>
-  <!--   
+    <!--  <% g_lat = @pano.get_latitude %> <% g_lon = @pano.get_longitude %> <% p_lat = g_lat.to_f %> <% p_lon = g_lon.to_f %>
     $(function() {
       $(window).trigger('resize');
       pano = new SimplePanorama({
@@ -28,11 +28,22 @@
             links = @pano.internal_links
             links.sort_by! { |l| l.get_area }
             links.each do |link| 
-              dest = link.get_dest;          
+              dest = link.get_dest; 
+              d_lon = dest.longitude
+              d_lat = dest.latitude      
               if link.is_circle
-          %>
+            %>
+            <% n_lon = p_lon - d_lon 
+               n_lat = p_lat - d_lat
+               dist_lon = n_lon.abs * 71.5
+               dist_lat = n_lat.abs * 111.3
+               dist_ko = Math.sqrt(dist_lon*dist_lon + dist_lat*dist_lat)*1000
+               dist_ko <= 2600? (dist = (dist_ko)) : (dist = (dist_ko).to_i) 
+               dist >= 1000? (distance = "- " + ((dist/1000).round(1).to_s) + "km") : (dist >= 20? (distance = "- " + (dist.round(-1).to_s) + "m") : (distance = "- " + (dist.to_s) + "m"))
+               (d_lon <1 || dist <1)? (distance = "") : ("")
+            %> 
               pano.createCircleHotspot(
-                "<a href='<%= dest.get_filename %><%= dest.hdpano==true ?  "_full_hd" : "_5c" %>.html'><span class='title'><% altnam = link.alt_name %><%= altnam.blank? ? (dest.alt_name.blank? ? dest.name : dest.alt_name) : altnam %></span></a>",
+                "<a href='<%= dest.get_filename %><%= dest.hdpano==true ?  "_full_hd" : "_5c" %>.html'><span class='title'><% altnam = link.alt_name %><%= altnam.blank? ? (dest.alt_name.blank? ? dest.name : dest.alt_name) : altnam %> <%= distance %> </span></a>", 
                 <%= link.path.split(',').map! { |s| (s.to_i*10.8/3.5).to_i }.join(',') %>,"intern"
               );
             <% else %> 
@@ -41,6 +52,21 @@
                 <%= link.get_xywh.split(',').map! { |s| (s.to_i*10.8/3.5).to_i }.join(',') %>,"intern"
               );
             <% end %><% end %>
+              <%
+              extlinks = @pano.external_links
+              extlinks.sort_by! { |l| l.get_area }
+              extlinks.each do |exlink| 
+              exurl = exlink.url                
+              if exlink.is_circle
+            %>
+            <% unless exlink.name=="Webcam" %>
+                pano.createCircleHotspot(
+                  "<a href='<%= exurl %>'><span class='title'><%= exlink.name %> </span></a>", 
+                  <%= exlink.path.split(',').map! { |s| (s.to_i*10.8/3.5).to_i }.join(',') %>,"intern"
+                );
+            <% end %>
+            <% end %>
+            <% end %>
                 pano.showHotspots("intern",true);                  
                 
                 var spotcss = $('html.no-touch .sp-hotspot');
@@ -57,9 +83,10 @@
               $('#pano .sp-hotspot').on('mouseleave', function() {
                 infoElem.css({'opacity': 0});
               });                 
-              $('#fullscr_button').show().delay(5000).fadeOut(3000);    
+              $('#fullscr_button').show().delay(5000).fadeOut(3000);  
+              $('#fullscr_button').css({'cursor': 'pointer'});   
               $('#back_button').delay(8000).fadeIn(400);    
-              $('#fullscr_button').css({'cursor': 'pointer'});
+              $('#first_headline').show().delay(5000).fadeOut(4500);  
          }
       });          
         <%= @pano.rotation == 0 ? "" : @pano.rotation == -20 ? "pano.setTargetSpeed(0.05);" : "pano.setTargetSpeed(-0.05);" %>  
@@ -73,6 +100,14 @@
          <div class="loadcircle"> 
            <img src="../navpic/load.gif">
          </div>
+       </div>
+       <div id="headline"><br>
+         <%= panoname %> - <%= @pano.location %> <%= @city.name %> <%= @pano.district %>
+         <br><span style="font-size:14px;"><% unless pano.date_of_recording.year.to_i <= 1999 %><%= pano.get_german_month %><% end %></span>
+       </div>
+       <div id="first_headline"><br>
+         <%= panoname %> - <%= @pano.location %>
+         <br><span style="font-size:14px;"><% unless pano.date_of_recording.year.to_i <= 1999 %><%= pano.get_german_month %><% end %></span>
        </div>
        <div id="fullscr_button">
          Vollbild (F11)

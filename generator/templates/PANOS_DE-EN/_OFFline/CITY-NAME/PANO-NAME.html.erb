@@ -7,7 +7,7 @@
    <meta name="viewport" content="width=800, maximum-scale=1">
    <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %><%= panoname %> <%= @pano.location %> in <%= @city.name %> <%= @pano.district %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
    <link rel="stylesheet" href="../css/simple-panorama.min.css"> 
-   <link rel="stylesheet" href="../css/pano_small.css">
+   <link rel="stylesheet" href="../css/panosmall.css">
    <link rel="shortcut icon" href="../icon.ico"> 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
@@ -19,7 +19,7 @@
     <link href="../css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
     <link href="../css/jquery.mCustomScrollbar_h.css" rel="stylesheet" type="text/css">  
     <script>
-    <!--  
+    <!--  <% g_lat = @pano.get_latitude %> <% g_lon = @pano.get_longitude %> <% p_lat = g_lat.to_f %> <% p_lon = g_lon.to_f %>
       $(function() {
         pano = new SimplePanorama({
          'selector': '#pano',
@@ -32,11 +32,21 @@
               links = @pano.internal_links
               links.sort_by! { |l| l.get_area }
               links.each do |link| 
-              dest = link.get_dest       
+              dest = link.get_dest  
+              d_lon = dest.longitude
+              d_lat = dest.latitude      
               if link.is_circle
             %>
+            <% n_lon = p_lon - d_lon 
+               n_lat = p_lat - d_lat
+               dist_lon = n_lon.abs * 71.5
+               dist_lat = n_lat.abs * 111.3
+               dist_ko = Math.sqrt(dist_lon*dist_lon + dist_lat*dist_lat)*1000
+               dist_ko <= 2600? (dist = (dist_ko)) : (dist = (dist_ko).to_i) 
+               dist >= 1000? (distance = "- " + ((dist/1000).round(1).to_s) + "km") : (dist >= 26? (distance = "- " + (dist.round(-1).to_s) + "m") : ((d_lon <1 || dist <1)? (distance = "") :  (distance = "- " + (dist.to_s) + "m")))
+            %> 
                 pano.createCircleHotspot(
-                  "<a href='<%= dest.get_filename %>.html'><span class='title'><% altnam = link.alt_name %><%= altnam.blank? ? (dest.alt_name.blank? ? dest.name : dest.alt_name) : altnam %> </span></a>", 
+                  "<a href='<%= dest.get_filename %>.html'><span class='title'><% altnam = link.alt_name %><%= altnam.blank? ? (dest.alt_name.blank? ? dest.name : dest.alt_name) : altnam %> <%= distance %> </span></a>", 
                   <%= link.path %>,"intern"
                 );
               <% else %>
@@ -220,7 +230,7 @@
         <div class="rahmen_wor">
         </div>
         <div id="rahmen_wom">
-          <%= panoname %> <%= @pano.location %> <%= @city.name %> <%= @pano.district %>
+          <%= panoname %> - <%= @pano.location %> <%= @city.name %> <%= @pano.district %>
         </div>
        </div>
        <div id="panobord">
@@ -320,7 +330,7 @@
                 <div class="anch"><a name="<%= pano.get_filename %>"> </a>
                 </div> <% city_name = @city.get_filename %>
                 <div id="<%= pano.get_filename %>" class="thumbWrapper" style="background-image: url(http://stadtpanoramen.de/en/<%= city_name.to_s == "koeln" ? "cologne" : (city_name.to_s == "muenchen" ? "munich" :(city_name.to_s == "nuernberg" ? "nuremberg" : city_name)) %>/photos/<%= pano.get_filename %>.jpg)">
-                  <a href="<%= pano.get_filename %>.html" title="<%= pano.alt_name.blank? ? (pano.name) : (pano.alt_name) %>" target="_top">
+                  <a href="<%= pano.get_filename %>.html" title="<%= pano.alt_name.blank? ? (pano.name) : (pano.alt_name) %>  <%= pano.location %> <%= pano.district %>" target="_top">
                     <span class="title"><%= (pano.name) %> </span></a>
                 </div>
               <% end %> 

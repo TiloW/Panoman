@@ -7,7 +7,7 @@
    <meta name="copyright" content="Helmut Koelbach"> <% location_en = (@pano.en_location.blank? ? (@pano.location) : (@pano.en_location)) %>
    <meta name="description" content="<% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %><%= pano_enname %> <%= location_en %> in <%= @city.en_name + " Germany" %> - <%= (@pano.repeative == true) ? ("360° Panorama") : ("Panorama") %>">
    <link rel="stylesheet" href="../css/simple-panorama.min.css">    
-   <link rel="stylesheet" href="../css/pano_small.css">
+   <link rel="stylesheet" href="../css/panosmall.css">
    <link rel="shortcut icon" href="../icon.ico">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
@@ -19,7 +19,7 @@
     <link href="../css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
     <link href="../css/jquery.mCustomScrollbar_h.css" rel="stylesheet" type="text/css">  
     <script>
-    <!--   
+    <!--  <% g_lat = @pano.get_latitude %> <% g_lon = @pano.get_longitude %> <% p_lat = g_lat.to_f %> <% p_lon = g_lon.to_f %>
       $(function() {
         pano = new SimplePanorama({
          'selector': '#pano',
@@ -32,11 +32,22 @@
               links = @pano.internal_links
               links.sort_by! { |l| l.get_area }
               links.each do |link| 
-              dest = link.get_dest       
+              dest = link.get_dest 
+              d_lon = dest.longitude
+              d_lat = dest.latitude      
               if link.is_circle
             %>
+            <% n_lon = p_lon - d_lon 
+               n_lat = p_lat - d_lat
+               dist_lon = n_lon.abs * 71.5
+               dist_lat = n_lat.abs * 111.3
+               dist_ko = Math.sqrt(dist_lon*dist_lon + dist_lat*dist_lat)*1000
+               dist_ko <= 2600? (dist = (dist_ko)) : (dist = (dist_ko).to_i) 
+               dist >= 1000? (distance = "- " + ((dist/1000).round(1).to_s) + "km") : (dist >= 20? (distance = "- " + (dist.round(-1).to_s) + "m") : (distance = "- " + (dist.to_s) + "m"))
+               (d_lon <1 || dist <1)? (distance = "") : ("")
+            %> 
                 pano.createCircleHotspot(
-                "<a href='<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html'><span class='title'><% altennam = link.alt_en_name %><%= altennam.blank? ? (dest.alt_en_name.blank? ? (dest.en_name.blank? ? dest.name : dest.en_name) : dest.alt_en_name) : altennam %></span></a>", 
+                "<a href='<%= dest.en_name.blank? ? (dest.get_filename) : (FileHelper.to_filename dest.en_name) %>.html'><span class='title'><% altennam = link.alt_en_name %><%= altennam.blank? ? (dest.alt_en_name.blank? ? (dest.en_name.blank? ? dest.name : dest.en_name) : dest.alt_en_name) : altennam %> <%= distance %> </span></a>", 
                 <%= link.path %>,"intern"
                 );
               <% else %>
@@ -201,17 +212,17 @@
   <body>
   <header>
       <div class="logo">
-        <a href="http://www.panorama-cities.net/"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas" border="0"></a>
+        <a href="http://www.panorama-cities.net/"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas"></a>
       </div>                  
       <div  class="city">
         <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<% if !@pano.district.blank? %><%= FileHelper.to_filename @pano.district %>_panoramas.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %><%= FileHelper.to_filename @pano.en_location %>_panoramas.html"><%= @pano.en_location %><% else %><%= FileHelper.to_filename @city.en_name %>_germany.html"><%= @city.en_name %><% end %><% end %> </a>
       </div>  
       <div class="flag">
-        <a href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @pano.name %>.html"><img src="../navpic/de_ico.gif" width="35px" height="26px" border="0" title="<%= @pano.name %> - German Version" alt="German"> </a>                                          
+        <a href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @pano.name %>.html"><img src="../navpic/de_ico.gif" width="35px" height="26px" border="0" title="<%= @pano.name %> - German Version" alt="German"> </a>
+      </div>                                                    
       <div class="cities_en"> 
         <a href="http://panorama-cities.net/german_cities/" title="German Cities" class="city-top">Cities</a>
       </div> 
-      </div>          
   </header>
  <div class="all"> 
     <div id="nojava">
@@ -222,7 +233,7 @@
         <div class="rahmen_wor">
         </div>
         <div id="rahmen_wom">
-          <%= pano_enname %> <%= location_en %> <%= @pano.district %> <%=@city.en_name %>
+          <%= pano_enname %> - <%= location_en %> <%= @pano.district %> <%=@city.en_name %>
         </div>
        </div>
      <div id="panobord">
@@ -344,7 +355,7 @@
                   <div class="anch"><a name="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>"> </a>
                   </div> <% city_name = @city.get_filename %>
                   <div id="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>" class="thumbWrapper" style="background-image: url(photos/<%= FileHelper.to_filename pano.name %>.jpg)">
-                    <a href="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>.html" title="<%= pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name):(pano.en_name)) : (pano.alt_en_name) %>" target="_top">
+                    <a href="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>.html" title="<%= pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name):(pano.en_name)) : (pano.alt_en_name) %>  <%= location_en %> <%= @pano.district %>" target="_top">
                       <span class="title"><%= pano.en_name.blank? ? (pano.name):(pano.en_name) %> </span></a>
                   </div>
                 <% end %> 

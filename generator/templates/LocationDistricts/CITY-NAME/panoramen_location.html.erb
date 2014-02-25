@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>::: <%= @city.name %> - Panoramen </title>
+  <meta http-equiv="content-language" content="de">  
+  <meta name="copyright" content="Helmut Kölbach">        
+  <meta name="viewport" content="width=device-width"> 
+  <meta name="description" content="Panoramen ::: in <%= @city.name %> - Ansichten mit virtuellen Rundgängen im Panoramaformat">
+  <link rel="stylesheet" type="text/css" href="../css/cities.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript" src="../ind.js"></script>     
+  <script type="text/javascript" src="../js/s-panorama.js"></script>
+</head>
+<body>
+  <header>
+      <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" alt="Stadtpanoramen" border="0"></a> 
+    <nav>  
+      <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte </a><br>
+          <ul>     
+            <li><a href="../berlin/">Berlin </a></li>
+            <li><a href="../bielefeld/">Bielefeld </a></li>
+            <li><a href="../bochum/">Bochum </a></li>
+            <li><a href="../bonn/">Bonn </a></li>
+            <li><a href="../braunschweig/">Braunschweig </a></li>
+            <li><a href="../bremen/">Bremen </a></li>
+            <li><a href="../bremerhaven/">Bremerhaven </a></li>
+            <li><a href="../darmstadt/">Darmstadt </a></li>
+            <li><a href="../dortmund/">Dortmund </a></li>
+            <li><a href="../dresden/">Dresden </a></li>
+            <li><a href="../duesseldorf/">Düsseldorf </a></li>
+            <li><a href="../duisburg/">Duisburg </a></li>
+            <li><a href="../erfurt/">Erfurt </a></li>
+            <li><a href="../essen/">Essen </a></li>
+            <li><a href="../frankfurt/">Frankfurt </a></li>
+            <li><a href="../freiburg/">Freiburg </a></li>
+            <li><a href="../goslar/">Goslar </a></li>
+            <li><a href="../hamburg/">Hamburg </a></li>
+            <li><a href="../hannover/">Hannover </a></li>
+            <li><a href="../heidelberg/">Heidelberg </a></li>
+            <li><a href="../hildesheim/">Hildesheim </a></li>
+            <li><a href="../karlsruhe/">Karlsruhe </a></li>
+            <li><a href="../kassel/">Kassel </a></li>
+            <li><a href="../kiel/">Kiel </a></li>
+            <li><a href="../koblenz/">Koblenz </a></li>
+            <li><a href="../koeln/">Köln </a></li>
+            <li><a href="../leipzig/">Leipzig </a></li>
+            <li><a href="../luebeck/">Lübeck </a></li>
+            <li><a href="../mainz/">Mainz </a></li>
+            <li><a href="../mannheim/">Mannheim </a></li>
+            <li><a href="../minden/">Minden </a></li>
+            <li><a href="../muenchen/">München </a></li>
+            <li><a href="../nuernberg/">Nürnberg </a></li>
+            <li><a href="../oldenburg/">Oldenburg </a></li>
+            <li><a href="../osnabrueck/">Osnabrück </a></li>
+            <li><a href="../rostock/">Rostock </a></li>
+            <li><a href="../rothenburg_ob_der_tauber/">Rothenburg o.d.T.</a></li>
+            <li><a href="../schwerin/">Schwerin </a></li>
+            <li><a href="../siegen/">Siegen </a></li>
+            <li><a href="../stuttgart/">Stuttgart </a></li>
+            <li><a href="../trier/">Trier </a></li>
+            <li><a href="../tuebingen/">Tübingen </a></li>
+            <li><a href="../wernigerode/">Wernigerode </a></li>
+            <li><a href="../wiesbaden/">Wiesbaden </a></li>
+            <li><a href="../wismar/">Wismar </a></li>
+            <li><a href="../wuerzburg/">Würzburg </a></li>
+            <li style="padding-right: 200px;"> &nbsp;</li>
+            <li><a href="../muensterland/" class="msland">Münsterland </a></li>
+            <li><a href="../ahaus/">Ahaus </a></li>
+            <li><a href="../ahlen/">Ahlen </a></li>
+            <li><a href="../coesfeld/">Coesfeld </a></li>
+            <li><a href="../emsdetten/">Emsdetten </a></li>
+            <li><a href="../greven/">Greven </a></li>
+            <li><a href="../horstmar/">Horstmar </a></li>
+            <li><a href="../ibbenbueren/">Ibbenbüren </a></li>
+            <li><a href="../lengerich/">Lengerich </a></li>
+            <li><a href="../luedinghausen/">Lüdinghausen </a></li>
+            <li><a href="../muenster/">Münster </a></li>
+            <li><a href="../rheine/">Rheine </a></li>
+            <li><a href="../steinfurt/">Steinfurt </a></li>
+            <li><a href="../tecklenburg/">Tecklenburg </a></li>
+            <li><a href="../telgte/">Telgte </a></li>
+            <li><a href="../warendorf/">Warendorf </a></li>
+        </ul> 
+    </nav>         
+        <h1>::: <br><%= @city.name %> </h1>  
+      <div class="navtop">
+        <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+      </div>
+  </header>
+  <div id="content">          
+    <div id="grid">
+      <ul> <% @city.panoramas.keep_if{ |d| !d.location.blank? }.sort_by{ |p| p.priority }.each do |pano| %>        
+        <li><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
+          <div class="wrapper">
+            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <%= pano.location %> in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg" alt="<%= pano.name %> ::: <%= @city.name %>"></a>
+            <% unless pano.rotation == 60 %>
+            <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>_5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
+            </div><% end %>
+          </div><%= pano.name %>
+        </li><% end %>
+      </ul>
+    </div>
+      
+      <div class="gmap">
+         Panorama-Aufnahmestandorte <%= @city.name %>
+         <br>
+         <iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" src="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;output=embed"></iframe><br /><a href="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;source=embed" target="_blank"><%= @city.name %> Panorama-Karte </a> &nbsp;<span style="font-size:0.9em;">(Panoramen auf einer gr&ouml;&szlig;eren Karte anzeigen)</span>
+      </div> 
+    <div class="more">
+      <a href="<%= @city.get_filename %>_panoramen.html">weitere Panoramen von <%= @city.name %> </a> <br><br>
+    </div>
+    <div id="cont-right">
+      <div id="tip">
+        <%= @city.linktips %>
+      </div> 
+      <div class="de-map">
+        INTERAKTIVE <br>DEUTSCHLANDKARTE
+         <br>   <% if @city.map_id == "0004da425c9f05f247e60" %>  
+          <iframe src="http://www.stadtpanoramen.de/karten/karte_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
+          <% else %>          
+           <% if @city.map_id == "00044b138d7eba762674d" %> 
+           <div style="width:229; height:312"> &nbsp; </div>
+           <% else %> 
+          <iframe src="http://www.stadtpanoramen.de/karten/karte_<%= @city.get_filename %>.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
+        <br><a href="http://www.stadtpanoramen.de/html/logos.html#deutschlandkarte"> Deutschlandkarte einbinden <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>
+        <% end %>
+        <% end %>
+      </div>
+      <div class="adv2-down"> 
+         <%= @city.ad_sec_page_down %>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
+    <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
+    <div class="mail"> <a href="mailto:?subject=Tipp%20StadtPanoramen%20von%20<%= @city.name %>-:::&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20Link%20zu%20interessanten%20Panoramabildern%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2Fpanoramen_...%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AA%20n%20l%20e%20i%20t%20u%20n%20g%0D%0AEmailadresse%20des%20Empf%C3%A4ngers%20eingeben%2c%0D%0Aden%20Text%20nach%20Belieben%20erg%C3%A4nzen%20und%0D%0Adiesen%20Anleitungsabschnitt%20vor%20dem%20Absenden%20entfernen%2E" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite weiterempfehlen </a>
+    </div>
+  </footer>
+</body>
+</html>
