@@ -19,6 +19,6 @@ class ExternalLink < ActiveRecord::Base
     
   private
     def default_values
-      self.name ||= "Neue Externer Link"
+      self.name ||= ""
     end
 end

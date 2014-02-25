@@ -19,7 +19,7 @@ class InternalLink < ActiveRecord::Base
   def get_dest
     Panorama.find(destination_id)
   end
-    
+            
   def get_name
     alt_name.nil? || alt_name.empty? ? get_dest.name : alt_name
   end
@@ -30,6 +30,6 @@ class InternalLink < ActiveRecord::Base
     
   private
     def default_values
-      self.alt_name ||= ""
+      self.alt_name ||= "Zum "
     end
 end

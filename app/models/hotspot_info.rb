@@ -16,6 +16,6 @@ class HotspotInfo < ActiveRecord::Base
     
   private
     def default_values
-      self.name ||= "Neuer Hotspot"
+      self.name ||= ""
     end
 end

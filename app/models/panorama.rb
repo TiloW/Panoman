@@ -53,7 +53,9 @@ class Panorama < ActiveRecord::Base
     def default_values
       self.name ||= ""
       self.rotation ||= "20"
-      self.initial_vertical ||= "250"
+      self.latitude ||= "0.000000"
+      self.longitude ||= "0.000000"
+      self.initial_vertical ||= "0"
       self.repeative = true if self.repeative.nil?
       self.published = true if self.published.nil?
       self.priority ||= self.id
