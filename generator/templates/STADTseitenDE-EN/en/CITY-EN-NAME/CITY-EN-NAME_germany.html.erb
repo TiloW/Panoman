@@ -9,7 +9,7 @@
   <link rel="shortcut icon" href="../icon.ico">
   <link rel="stylesheet" type="text/css" media="screen" href="../css/cities.css" />
   <link rel="shortcut icon" href="../icon.ico">
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" language="javascript" src="../ind.js"></script> 
   <script type="text/javascript" src="../js/s-panorama.js"></script>
 </head>
@@ -158,7 +158,7 @@
           end.sort_by{ |p| p.priority }.first(10).each do |pano| %>  
         <li><% pano_subtitle = (pano.en_name.blank? ? (pano.alt_en_name.blank? ? (pano.name) : (pano.alt_en_name)) : (pano.en_name)) %>  <% pano_enname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
           <div class="wrapper"><% pano_enlocation = (pano.en_location.blank? ? (pano.location.blank? ? (" ") : (pano.location)) : (pano.en_location)) %>
-            <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title=" <%= pano_enname %> <%= pano_enlocation %> in <%= @city.en_name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" alt="<%= pano.name + " " + @city.name %>"></a>
+            <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title=" <%= pano_enname %> <%= pano_enlocation + " " %>in <%= @city.en_name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" alt="<%= pano.name + " " + @city.name %>"></a>
             <% unless pano.rotation == 60 %>  
             <div class="widescreen"><a href="javascript:cindex('http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>_5c.html')" title="<%= pano_enname %> Panorama in Widescreen">Widescreen</a>
             </div><% end %>
@@ -189,7 +189,7 @@
       @city.panoramas.each { |p| locations[p.en_location] = true if p.en_location }
       locations.each_key do |loc| %>
       <% unless loc.blank? %>
-      <a href="<%= FileHelper.to_filename loc %>_panoramas.html"><%= loc %> Panoramas </a><br><br>
+      <a href="<%= FileHelper.to_filename loc %>_panoramas.html"><%= loc %> </a><br><br>
       <% end %>
       <% end %> 
     </div> 

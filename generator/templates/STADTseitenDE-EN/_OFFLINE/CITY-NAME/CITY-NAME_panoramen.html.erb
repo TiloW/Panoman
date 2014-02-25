@@ -9,7 +9,7 @@
   <meta name="description" content="360° Stadtpanoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen im Panoramaformat">
   <link rel="shortcut icon" href="../icon.ico">
   <link rel="stylesheet" type="text/css" media="screen" href="../css/cities.css" />
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" language="javascript" src="../ind.js"></script>     
   <script type="text/javascript" src="../js/s-panorama.js"></script>
 </head>
@@ -137,7 +137,7 @@
     <div id="tip">
       <div style="height:50px;"><a name="<%= @city.get_filename %>-tipps"></a></div>
       <%= @city.linktips %>
-    </div><% end %>  
+    </div><% end %>     
       <div class="more">
         <% if @city.quiz == true %>
         <a href="http://www.stadtpanoramen.de/staedtequiz/quiz_<%= @city.get_filename %>.html"><%= @city.name %>-Quiz  </a> 
