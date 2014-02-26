@@ -39,7 +39,7 @@
                dist_lat = n_lat.abs * 111.3
                dist_ko = Math.sqrt(dist_lon*dist_lon + dist_lat*dist_lat)*1000
                dist_ko <= 2600? (dist = (dist_ko)) : (dist = (dist_ko).to_i) 
-               dist >= 1000? (distance = "- " + ((dist/1000).round(1).to_s) + "km") : (dist >= 20? (distance = "- " + (dist.round(-1).to_s) + "m") : (distance = "- " + (dist.to_s) + "m"))
+               dist >= 1000? (distance = "- " + ((dist/1000).round(1).to_s) + "km") : (dist >= 26? (distance = "- " + (dist.round(-1).to_s) + "m") : (distance = "- " + (dist.to_i.to_s) + "m"))
                (d_lon <1 || dist <1)? (distance = "") : ("")
             %> 
               pano.createCircleHotspot(
