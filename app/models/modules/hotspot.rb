@@ -22,10 +22,10 @@ module Hotspot
     w = (tmp[0] - tmp[2]).abs
     x = [tmp[0], tmp[2]].min
     
-    h = (tmp[1] - tmp[3]).abs
+    h = (tmp[1] - tmp[3]).abs 
     y = [tmp[1],tmp[3]].min
     
-    [x,y,w,h].join(",")
+    [x,y,w-2,h-2].join(",")
   end
   
   def get_scaled_path_sp factor = 1

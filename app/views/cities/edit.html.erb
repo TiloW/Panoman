@@ -22,30 +22,34 @@
         <%= f.text_field :en_name %>
       </div>
       <div class="field">
-        <%= f.label :map_id, "G-Map City-ID" %>
-        <%= f.text_field :map_id %>
+        <%= f.label :mymap_id, "G-MyMap ID (mymap_id)" %>
+        <%= f.text_field :mymap_id, :size => 70 %>
       </div>
       <div class="field">
-        <%= f.label :map_coord, "G-Map Koordinaten" %>
+        <%= f.label :mymap_en_id, "G-MyMap EN ID (mymap_en_id)" %>
+        <%= f.text_field :mymap_en_id, :size => 70 %>
+      </div>
+      <div class="field">
+        <%= f.label :map_coord, "Koordinaten Münsterland-Stadt (alte map_coord)" %>
         <%= f.text_field :map_coord, :size => 70 %>
       </div>
       <div class="field">
-        <%= f.label :quiz, "Quiz-Link" %>
+        <%= f.label :quiz, "Quiz-Link (quiz)" %>
         <%= f.check_box :quiz %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Speichern" %>
       </div>
       <div class="field">
         <%= f.label :linktipps, "Linktips"  %>
         <%= f.text_area :linktips, :cols => 199 %>
       </div>
       <div class="field">
-        <%= f.label :ad_mobile_banner, "Mobile-Banner Stadtübersicht top"  %>
+        <%= f.label :ad_mobile_banner, "Werbung Stadtübersicht top (ad_mobile_banner)"  %>
         <%= f.text_area :ad_mobile_banner, :cols => 75, :rows => 12 %>
       </div>
-      <div class="actions">
-        <%= f.submit "Speichern" %>
-      </div>
       <div class="field">
-        <%= f.label :ad_more_first_page_top, "Weitere Werbung Stadtübersicht top"  %>
+        <%= f.label :ad_more_first_page_top, "Weitere Stadtübersicht top"  %>
         <%= f.text_area :ad_more_first_page_top, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
@@ -53,20 +57,20 @@
         <%= f.text_area :citytext, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :ad_first_page_down, "Werbung Stadtübersicht unten"  %>
-        <%= f.text_area :ad_first_page_down, :cols => 75, :rows => 12 %>
+        <%= f.label :html_content, "Werbung Pano-Seiten - klPanos-r"  %>
+        <%= f.text_area :html_content, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :ad_sec_page_top, "Werbung 2.Stadtübersicht top"  %>
+        <%= f.label :ad_sec_page_top, "Werbung 2.Stadtübersicht top - SÜw-o"  %>
         <%= f.text_area :ad_sec_page_top, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :ad_sec_page_down, "Werbung 2.Stadtübersicht unten"  %>
+        <%= f.label :ad_sec_page_down, "Werbung Stadtübersichten unten - SÜw-u"  %>
         <%= f.text_area :ad_sec_page_down, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :html_content, "Werbung Pano-Seiten"  %>
-        <%= f.text_area :html_content, :cols => 75, :rows => 12 %>
+        <%= f.label :ad_first_page_down, "Werbung 1.Stadtübersicht unten - alt"  %>
+        <%= f.text_area :ad_first_page_down, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
         <%= f.label :en_ad_mobile_banner, "En-Mobile-Banner (Stadtübersicht top)"  %>
@@ -80,9 +84,6 @@
         <%= f.label :en_ad_more_first_page_top, "En-Weitere Werbung Stadtübersicht top"  %>
         <%= f.text_area :en_ad_more_first_page_top, :cols => 75, :rows => 12 %>
       </div>
-      <div class="actions">
-        <%= f.submit "Speichern" %>
-      </div>
       <div class="field">
         <%= f.label :en_ad_first_page_down, "En-Werbung Stadtübersicht unten"  %>
         <%= f.text_area :en_ad_first_page_down, :cols => 75, :rows => 12 %>
@@ -91,13 +92,20 @@
         <%= f.label :en_ad_sec_page_top, "En-Werbung 2.Stadtübersicht top"  %>
         <%= f.text_area :en_ad_sec_page_top, :cols => 75, :rows => 12 %>
       </div>
+      <div class="actions">
+        <%= f.submit "Speichern" %>
+      </div>
       <div class="field">
-        <%= f.label :en_ad_sec_page_down, "En-Werbung 2.Stadtübersicht unten"  %>
+        <%= f.label :en_ad_sec_page_down, "En-Werbung Stadtübersichten unten"  %>
         <%= f.text_area :en_ad_sec_page_down, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
         <%= f.label :en_ad_panos, "En-Werbung Panoramen"  %>
         <%= f.text_area :en_ad_panos, :cols => 75, :rows => 12 %>
+      </div>
+      <div class="field">
+        <%= f.label :map_id, "alte Map-ID (map_id)" %>
+        <%= f.text_field :map_id %>
       </div>
       <div class="field">
         <%= f.label :ad_first_page_top, "125x125 Google-Werbung (Stadtübersicht alt)"  %>

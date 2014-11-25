@@ -24,7 +24,8 @@ class CitiesController < ApplicationController
       @panoramas = @panoramas.tagged_with(@tag)
     end
     @panoramas_priorized = @panoramas.sort_by { |pano| pano.priority }
-    
+    @panoramas_date_of_recording = @panoramas.sort_by { |pano| pano.date_of_recording } 
+    @panoramas_date = @panoramas_date_of_recording.reverse
     @panoramas.sort_by! { |pano| pano.name.downcase }
   end
   

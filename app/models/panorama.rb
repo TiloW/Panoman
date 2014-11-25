@@ -57,7 +57,7 @@ class Panorama < ActiveRecord::Base
       self.longitude ||= "0.000000"
       self.initial_vertical ||= "0"
       self.repeative = true if self.repeative.nil?
-      self.published = true if self.published.nil?
+      self.hdpano = true if self.published.nil?
       self.priority ||= self.id
     end
     

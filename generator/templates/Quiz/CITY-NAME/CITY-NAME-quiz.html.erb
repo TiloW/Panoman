@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/Article">
+<head>
+<meta charset=utf-8 />
+<meta http-equiv="content-language" content="de">  
+<meta name="copyright" content="Helmut Kölbach">    
+<meta name="viewport" content="width=device-width"> 
+<meta name="description" content="Quiz über <%= @city.name %> mit Panorama-Ansichten">
+<meta itemprop="name" content="Panorama-Quiz <%= @city.name %>">
+<meta itemprop="description" content="Panorama-Quiz mit Fragen und Panoramabilder zu <%= @city.name %>">
+<title><%= @city.name %>-Quiz StadtPanoramen</title>
+<script type="text/javascript">
+<!--
+browser = navigator.appName ;
+function lade() {
+if (browser == "Microsoft Internet Explorer") {
+    if (navigator.appVersion.substring(0, 1) > "4")
+location.replace('http://www.stadtpanoramen.de/staedtequiz/quiz_<%= @city.get_filename %>.html')
+}
+}
+
+function quizcode_<%= @city.get_filename %>()
+{
+var win;
+win=window.open("http://www.stadtpanoramen.de/staedtequiz/<%= @city.get_filename %>-quizcode.html","","width=600,height=250,screenX=180,screenY=130");
+}
+//-->
+</script>
+<script type="text/javascript">
+  window.___gcfg = {lang: 'de'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<link rel="stylesheet" type="text/css" href="../css/panoquiz.css">
+</head>
+<body onLoad="lade()">
+  <div class="logo">   
+    <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" alt="Stadtpanoramen" border="0"></a> 
+  </div>  
+  <div class="content">
+    <div class="frame">
+      <iframe width="628" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.stadtpanoramen.de/staedtequiz/quiz_<%= @city.get_filename %>.html"></iframe>      
+      <div class="bottom">
+        <a href="mailto:?subject=<%= @city.name %>-Quiz&body=%0A%0D%0Ahier%20ist%20ein%20Link%20zum%20<%= @city.name %>-Quiz%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2F<%= @city.get_filename %>-quiz%2Ehtml" class="white" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0"> Quiz weiterempfehlen </a> 
+        <img src="../navpic/pan.gif" alt="" height="18" width="88"> <a href="javascript:quizcode_<%= @city.get_filename %>()" class="white">Quiz einbinden <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a> <img src="../navpic/pan.gif" alt="" height="18" width="88"> <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= @city.get_filename %>_panoramen.html" class="white">Panoramen von <%= @city.name %> <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>
+        <img src="../navpic/pan.gif" alt="" height="18" width="300"><g:plusone size="medium" annotation="inline"></g:plusone><br>
+      </div>
+    </div>
+    <div class="adv-r"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- D-Quiz -->
+      <ins class="adsbygoogle"
+           style="display:inline-block;width:160px;height:600px"
+           data-ad-client="ca-pub-2069005959740847"
+           data-ad-slot="0601839971"></ins>
+      <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>  
+  </div> 
+</body>
+</html>

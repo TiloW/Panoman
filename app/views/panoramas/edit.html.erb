@@ -39,7 +39,7 @@
         <%= f.text_field :en_location, :size => 45 %>
       </div>
       <div class="field">
-        <%= f.label :district, "Ortsteil" %>
+        <%= f.label :district, "Ortsteil / District" %>
         <%= f.text_field :district, :size => 45 %>
       </div>
       <div class="field">
@@ -64,7 +64,7 @@
       </div>
       
       <div class="field">      
-        <%= f.label :latitude, "Breitengrad" %>
+        <%= f.label :latitude, "Breitengrad (Gmap-Link &ll=)" %>
         <%= f.text_field :latitude, :value => f.object.get_latitude %>
       </div>
       <div class="field">
@@ -72,7 +72,7 @@
         <%= f.text_field :longitude, :value => f.object.get_longitude %>
       </div>
       <div class="field">
-        <%= f.label :map_id, "G-Map Pano-ID" %>
+        <%= f.label :map_id, "Meine Karten G-Map Pano-ID (&iwloc=)" %>
         <%= f.text_field :map_id, :size => 45 %>
       </div>      
       <div class="field">

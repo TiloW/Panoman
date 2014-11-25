@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+  <Document>
+    <name>City Panoramas - 360° Panoramas of German Cities </name>
+    <Style id="styleCamera">
+      <IconStyle>
+        <Icon>
+          <href>http://maps.google.com/mapfiles/kml/shapes/camera.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+      <Folder>        
+      <name>German City Panoramas of Germany</name>
+      <% City.order(:name).all.each do |city| %>
+      <% unless city.map_id == "0004da425c9f05f247e60" %>
+        <% city_filename = FileHelper.to_filename city.name %>
+        <% city_en_filename = FileHelper.to_filename city.en_name %>       
+        <% sortedPanoramas = city.panoramas %>
+        <% sortedPanoramas.sort_by!{ |p| (p.district.blank? ? "0_" : p.district) + (p.location.blank? ? "0_" : p.location) + p.name } %>
+        
+        <% sortedPanoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority }.first(10).each do |pano| %>  
+         <% pano_enname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
+         <% city_en_name = (pano_enname[city.en_name] == city.en_name) ? ("") :(city.en_name) %>
+         <% location_en = (pano.en_location.blank? ? (pano.location) : (pano.en_location)) %> 
+          <% pano_filename = FileHelper.to_filename pano.name %>
+          <% pano_en_filename = FileHelper.to_filename( pano.en_name.blank? ? pano.name : pano.en_name ) %>          
+          <% unless pano.get_latitude == "0.000000" %>    
+          <% panoenname = pano.en_name.blank? ? (pano.name) : (pano.en_name) %>
+          <% pano_loc = (pano.location.blank? ? ("") : (pano.location + " in")) %>
+          <% pano_dist = (pano.district.blank? ? ("") : (pano.district)) %>
+          <% citytitle = pano.district.blank? ? (city_en_name) : (pano.district) %> 
+          <Placemark> 
+            <name><%= citytitle.blank? ? ("") : (citytitle) %> <%= panoenname %> </name>
+            <ExtendedData>
+              <Data name='gx_media_links'>
+              <value>http://panorama-cities.net/<%= city_en_filename %>/panoramas/<%= pano_filename %>_<%= city_filename %>.jpg</value>
+              </Data>
+            </ExtendedData>
+            <description>
+              <![CDATA[<%= (pano.repeative == true) ? ("-------------- 360° Panorama -------------- ") : ("") %> 
+               http://www.panorama-cities.net/<%= city_en_filename %>/<%= pano_en_filename %>.html]]>
+            </description>
+            <styleUrl>#styleCamera</styleUrl>
+            <Point>
+              <coordinates><%= pano.longitude %>,<%= pano.latitude %></coordinates>
+            </Point>
+          </Placemark>
+          <% end %>
+        <% end %>
+       <% end %>
+       <% end %>
+      </Folder>  
+  </Document>
+</kml>

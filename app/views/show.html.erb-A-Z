@@ -1,0 +1,136 @@
+<%# coding: utf-8 
+%>
+
+<% content_for :head do %>
+  <%= javascript_include_tag "panorama-lists" %>
+<% end %>
+
+
+
+
+<div id="sticky">
+  <ul>
+    <li><a href="#tab-tasks">Aufgaben</a></li>
+  </ul>
+  
+  <div id="tab-tasks">
+    <ul class="tasks">
+      <li><%= link_to "Panorama hinzufügen", new_panorama_path(:city_id => @city.id), :class => :button %></li>
+    </ul>
+  </div>
+</div>
+<a href="<%= edit_city_path(@city) %>">Datensatz</a>
+<h2><%= @city.name %></h2>
+<div id="sections">
+  <ul>
+    <li><a href="#tab-table">A-Z Liste</a></li>
+    <li><a href="#tab-date">Datum</a></li>
+    <li><a href="#tab-priority">Web-Anordnung</a></li>
+  </ul>
+  
+  <div id="tab-table" class="section">
+    <h3>Tag-Cloud</h3>
+    <p>
+    <% @tag_cloud.each do |tag| %>
+      <%= link_to tag.name, city_path(@city.id, { :tag => tag.name }) %> 
+      <% unless @tag_cloud.last == tag %>
+        /
+      <% end %>
+    <% end %>
+    </p>
+    <% unless @tag.nil? %>
+      <p>Es werden nur mit "<%= @tag %>" assoziierte Panoramen angezeigt.</p>
+      <p><%= link_to "Filter löschen", city_path(@city.id), :class => :button %></p>
+    <% end %>
+    
+    <%= 
+      generate_table(nil, ["Vorschau", "Details", "360°", "Links", "Alt-Name", "EN-Name", "Alt-EN-Name", "Datum", "imNetz", "Exkl", "HD", "Löschen"], @panoramas) do |pano|
+        row_data = [
+          pano.id,
+          "<img title=\"Pfad: #{FileHelper.get_big_thumb_location pano}\"" +
+              "class=\"thumbnail\" src=\"#{FileHelper.get_big_thumb pano}\" alt=\"nicht gefunden\" />",
+          (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
+          generate_chkbtn(:panoramas, pano.id, :repeative, pano.repeative),
+          (link_to pano.name, panorama_path(pano.id)),
+           pano.alt_name,
+           pano.en_name,
+           pano.alt_en_name,
+          pano.date_of_recording.nil? ? "[Unbekannt]" : (l pano.date_of_recording, :format => :month),
+          generate_chkbtn(:panoramas, pano.id, :published, pano.published),
+          generate_chkbtn(:panoramas, pano.id, :exclusive, pano.exclusive),
+          generate_chkbtn(:panoramas, pano.id, :hdpano, pano.hdpano),
+            (link_to "Löschen", pano, :remote => true, :class => 'delete button', :method => 'delete',
+                                      :confirm => "Panorama '#{pano.name}' wirklich löschen?")
+        ]
+      end
+    %>
+  </div>
+  
+  <div id="tab-priority" class="section">
+    <%= 
+      generate_table(nil, ["Details", "Vorschau", "gener."],  @panoramas_priorized) do |pano|
+        row_data = [
+          pano.id,
+          (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
+          (link_to pano.name, panorama_path(pano.id)),          
+          generate_chkbtn(:panoramas, pano.id, :published, pano.published),
+          (link_to "an Anfang verschieben", shift_panorama_path(pano, :dest => "top"), :remote => true, :class => "button top"),
+          @tag.nil? ? (link_to "hoch", shift_panorama_path(pano, :dest => "up"), :remote => true, :class => "button up") : "",
+          @tag.nil? ? (link_to "runter", shift_panorama_path(pano, :dest => "down"), :remote => true, :class => "button down") : "",
+          (link_to "an Ende verschieben", shift_panorama_path(pano, :dest => "bottom"), :remote => true, :class => "button bottom"),
+          "<img title=\"Pfad: #{FileHelper.get_big_thumb_location pano}\"" +
+              "class=\"thumbnail\" src=\"#{FileHelper.get_big_thumb pano}\" alt=\"nicht gefunden\" />"
+        ]
+      end
+    %>
+  </div>
+  
+  <div id="tab-date" class="section">
+    <%= 
+      generate_table(nil, ["Details", "Vorschau", "Datum", "gener."],  @panoramas_date) do |pano|
+        row_data = [
+          pano.id,
+          (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
+          (link_to pano.name, panorama_path(pano.id)),     
+          pano.date_of_recording.nil? ? "[Unbekannt]" : (l pano.date_of_recording, :format => :month),     
+          generate_chkbtn(:panoramas, pano.id, :published, pano.published),
+          "<img title=\"Pfad: #{FileHelper.get_big_thumb_location pano}\"" +
+              "class=\"thumbnail\" src=\"#{FileHelper.get_big_thumb pano}\" alt=\"nicht gefunden\" />"
+        ]
+      end
+    %>
+  </div>
+    
+  <div id="tab-table" class="section">
+    <table>
+    <tr>
+      <th>Locations</th>
+      <th>Panorama</th>
+    <tr>
+    <% @panoramas.order(:location).each do |pano| %>
+    <% unless pano.location.blank? %>
+        <tr>                  
+          <td><%= pano.location %></td>
+          <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>/edit"><%= pano.name %></a></td> 
+        <tr>
+    <% end %>
+    <% end %>
+  </table>
+  </div>
+      
+  <div id="tab-table" class="section">
+    <table>
+    <tr>
+      <th>Ortsteil</th>
+      <th>Panorama</th>
+    <tr>
+    <% @panoramas.order(:district).each do |pano| %>
+    <% unless pano.district.blank? %>
+        <tr>                    
+          <td><%= pano.district %></td>
+          <td><a href="http://127.0.0.1:3000/panoramas/<%= pano.id %>/edit"><%= pano.name %></a></td> 
+        <tr>
+    <% end %>
+    <% end %>
+  </table>
+  </div>

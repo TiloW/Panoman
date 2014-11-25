@@ -23,8 +23,9 @@
 <h2><%= @city.name %></h2>
 <div id="sections">
   <ul>
-    <li><a href="#tab-table">Liste</a></li>
-    <li><a href="#tab-priority">Anordnung</a></li>
+    <li><a href="#tab-priority">Web-Anordnung</a></li>
+    <li><a href="#tab-table">A-Z Liste</a></li>
+    <li><a href="#tab-date">Datum</a></li>
   </ul>
   
   <div id="tab-table" class="section">
@@ -67,15 +68,32 @@
   
   <div id="tab-priority" class="section">
     <%= 
-      generate_table(nil, nil, @panoramas_priorized) do |pano|
+      generate_table(nil, ["Details", "Vorschau", "gener."],  @panoramas_priorized) do |pano|
         row_data = [
           pano.id,
           (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
-          pano.name,
+          (link_to pano.name, panorama_path(pano.id)),          
+          generate_chkbtn(:panoramas, pano.id, :published, pano.published),
           (link_to "an Anfang verschieben", shift_panorama_path(pano, :dest => "top"), :remote => true, :class => "button top"),
           @tag.nil? ? (link_to "hoch", shift_panorama_path(pano, :dest => "up"), :remote => true, :class => "button up") : "",
           @tag.nil? ? (link_to "runter", shift_panorama_path(pano, :dest => "down"), :remote => true, :class => "button down") : "",
           (link_to "an Ende verschieben", shift_panorama_path(pano, :dest => "bottom"), :remote => true, :class => "button bottom"),
+          "<img title=\"Pfad: #{FileHelper.get_big_thumb_location pano}\"" +
+              "class=\"thumbnail\" src=\"#{FileHelper.get_big_thumb pano}\" alt=\"nicht gefunden\" />"
+        ]
+      end
+    %>
+  </div>
+  
+  <div id="tab-date" class="section">
+    <%= 
+      generate_table(nil, ["Details", "Vorschau", "Datum", "gener."],  @panoramas_date) do |pano|
+        row_data = [
+          pano.id,
+          (link_to "Details", edit_panorama_path(pano.id), :class => 'details button'),
+          (link_to pano.name, panorama_path(pano.id)),     
+          pano.date_of_recording.nil? ? "[Unbekannt]" : (l pano.date_of_recording, :format => :month),     
+          generate_chkbtn(:panoramas, pano.id, :published, pano.published),
           "<img title=\"Pfad: #{FileHelper.get_big_thumb_location pano}\"" +
               "class=\"thumbnail\" src=\"#{FileHelper.get_big_thumb pano}\" alt=\"nicht gefunden\" />"
         ]

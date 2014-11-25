@@ -1,43 +1,94 @@
-﻿s i m p l e P a n o r a m a  
- touch-Richtung ändern
-schwarze Striche bei  Panos im Safari-Browser  (Elbe-Pano)
-Kreise bei 0,0,3000
-Cursor + Hotspot-Koordinatenfeld unter das Pano anstelle über Pano
-Startposition wie Center-Werte
+﻿alle veröffentlichen mit einem Mausklick
 
-werden Links zu nicht veröffentlichten Panos deaktiviert?
+PanoLinks in neuem Browsertab öffnen damit nachdem Speichern dieStadtseite nicht neu geladen werden muss.
+
+
+s i m p l e P a n o r a m a  
+
+
+N E U :   ( a l t - T e x t ) in simplepanorama.min.js   (funktioniert nur in DE-Version wegen pathname- macht für EN auch keinen Sinn wegen deutscher Bilddateien)
+      this.img.onload = function() {
+        var i, imgHtml, max, _i, _ref;
+        pathname = c.split( "/" );
+        filename = pathname[ 4 ];
+        imgname = filename.replace("_3.jpg", "");
+        charlow = imgname.charAt( 0 );
+        charup = imgname.charAt( 0 ).toUpperCase();
+        iname = imgname.replace(charlow, charup);
+        pano.elem.css("height", this.height + "px");
+        imgHtml = "<div>";
+        max = pano.isRepeative ? 2 : 0;
+        for (i = _i = 0; 0 <= max ? _i <= max : _i >= max; i = 0 <= max ? ++_i : --_i) {
+          imgHtml += "<img class=\"sp-image sp-number_" + i + "\" src=\"" + imgFile + "\" alt=\"Panorama " + iname + "\" />";
+
+      this.img.onload=function(){var f,g,h,i,j;pathname=c.split("/");filename = pathname[ 4 ] };imgname=filename.replace("_3.jpg","");charlow=imgname.charAt(0);charup=imgname.charAt(0).toUpperCase();iname=imgname.replace(charlow,charup);for(d.elem.css("height",this.height+"px"),g="<div>",h=d.isRepeative?2:0,f=i=0;h>=0?h>=i:i>=h;f=h>=0?++i:--i)g+='<img class="sp-image sp-number_'+f+'" src="'+c+'" alt="Panorama '+iname+'" />';
+
+
+N E U :   ( a l t - T e x t ) funktioniert evt. nicht:
+      this.img.onload = function() {
+        var i, imgHtml, max, _i, _ref;
+;pathname = imgFile.split( "/" );
+filename = pathname[ 4 ];
+charlow =filename.charAt( 0 );
+charup = filename.charAt( 0 ).toUpperCase();
+newname=filename.replace(charlow, charup);
+if(filename.charAt(str.length-5) == 3) {
+imgname = filename.replace("_3.jpg", "");
+       altname = "Panorama" + imgname;
+}
+else {
+if (filename.charAt(str.length-5) == 5) {
+        imgname = filename.replace("_5.jpg", "");
+       altname = "Widescreen Panorama" + imgname;
+}
+else {
+imgname = filename.replace("_hd.jpg", "");
+       altname = "Fullscreen Panorama" + imgname;
+}}
+
+        pano.elem.css("height", this.height + "px");
+        imgHtml = "<div>";
+        max = pano.isRepeative ? 2 : 0;
+        for (i = _i = 0; 0 <= max ? _i <= max : _i >= max; i = 0 <= max ? ++_i : --_i) {
+          imgHtml += "<img class=\"sp-image sp-number_" + i + "\" src=\"" + imgFile + "\" alt=\"Panorama " + altname + "\" />";
+
+
+
+
+
+Rotation zurück bei keinen 360° am Rand
+bei 720°Panos keine doppelten Links zu gleichen Panos möglich
+Welle Brunnemannplatz Bielefeld 2 gleiche Straßen in einem Pano mit Leertaste am Ende?
+ABC-Reihenfolge Panoramen bei Städte stimmt nicht (Überseemuseum)
+EN Panotitel Feld könnte leer sein wenn gleicher Name wie DE Feld (engl. Dateiname wird nicht generiert wenn EN-Feld leer ist - nur .html)
+int-Link-Entfernung im Linktext anzeigen
 _________________
+wenn bei  <%= pano.location %> <%= pano.district %> 
+<%= " -" + pano.location %> <%= " -" + pano.district %> diese Zeichen eingefügt werden kann Asterarkaden nicht generiert werden - warum????
+Ausschnitt Zeile 333:
+                <div id="<%= pano.get_filename %>" class="thumbWrapper" style="background-image: url(http://stadtpanoramen.de/en/<%= city_name.to_s == "koeln" ? "cologne" : (city_name.to_s == "muenchen" ? "munich" :(city_name.to_s == "nuernberg" ? "nuremberg" : city_name)) %>/photos/<%= pano.get_filename %>.jpg)">
+                  <a href="<%= pano.get_filename %>.html" title="<%= pano.alt_name.blank? ? (pano.name) : (pano.alt_name) %>  <%= pano.location %> <%= pano.district %>" target="_top">
+----------------------------
+vertikale Panos - simplepanorama ohne height-Vorgabe in css
+große BogenLinks am Bildrand nicht anklixkbar (http://www.stadtpanoramen.de/tecklenburg/im_bismarckturm_5c.html)
+Kreise bei 0,0,3000
+nojava Safari Blick auf Dresen Terrassenufer-Texteinblendung ist auch außerhalb des Kreises
+Startposition wie Center-Werte bei FullScreen mit Rechtsdrehung nur auf notebook? (forum münchen) oder http://www.stadtpanoramen.de/dresden/kutschfahrten-startplatz_5c.html
+Auflistung der Locations wie Tag-Cloud!!!  (cities/show.html.erb    controllers/citycontroler.rb)
+bei Datum auch kein Datum erlauben,
+Cursor + Hotspot-Koordinatenfeld unter das Pano anstelle über Pano im Panoman
+
 
 Besonderheiten:
+Achtung bei nur einer Übersichtsseite: Weitere Panoramen von stadt_1.html in index.html ändern
 Webcam-Link und andere Polygone (vermutlich bei panoman/app/models/external_link.rb)
 Komma im Link=%2C
-vertikales Panorama
 Links zu Nahaufnahmen (Fotos)
-Cine-Panos ohne Rotation
-
-
-
-production.sqlite funtioniert evt. nicht mehr
-
-txt im ANSI-Format speichern
-
-EN Panotitel Feld könnte leer sein wenn gleicher Name wie DE Feld (engl. Dateiname wird nicht generiert wenn EN-Feld leer ist - nur .html)
-
 Beim Löschen der Hotspots muss danach Seite aktualisiert werden
-
-Start und Zielpanorama werden falsch angezeigt bei Internen Links
-
-
-- Felder für Werbung 3 bei Panoramen und 5  bei Städte
-- Pfad zu Bilddateien - wie am besten ändern damit es auf dem Server und offline funktioniert.
-- pmvr Unregistered Version Pfad ändern:
 
 ___________________
 Webseiten:
 Panorama im Kopfteil der Stadtübersicht
-Städte-Button und Auflistung
-transparenter Hintergrund  nicht im IE 8
-Beide Karten bei Stadtübersichten + evt. Werbung + Linktipps
 ---------
 Beteiligung von Dritten für historische Aufnahmen
 

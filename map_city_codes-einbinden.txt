@@ -60,7 +60,7 @@ http://maps.google.com/maps/ms?msid=204881142368333592551.00044a83a1158ccf2747a&
 Stadtcode: 00044a83a1158ccf2747
 Pano-Koordinaten : 50.097277,8.229609
 Kartenhöhe: 0.002500,0.002500
-Location einblenden: iwloc=0004d9fc8bc9266f4aa7b
+Location einblenden (beim Erstellen Meine Gmaps-Stadtkarten): iwloc=0004d9fc8bc9266f4aa7b
 
 
 PANO-NAME.html.erb-code:

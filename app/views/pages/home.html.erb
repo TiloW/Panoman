@@ -22,7 +22,8 @@
         <%= link_to "Externe Links reparieren", { :controller => "pages", :action => "repair_links"}, :class => "button", :confirm => 
                 "Dies wird die Datenbank dauerhaft ändern. Zuvor sollte ein Backup angelegt werden.\n" +
                 "Die Titel der Links werden reduztiert, so dass sie nicht den Anfang der URL enthalten. " +
-                "Außerdem wird innerhalb der URL jedes \"%2C\" durch ein Komma ersetzt."
+                "Außerdem wird innerhalb der URL jedes \"%2C\" durch ein Komma ersetzt." +
+                "Siehe auch app\controllers\pages_controller.rb und web_helper.rb"
         %>
       </li>
     </ul>

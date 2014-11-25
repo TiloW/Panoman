@@ -1,15 +1,16 @@
 ﻿<!doctype html>
-<html>
+<html lang="de">
 <head>
   <meta charset=utf-8> 
-  <meta name="description" content="<% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %> <%= panoname %> <%= pano.location %> in <%= @city.name %> <%= @pano.district %> - <%= (@pano.repeative == true) ? ("360° Vollbild Panorama") : ("Vollbild Panorama") %>">
-  <meta name="copyright" content="H. Kölbach">   
-  <meta name="viewport" content="width=device-width, maximum-scale=1">   
-  <title><%= @pano.name %> <%= @city.name %> Vollbild </title>
-  <link rel="stylesheet" href="../css/simple-panorama.min.css">
-  <link rel="stylesheet" type="text/css" href="../css/hd_pano.css">
+  <meta http-equiv="content-language" content="de"><% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
+  <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
+  <meta name="viewport" content="width=device-width, maximum-scale=1"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
+  <meta name="description" content="<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> <%= (@pano.repeative == true) ? ("- Volbild-Panorama") : ("") %>">
+  <title><%= (@pano.repeative == true) ? ("360° Panorama") : ("") %> <%= pano.name %> <%= pano.location %>  <%= citytitle.blank? ? ("") : (citytitle) %> - Vollbild </title>
+  <link rel="stylesheet" href="../css/simplepanorama.css">
+  <link rel="stylesheet" type="text/css" href="../css/hdpano.css">
   <link rel="shortcut icon" href="../icon.ico">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script type="text/javascript" src="../js/modernizr.js"></script>
   <script type="text/javascript" src="../js/fullpanorama.js"></script>
   <script type="text/javascript" src="../js/hdpano.js"></script>
@@ -17,16 +18,17 @@
     <!--  <% g_lat = @pano.get_latitude %> <% g_lon = @pano.get_longitude %> <% p_lat = g_lat.to_f %> <% p_lon = g_lon.to_f %>
     $(function() {
       $(window).trigger('resize');
+      viewheight = screen.availHeight;
       pano = new SimplePanorama({
        'selector': '#pano',
        'imagePath': '../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_hd.jpg', 
        'modules': ['move_mousedown', 'move_swipe'], 
-       'initialPos':<%= @pano.initial_center.blank? ?  "0" : (@pano.initial_center*10.8/3.5).to_i %>,
+       'initialPos':<%= @pano.initial_center.blank? ?  "0" : (@pano.initial_center).to_i %>*viewheight/350,
        'repeative': <%= @pano.repeative.blank? ?  "false" : @pano.repeative %>,
        'callback': function() { 
           <%
             links = @pano.internal_links
-            links.sort_by! { |l| l.get_area }
+            links.sort_by!{ |l| -l.get_area }
             links.each do |link| 
               dest = link.get_dest; 
               d_lon = dest.longitude
@@ -39,7 +41,7 @@
                dist_lat = n_lat.abs * 111.3
                dist_ko = Math.sqrt(dist_lon*dist_lon + dist_lat*dist_lat)*1000
                dist_ko <= 2600? (dist = (dist_ko)) : (dist = (dist_ko).to_i) 
-               dist >= 1000? (distance = "- " + ((dist/1000).round(1).to_s) + "km") : (dist >= 26? (distance = "- " + (dist.round(-1).to_s) + "m") : (distance = "- " + (dist.to_i.to_s) + "m"))
+               dist >= 2600? (distance = "&nbsp; " + ((dist/1000).round(1).to_i.to_s) + "km") : (dist >= 1000? (distance = "&nbsp; " + ((dist/1000).round(1).to_s) + "km") : (dist >= 26? (distance = "&nbsp; " + (dist.round(-1).to_s) + "m") : (dist <= 10? (distance = "") : (distance = "&nbsp; " + (dist.to_i.to_s) + "m"))))
                (d_lon <1 || dist <1)? (distance = "") : ("")
             %> 
               pano.createCircleHotspot(
@@ -54,43 +56,114 @@
             <% end %><% end %>
               <%
               extlinks = @pano.external_links
-              extlinks.sort_by! { |l| l.get_area }
+              extlinks.sort_by!{ |l| -l.get_area }
               extlinks.each do |exlink| 
               exurl = exlink.url                
               if exlink.is_circle
             %>
-            <% unless exlink.name=="Webcam" %>
                 pano.createCircleHotspot(
-                  "<a href='<%= exurl %>'><span class='title'><%= exlink.name %> </span></a>", 
-                  <%= exlink.path.split(',').map! { |s| (s.to_i*10.8/3.5).to_i }.join(',') %>,"intern"
+                  "<a href='<%= exurl %>' target='_blank'><span class='title'><%= exlink.name %> </span></a>", 
+                  <%= exlink.path.split(',').map! { |s| (s.to_i*10.8/3.5).to_i }.join(',') %>,"<%= exlink.name=="Webcam" ? "extern" : "intern" %>"
                 );
-            <% end %>
-            <% end %>
-            <% end %>
-                pano.showHotspots("intern",true);                  
-                
-                var spotcss = $('html.no-touch .sp-hotspot');
-                var linkcss = $('html.no-touch #linkInfo');
-                var spottouchcss = $('html.touch .sp-hotspot');
-                var linktouchcss = $('html.touch #linkInfo'); 
-              
-              var infoElem = $('#linkInfo');
-              infoElem.css({'opacity': 0});
-              $('#pano .sp-hotspot').on('mouseenter', function(event) {
-                infoElem.text($(event.target).find('.title').text());
-                infoElem.css({'opacity': 1});
-              });
-              $('#pano .sp-hotspot').on('mouseleave', function() {
-                infoElem.css({'opacity': 0});
-              });                 
+              <% else %>
+                pano.createRectHotspot( <% v_space = exlink.get_xywh.split(",")[3].to_i %><%linkspan = (exlink.name + " </span> <span class='title_url'> ") %>
+                  "<a href='<%= exurl %>'><span class='title'><% linkname = (v_space < 50 ? (linkspan) : (linkspan + "<br> ")) %><%= (exlink.name == "." ? " " : linkname + (exurl.split("/")[2])) %> </span></a>",
+                  <%= exlink.get_xywh.split(',').map! { |s| (s.to_i*10.8/3.5).to_i }.join(',') %>,"extern"
+                );<% end %> <% end %> 
+                pano.showHotspots("intern",true); 
+                pano.showHotspots("extern",false); 
+                pano.showHotspots("info",false); 
+                pano.showHotspots("screen",false);  
+                var spotcss = $('.sp-hotspot');
+                var linkInf = $('#linkInfos');
+                var linktxt = $('.no-touch #linkinfo');
+                var linktxt_url = $('#link_url');
+                var t_linktxt = $('.touch #linkinfo');  
+                linktxt_url.hide();  
+                function int_spot() { 
+                pano.showHotspots("intern",true);
+                pano.showHotspots("extern",false);
+                linktxt_url.hide();   
+                spotcss.css({'border-width': '2px', 'border-color': 'rgba(250,250,110,1)', 'background-color': 'rgba(0,0,0,.07)'});
+                $( "#linkinfo" ).text( "Virtueller Panorama-Rundgang ist aktiviert!" );
+                linkInf.fadeIn(); 
+                }; 
+                function ext_info() { 
+                pano.showHotspots("extern",true);
+                pano.showHotspots("intern",false);
+                spotcss.css({'border-width': '2px', 'border-color': 'rgba(190,190,190,1)', 'background-color': 'rgba(0,0,0,.07)'});
+                $( "#linkinfo" ).text( "Info-Links im Panorama sind aktiviert!" ); 
+                linktxt.css({'opacity': 1,'color': 'rgb(210,210,210)'}); 
+                linktxt_url.css({'opacity': 1,'color': 'rgb(210,210,210)'}); 
+                t_linktxt.css({'opacity': 1,'color': 'rgb(210,210,210)'});  
+                linkInf.fadeIn();   
+                };         
+            <% unless @pano.internal_links.empty? %> 
+                $('#hotsp').click(function() { 
+                  int_spot();
+                  linktxt.css({'opacity': 1,'color': 'rgb(250,250,90)'}); 
+                  t_linktxt.css({'opacity': 1,'color': 'rgb(250,250,90)'}); 
+                $('#hotsp').fadeOut(500);  
+                $('#ext').delay(510).fadeIn(600);  
+                }); <% end %>       
+            <% unless @pano.external_links.empty? %> 
+                $('#ext').click(function() { 
+                  ext_info();                     
+                $('#ext').fadeOut(500);
+               <% links = @pano.internal_links
+                  links.first(1).each do |link| 
+                  if link %>   
+                $('#hotsp').delay(510).fadeIn(600);<% end %><% end %>  
+                }); <% end %>  
+                $('.sp-hotspot').on('mouseenter', function(event) {
+                  spotcss.css({'cursor': 'pointer'});
+                  linktxt.text($(event.target).find('.title').text());
+                  linkInf.fadeIn();
+                });
+                $('.sp-hotspot').on('mouseleave', function() {
+                  linkInf.hide();
+                }); 
+                $('.sp-rect').on('mouseenter', function(event) {
+                  linktxt_url.text($(event.target).find('.title_url').text());
+                  linktxt_url.fadeIn();
+                  spotcss.css({'border-color': 'rgba(190,190,190,1)'});
+                });
+                $('.sp-rect').on('mouseleave', function(event) {
+                  linktxt_url.hide();
+                });
+                $('.sp-hotspot').on('click', function(event) {  
+                spotxt = $(this).html();               
+                startpos = spotxt.indexOf('href="'); 
+                endpos = spotxt.indexOf('"><span');                     
+                spotlink = $(this).html().slice(startpos+6 ,endpos);                 
+                location.href = spotlink;                    
+                });
+                $('.sp-container').on("touchend", function() {
+                  if (pano.speed.x < 0){
+                  pano.setTargetSpeed(-0.1);
+                  button(bus,Bildrr2); tbutton(bus_t,Bildrr2);
+                    }                
+                  else {
+                  pano.setTargetSpeed(0.1)
+                  button(bus,Bildll2); tbutton(bus_t,Bildll2);
+                  }
+                });
               $('#fullscr_button').show().delay(5000).fadeOut(3000);  
               $('#fullscr_button').css({'cursor': 'pointer'});   
               $('#back_button').delay(8000).fadeIn(400);    
               $('#first_headline').show().delay(5000).fadeOut(4500);  
          }
       });          
-        <%= @pano.rotation == 0 ? "" : @pano.rotation == -20 ? "pano.setTargetSpeed(0.05);" : "pano.setTargetSpeed(-0.05);" %>  
-      }); 
+        <%= @pano.rotation == 0 ? "" : @pano.rotation == -20 ? "pano.setTargetSpeed(0.05);" : "pano.setTargetSpeed(-0.05);" %>
+        <% if not @pano.repeative %>  
+        var lastX = undefined;
+        setInterval(function() {
+          if(lastX == pano.pos.x) {
+            pano.setTargetSpeed(-pano.targetSpeed.x);
+          }
+          lastX = pano.pos.x;
+        }, 1000);<% end %>
+      });  
    //-->
   </script>
 </head>
@@ -102,11 +175,19 @@
          </div>
        </div>
        <div id="headline"><br>
-         <%= panoname %> - <%= @pano.location %> <%= @city.name %> <%= @pano.district %>
-         <br><span style="font-size:14px;"><% unless pano.date_of_recording.year.to_i <= 1999 %><%= pano.get_german_month %><% end %></span>
+         <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %><% @city.panoramas.keep_if{ |p| p.published }.count %><% if @city.panoramas.count > 12 %><%= @city.get_filename %>_panoramen.html"><%= @city.name %><% else %>"><%= @city.name %><% end %><% end %><% end %> </a>
+      <div id="ext"<%= @pano.external_links.empty? ? " style='display:none;'" : "" %>> 
+       <img src="../navpic/infos-hd.gif" width="25" height="25" title=" Info-Links im Panorama einblenden " alt="" border="0" name="infosname" onmouseleave="tauschin(infosname,infos)" onmouseover="tauschin(infosname,infos_h)">
+      </div> 
+      <div id="hotsp"<%= @pano.internal_links.empty? ? " style='display:none;'" : "" %>> 
+       <img src="../navpic/hotspot-hd.gif" width="25" height="25" title=" Panorama-Tour einblenden " alt="" border="0">
+      </div> 
+      <div id="gps"<%= @pano.get_latitude == "0.000000" ? " style='visibility:hidden'" : "" %>>
+       <a href="karte_<%= @pano.get_filename %>.html" title="<%= @city.name %>-Karte mit Aufnahme-Standort <%= panoname %>"><img src="../navpic/gps-hd.gif" width="25" height="25" alt="" border="0" name="gpsname" onmouseleave="tauschgps(gpsname,gps)" onmouseover="tauschgps(gpsname,gps_h)" ></a>
+      </div>
        </div>
        <div id="first_headline"><br>
-         <%= panoname %> - <%= @pano.location %>
+         <%= panoname %> <% unless @pano.location.blank? %><%= "- " + @pano.location %><% end %>
          <br><span style="font-size:14px;"><% unless pano.date_of_recording.year.to_i <= 1999 %><%= pano.get_german_month %><% end %></span>
        </div>
        <div id="fullscr_button">
@@ -115,8 +196,11 @@
        <div id="back_button">
          <a href="<%= @pano.get_filename %>_5c.html">x</a>
        </div>
-       <div id="linkInfo">
-          <div class="linkspace"> </div>
+        <div id="linkInfos">   
+         <div id="linkinfo">
+         </div>     
+         <div id="link_url">
+         </div>     
        </div>     
     </div> 
 </body>

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
   <meta charset=utf-8 />
   <title><%= @city.name %> 360° StadtPanoramen </title>
   <meta http-equiv="content-language" content="de">  
   <meta name="copyright" content="Helmut Kölbach">    
   <meta name="viewport" content="width=device-width"> 
-  <meta name="description" content="360° Panoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen in voller Bildschirmbreite">
+  <meta name="description" content="360° Panoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen<% citypanos = @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority } %><% unless citypanos.at(9).nil? %> und Fotos mit den Bildmotiven: <% citypanos.first(8).each do |pano| %><%=  pano.name + ", " %><% end %><% pano8 = citypanos.at(8) %><%=  pano8.name %><% pano9 = citypanos.at(9) %><%= " und " + pano9.name  %><% end %><% n_pano = citypanos.length %><% unless n_pano > 10 %> und Fotos mit den Bildmotiven: <% citypanos.first(n_pano-2).each do |pano_n| %><%=  pano_n.name + ", " %><% end %><% pano_vend = citypanos.at(n_pano-2) %><%=  pano_vend.name %><% pano_end = citypanos.at(n_pano-1) %><%= " und " + pano_end.name  %><% end %>">
   <link rel="shortcut icon" href="../icon.ico">
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/cities.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/city.css" />
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" language="javascript" src="../ind.js"></script> 
   <script type="text/javascript" src="../js/s-panorama.js"></script>
@@ -101,15 +101,7 @@
         </nav>
       </div>     
     <div id="box">      
-      <% if @city.map_id == "0004da425c9f05f247e60" %>
-        <% if @city.name == "Tecklenburg" %>
-          <div class="adv-more">
-            <%= @city.ad_more_first_page_top %>
-          </div>  
-          <% else %> 
-          <iframe src="http://www.stadtpanoramen.de/karten/karte_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
-        <% end %>
-        <% else %>  
+      <% if @city.map_id != "0004da425c9f05f247e60" %>
         <script>
         (function() {
           var cx = '014086874790278901250:trd61z8lvpu';
@@ -123,19 +115,22 @@
         })();
         </script>
         <gcse:search></gcse:search>
-          <% if !@city.ad_more_first_page_top.blank? %>
-          <div class="adv-more">
-          <%= @city.ad_more_first_page_top %>
-          </div>  
-          <div class="g_adv">
-          <%= @city.ad_first_page_top %>
-          </div> 
-          <% else %>  
-          <div class="g_adv_only">
-          <%= @city.ad_first_page_top %>
-          </div> 
-          <% end %>
       <% end %>
+    <% if !@city.ad_more_first_page_top.blank? %>
+    <div class="adv-more">
+      <%= @city.ad_more_first_page_top %>
+    </div> 
+    <% end %> 
+    <div id="tip">
+      <%= @city.linktips %>
+    </div>
+      <% if @city.map_id == "0004da425c9f05f247e60" %>
+      <div id="ms_map">
+          <iframe src="http://www.stadtpanoramen.de/karten/karte_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
+         </div><% end %>   
+        <div class="g_adv_only">
+          <%= @city.ad_mobile_banner %>
+        </div> 
     </div> 
          
     <div id="grid">
@@ -149,17 +144,14 @@
         </li><% end %>
       </ul>
     </div>
-    <% if @city.linktips.blank? %>
-    <div id="notip">&nbsp;
-    </div><% else %>
-    <div id="tip">
-      <div style="height:50px;"><a name="<%= @city.get_filename %>-tipps"></a></div>
-      <%= @city.linktips %>
-    </div><% end %>           
+    <div class="gmap"><% mapcode = @city.mymap_id %><% if mapcode == "zIANpqu4IHeQ.kKDcOohK8htk" %>
+        <iframe src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.kKDcOohK8htk&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode == "zIANpqu4IHeQ.k6dPEXy8Scoc" %><iframe src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.k6dPEXy8Scoc&ie=UTF8&z=19&t=h"<% else %><iframe src="https://mapsengine.google.com/map/embed?mid=<%= @city.mymap_id %>"<% end %><% end %> frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" width="560" height="660"></iframe><% if mapcode == "zIANpqu4IHeQ.kKDcOohK8htk" %>
+        <a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.kKDcOohK8htk&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode == "zIANpqu4IHeQ.k6dPEXy8Scoc" %><a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.k6dPEXy8Scoc&ie=UTF8&z=19&t=h"<% else %><a href="https://mapsengine.google.com/map/viewer?mid=<%= @city.mymap_id %>" <% end %><% end %> target="_blank"><span style="font-size:1.1em;"><%= @city.name %> Panorama-Karte </a></span> <br><span style="font-size:0.9em;">(Panoramen auf einer größeren Karte anzeigen)</span>
+    </div> 
     <div class="more">  
       <% @city.panoramas.keep_if{ |p| p.published }.count %>
-        <% if @city.panoramas.count > 11 %>
-      <span style="font-size: 1.1em;"><a href="<%= @city.get_filename %>_panoramen.html">weitere Panoramen von <%= @city.name %> </a></span> <br><br>
+        <% if @city.panoramas.count > 12 %>
+      <span style="font-size: 1.1em;"><a href="<%= @city.get_filename %>_panoramen.html#<%= @city.get_filename %>">weitere Panoramen von <%= @city.name %> </a></span> <br><br>
       <% end %>
       <% districts = Hash.new
       @city.panoramas.each { |p| districts[p.district] = true if p.district }
@@ -176,28 +168,35 @@
       <% end %>
       <% end %>
       <% if @city.quiz == true %>
-      <a href="http://www.stadtpanoramen.de/staedtequiz/quiz_<%= @city.get_filename %>.html"><%= @city.name %>-Quiz  </a> 
+      <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= @city.get_filename %>_quiz.html"><%= @city.name %>-Quiz  </a> 
       <% end %>    
     </div> 
-    <div class="gmap">
-       Panorama-Aufnahmestandorte <%= @city.name %>
-       <br>
-       <iframe width="560" height="660" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" src="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;output=embed"></iframe><br /><a href="http://maps.google.de/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= @city.map_coord %>&amp;source=embed" target="_blank"><%= @city.name %> Panorama-Karte </a> &nbsp;<span style="font-size:0.9em;">(Panoramen auf einer größeren Karte anzeigen)</span>
-    </div> 
-     <br> <% unless @city.ad_first_page_down.blank? %>
-    <div class="adv1-down">
-      <br>
+     <br> <% unless @city.ad_sec_page_down.blank? %>
+    <div class="adv2-down">      
+    <%= @city.ad_sec_page_down %>
     </div> <% end %> 
     <div class="adtext">
     <%= @city.citytext %>
       <br>
     </div> 
   </div>
+  <div id="fb-root"></div>
+   <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));</script>
   <footer>
     <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
     <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
-    <div class="mail"> <a href="mailto:?subject=Tipp%20StadtPanoramen%20von%20<%= @city.name %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20Link%20zu%20interessanten%20Panoramabildern%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2Findex%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AA%20n%20l%20e%20i%20t%20u%20n%20g%0D%0AEmailadresse%20des%20Empf%C3%A4ngers%20eingeben%2c%0D%0Aden%20Text%20nach%20Belieben%20erg%C3%A4nzen%20und%0D%0Adiesen%20Anleitungsabschnitt%20vor%20dem%20Absenden%20entfernen%2E" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite weiterempfehlen </a>
+    <div class="mail"> <a href="mailto:?subject=Tipp%20StadtPanoramen%20von%20<%= @city.name %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20Link%20zu%20interessanten%20Panoramabildern%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2Findex%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AA%20n%20l%20e%20i%20t%20u%20n%20g%0D%0AEmailadresse%20des%20Empf%C3%A4ngers%20eingeben%2c%0D%0Aden%20Text%20nach%20Belieben%20erg%C3%A4nzen%20und%0D%0Adiesen%20Anleitungsabschnitt%20vor%20dem%20Absenden%20entfernen%2E" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite senden </a>
     </div>
+    <div class="gplus"><script type="text/javascript" src="http://apis.google.com/js/plusone.js">{lang: 'de', parsetags: 'explicit'}</script><g:plusone href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/" size="medium" count="false"></g:plusone><script type="text/javascript">gapi.plusone.go();</script></div>
+    <div class="socmed-fb">
+      <div class="fb-like" data-href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/" data-width="265" data-layout="button" data-action="recommend" colorscheme="dark" data-show-faces="false" data-share="false"></div>      
+    </div>  
   </footer>
 </body>
 </html>

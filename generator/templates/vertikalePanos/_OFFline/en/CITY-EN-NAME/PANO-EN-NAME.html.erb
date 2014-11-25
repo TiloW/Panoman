@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, maximum-scale=1">  
   <title><%= pano_enname %> <%= citytitle %> </title>
   <link rel="stylesheet" href="../css/simple-panorama.min.css">
-  <link rel="stylesheet" type="text/css" href="../css/v-pano.css">
+  <link rel="stylesheet" type="text/css" href="../css/v_pano.css">
   <link rel="shortcut icon" href="../icon.ico">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script type="text/javascript" src="../js/modernizr.js"></script>
@@ -158,7 +158,6 @@
               if (imgwidth != 0) {
                 $('#panoramaWrapper').css({"max-width": imgw});  
                 $('#pano').css({"max-width": imgw});   
-                $('#top').css({"max-width": imgw, "margin": "0 auto"}); 
               }
          }
       });         
@@ -172,7 +171,7 @@
   <header>
       <div id="top">
         <div class="logo">
-          <a href="http://www.panorama-cities.net/"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas"></a>
+          <a href="http://www.panorama-cities.net/"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas" border="0"></a>
         </div>                  
         <div  class="city">
           <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<% if !@pano.district.blank? %><%= FileHelper.to_filename @pano.district %>_panoramas.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %><%= FileHelper.to_filename @pano.en_location %>_panoramas.html"><%= @pano.en_location %><% else %><%= FileHelper.to_filename @city.en_name %>_germany.html"><%= @city.en_name %><% end %><% end %> </a>
@@ -188,7 +187,8 @@
         </div>  
       </div>           
   </header>
- <div id="all">    
+ <div id="all">  
+   <div id="content">   
     <div id="panoramaWrapper">
      <div class="rahmen_w">
       <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="15">     
@@ -200,7 +200,7 @@
      <div id="linkInfo"> </div>   
     </div>  
      <div class="rahmen_wu">
-      <div class="rahmen_wul"><a href="javascript:end()" class="back"><img src="../navpic/pfeil_r.gif" alt="" width="8" height="8"> back</a>
+      <div class="rahmen_wul"><a href="javascript:end()" class="back"><img src="../navpic/pfeil_r.gif" alt="" width="8" height="8" border="0"> back</a>
       </div>
       <div class="rahmen_wur"><a href="http://www.panorama-cities.net/html/st_kontakt_index.html" class="foto">Panorama H. Kölbach</a>
       </div>
@@ -233,11 +233,31 @@
    </div>  
    <noscript style="color:#ff6666;font-size:20pt"><br>Please enable <a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://www.enable-javascript.com/">Javascript </a> </noscript>
    </div>
-   <div class="center_full">
-      <div id="full">
-       <img src="../navpic/fullscreen.gif" title="Fullscreen View" alt="Fullscreen">
-      </div>
-   </div>
+    <div id="ads"><% if !@pano.exclusive %>
+      <script type="text/javascript"><!--
+      google_ad_client = "pub-2069005959740847";
+      google_alternate_color = "000000";
+      google_ad_width = 120;
+      google_ad_height = 240;
+      google_ad_format = "120x240_as";
+      google_ad_type = "text";
+      //2007-06-29: EN-klPanos-klvert
+      google_ad_channel = "3122914084";
+      google_color_border = "333333";
+      google_color_bg = "000000";
+      google_color_link = "66B5FF";
+      google_color_text = "CCCCCC";
+      google_color_url = "3D81EE";
+      google_ui_features = "rc:6";
+      google_language = "en";
+      //-->
+      </script>
+      <script type="text/javascript"
+        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>)
+      <% end %>
+     </div>
+    </div>
   </div>
   <footer>
     <span class="contact"><a href="http://www.panorama-cities.net/html/kontakt.html">Contact us</a></span>

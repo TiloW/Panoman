@@ -22,8 +22,8 @@
       generate_table(nil, nil, @cities) do |city|
         row_data = [
           city.id,
-          (link_to city.name, city_path(city.id)),
           (link_to "Details", edit_city_path(city.id), :class => 'details button'),
+          (link_to city.name, city_path(city.id)),
           (link_to "Löschen", city, :remote => true, :class => 'delete button', :method => 'delete',
                :confirm => "Stadt '#{city.name}' wirklich löschen?")
         ]
