@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Datenbankbericht</title>
+</head>
+<body>
+  <h1>Datenbankbericht vom <%= Time.now.to_date %> in <%= Rails.env %> Umgebung</h1>
+  <ul>
+    <% @cities.sort_by! { |c| c.name.downcase } %>
+    <% @cities.each do |city| %>
+      <li>
+        <h2><%= city.name %></h2>
+        <ul>
+          
+          <% panos = city.panoramas.sort_by { |p| p.priority } %>
+          <% panos.each do |pano| %>
+            <li>
+              <h3><%= pano.name %></h3>
+              <ul>
+                <li>
+                  <h4>Interne Links</h4>
+                  <ul>
+                    <% pano.internal_links.each do |link| %>
+                      <li><%= Panorama.find(link.destination_id).name %></li>
+                    <% end %>
+                  </ul>
+                </li>
+                <li>
+                  <h4>Externe Links</h4>
+                  <ul>
+                    <% pano.external_links.each do |link| %>
+                      <li><%= link.name %></li>
+                    <% end %>
+                  </ul>
+                </li>
+                <li>
+                  <h4>Hotspots</h4>
+                  <ul>
+                    <% pano.hotspot_infos.each do |spot| %>
+                      <li><%= spot.name %></li>
+                    <% end %>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+</body>
+</html>

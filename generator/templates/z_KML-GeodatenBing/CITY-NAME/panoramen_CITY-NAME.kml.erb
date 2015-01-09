@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://earth.google.com/kml/2.1">
+  <Document>
+    <name>StadtPanoramen <%= @city.name %></name>
+    <description>Virtueller Stadtrundgang mit interaktiven Panoramen von <%= @city.name %></description>
+      <% city_filename = FileHelper.to_filename @city.name %>
+      <% city_en_filename = FileHelper.to_filename @city.en_name %>
+        <% sortedPanoramas = @city.panoramas %>
+        <% sortedPanoramas.sort_by!{ |p| (p.district.blank? ? "0_" : p.district) + (p.location.blank? ? "0_" : p.location) + p.name } %>
+        <% sortedPanoramas.each do |pano| %>    
+          <% pano_filename = FileHelper.to_filename pano.name %>
+          <% pano_en_filename = FileHelper.to_filename( pano.en_name.blank? ? pano.name : pano.en_name ) %>          
+          <% unless pano.get_latitude == "0.000000" %>    
+          <% panoenname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
+          <% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
+          <% pano_loc = (pano.location.blank? ? ("") : (pano.location + " in")) %>
+          <% pano_dist = (pano.district.blank? ? ("") : (pano.district)) %>
+          <Placemark> 
+            <name><%= pano.name %> in <%= @city.name %></name>
+            <description>&lt;img src='http://panorama-cities.net/<%= city_en_filename %>/panoramas/<%= pano_filename %>_<%= city_filename %>.jpg'/&gt;&lt;br/&gt;&lt;br/&gt;
+            &lt;a href='http://www.stadtpanoramen.de/<%= city_filename %>/<%= pano_filename %>.html'&gt; <%= (pano.repeative == true) ? (". 360° Panorama .") : ("") %>&lt;/a&gt;</description>        
+            <Point>
+              <coordinates><%= pano.longitude %>,<%= pano.latitude %></coordinates>
+            </Point>
+          </Placemark>
+          <% end %>
+        <% end %>
+  </Document>
+</kml>

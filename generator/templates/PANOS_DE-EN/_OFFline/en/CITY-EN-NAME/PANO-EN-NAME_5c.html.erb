@@ -1,20 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset=utf-8><% location_en = (@pano.en_location.blank? ? (@pano.location) : (@pano.en_location)) %> 
-  <meta http-equiv="content-language" content="en"><% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %>
-  <meta name="viewport" content="width=device-width, maximum-scale=1"><% city_en_name = (pano_enname[@city.en_name] == @city.en_name) ? ("") :(@city.en_name) %>
-  <meta name="copyright" content="Helmut Koelbach"><% citytitle = @pano.district.blank? ? (city_en_name) : (@pano.district) %>    
-  <meta name="description" content="<%= pano_enname %> <%= location_en.blank? ? ("") : ("at the " + location_en) %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> Germany <%= (@pano.repeative == true) ? ("- Widescreen Panorama") : ("") %>">
-  <title><%= (@pano.repeative == true) ? ("360° Widescreen Panorama") : ("") %> <%= pano_enname %> <%= location_en.blank? ? ("") : ("- " + location_en) %> <%= citytitle.blank? ? ("") : (citytitle) %> Germany </title>
-  <link rel="stylesheet" href="../css/simplepanorama.css">
-  <link rel="stylesheet" type="text/css" href="../css/cinepano.css">
-  <link rel="shortcut icon" href="../icon.ico">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <script type="text/javascript" src="../js/modernizr.js"></script>
-  <script type="text/javascript" src="../js/simple-panorama.min.js"></script>
-  <script type="text/javascript" src="../js/cinepano-en.js"></script>
-  <script>
+   <meta charset=utf-8><% location_en = (@pano.en_location.blank? ? (@pano.location) : (@pano.en_location)) %> 
+   <meta http-equiv="content-language" content="en"><% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"><% city_en_name = (pano_enname[@city.en_name] == @city.en_name) ? ("") :(@city.en_name) %>
+   <meta name="copyright" content="Helmut Koelbach"><% citytitle = @pano.district.blank? ? (city_en_name) : (@pano.district) %>    
+   <meta http-equiv="cache-control" content="max-age=260000">
+   <meta name="description" content="<%= pano_enname %> <%= location_en.blank? ? ("") : ("at the " + location_en) %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> Germany - Widescreen Panorama">
+   <title><%= (@pano.repeative == true) ? ("360° Widescreen Panorama") : ("Widescreen Panorama") %> <%= pano_enname %> <%= location_en.blank? ? ("") : ("- " + location_en) %> <%= citytitle.blank? ? ("") : (citytitle) %> Germany </title>
+   <link rel="stylesheet" href="../css/simplepanorama.css">
+   <link rel="stylesheet" type="text/css" href="../css/cine_pano.css">
+   <link rel="shortcut icon" href="../icon.ico">
+   <link rel="alternate" hreflang="de" href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @pano.name %>_5c.html" />
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script type="text/javascript" src="../js/modernizr.js"></script>
+   <script type="text/javascript" src="../js/simple-panorama.min.js"></script>
+   <script type="text/javascript" src="../js/cinepano-en.js"></script>
+   <script>
     <!--  <% g_lat = @pano.get_latitude %> <% g_lon = @pano.get_longitude %> <% p_lat = g_lat.to_f %> <% p_lon = g_lon.to_f %>
     $(function() {
       pano = new SimplePanorama({
@@ -268,10 +270,10 @@
   <header>
       <div id="top">
         <div class="logo">
-         <a href="http://www.panorama-cities.net/"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas" border="0"></a>
+         <a href="http://www.panorama-cities.net/" target="_top"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas" border="0"></a>
         </div>                  
         <div  id="city">
-          <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<% if !@pano.district.blank? %><%= FileHelper.to_filename @pano.district %>_panoramas.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %><%= FileHelper.to_filename @pano.en_location %>_panoramas.html"><%= @pano.en_location %><% else %><%= FileHelper.to_filename @city.en_name %>_germany.html"><%= @city.en_name %><% end %><% end %> </a><% if !@pano.location.blank? %>in <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @city.en_name %>_germany.html"><%= @city.en_name %> </a><% end %>
+          <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<% if !@pano.district.blank? %><%= FileHelper.to_filename @pano.district %>_panoramas.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %><%= FileHelper.to_filename @pano.en_location %>_panoramas.html"><%= @pano.en_location %><% else %><%= FileHelper.to_filename @city.en_name %>_germany.html"><%= @city.en_name %><% end %><% end %> </a><% if !@pano.location.blank? %>in <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @city.en_name %>_germany.html" target="_top"><%= @city.en_name %> </a><% end %>
         </div>  
         <div id="close">
          <a href="javascript:window.close()"><img src="../navpic/close.png" alt="" border="0"></a>
@@ -287,13 +289,15 @@
   </header>
  <div id="all">    
     <div id="panoramaWrapper">
+        <div id="rahmen_txt">   
+        <%= pano_enname %> <%= location_en.blank? ? ("") : ("at the " + location_en) %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> Germany
+        </div>
      <div class="rahmen_w">
       <div class="rahmen_wol">
       </div>
       <div class="rahmen_wor">
       </div>
-      <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="15">     
-        <%= pano_enname %> <%= location_en.blank? ? ("") : ("at the " + location_en) %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> Germany
+      <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="15">  
       </div>
      </div>
      <div id="screen">

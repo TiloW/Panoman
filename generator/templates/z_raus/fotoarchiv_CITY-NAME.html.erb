@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset=utf-8> 
+    <link href="../css/fotoarchiv.css" rel="stylesheet" type="text/css">  
+   <title>Fotoarchiv - <%= @city.name %></title>
+   <meta name="description" content="Fotoarchiv <%= @city.name %> - Fotos zum Anklicken für Panoramapräsentationen">
+  </head>
+  <body>
+      <div id="cont" class="wrapper">
+          <div id="thumbnails"> 
+            <% @city.panoramas.sort_by!{ |pano| pano.priority }.each do |pano| %>
+             <% next unless pano.published %>
+              <div class="anch"><a name="<%= pano.get_filename %>"> </a>
+              </div> <% city_name = @city.get_filename %>
+              <div id="<%= pano.get_filename %>" class="thumbWrapper" style="background-image: url(http://stadtpanoramen.de/en/<%= city_name.to_s == "koeln" ? "cologne" : (city_name.to_s == "muenchen" ? "munich" :(city_name.to_s == "nuernberg" ? "nuremberg" : city_name)) %>/photos/<%= pano.get_filename %>.jpg)">
+                <a href="<%= pano.get_filename %>.html" title="<%= pano.alt_name.blank? ? (pano.name) : (pano.alt_name) %>" target="_top">
+                  <span class="title"><%= (pano.name) %> </span></a>
+              </div>
+            <% end %> 
+              <div class="thumbWrapper" style="background-color: rgba(34, 34, 34, 0.7)">
+              </div>
+           </div>  
+      </div>
+  </body>
+</html>

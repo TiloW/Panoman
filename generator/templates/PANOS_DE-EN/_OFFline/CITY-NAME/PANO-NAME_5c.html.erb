@@ -1,20 +1,21 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset=utf-8> 
-  <meta http-equiv="content-language" content="de"><% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
-  <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
-  <meta name="viewport" content="width=device-width, maximum-scale=1"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
-  <meta name="description" content="<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> <%= (@pano.repeative == true) ? ("- Widescreen-Panorama - Ansicht in voller Breite") : ("") %>">
-  <title><%= (@pano.repeative == true) ? ("360° Widescreen Panorama") : ("") %> <%= panoname %> <%= pano.location %>  <%= citytitle.blank? ? ("") : (citytitle) %></title>
-  <link rel="stylesheet" href="../css/simplepanorama.css">
-  <link rel="stylesheet" type="text/css" href="../css/cinepano.css">
-  <link rel="shortcut icon" href="../icon.ico">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript" src="../js/modernizr.js"></script>
-  <script type="text/javascript" src="../js/simple-panorama.min.js"></script>
-  <script type="text/javascript" src="../js/cine_pano.js"></script>
-  <script>
+   <meta charset=utf-8> <% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
+   <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
+   <meta name="description" content="<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> <%= (@pano.repeative == true) ? ("- Widescreen-Panorama - Ansicht in voller Breite") : ("") %>">
+   <meta http-equiv="cache-control" content="max-age=260000">
+   <title><%= (@pano.repeative == true) ? ("360° Widescreen Panorama") : ("") %> <%= panoname %> <%= pano.location %>  <%= citytitle.blank? ? ("") : (citytitle) %></title>
+   <link rel="stylesheet" href="../css/simplepanorama.css">
+   <link rel="stylesheet" type="text/css" href="../css/cine_pano.css">
+   <link rel="shortcut icon" href="../icon.ico">
+   <link rel="alternate" hreflang="en" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @pano.en_name %>_5c.html" />
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script type="text/javascript" src="../js/modernizr.js"></script>
+   <script type="text/javascript" src="../js/simple-panorama.min.js"></script>
+   <script type="text/javascript" src="../js/cine_pano.js"></script>
+   <script>
     <!--  <% g_lat = @pano.get_latitude %> <% g_lon = @pano.get_longitude %> <% p_lat = g_lat.to_f %> <% p_lon = g_lon.to_f %>
     $(function() {
       pano = new SimplePanorama({
@@ -267,10 +268,10 @@
   <header>
      <div id="top">
        <div class="logo">
-        <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen" border="0"></a>
+        <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen" border="0"></a>
        </div>                     
        <div id="city">
-        <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a><% if !@pano.location.blank? %>in <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/"><%= @city.name %> </a><% end %>
+        <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a><% if !@pano.location.blank? %>in <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/" target="_top"><%= @city.name %> </a><% end %>
        </div>  
        <div id="close">
          <a href="javascript:window.close()"><img src="../navpic/close.png" alt="" border="0"></a>
@@ -285,13 +286,15 @@
   </header>
  <div id="all"> 
     <div id="panoramaWrapper">
+        <div id="rahmen_txt">
+          <%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("- " + citytitle) %>
+        </div>
      <div class="rahmen_w">
       <div class="rahmen_wol">
       </div>
       <div class="rahmen_wor">
       </div>
       <div class="rahmen_wom"><img src="../navpic/pan.gif" alt="" width="8" height="15">   
-        <%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("- " + citytitle) %>
       </div>
      </div>
      <div id="screen">
@@ -351,7 +354,7 @@
    </div> 
    <div id="foot">   
     <div id="f_left"> 
-      <a href="mailto:?subject=StadtPanorama%20<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("- " + citytitle) %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20interessantes%20Panorama%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2F<%= @pano.get_filename %>_5c%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AA%20n%20l%20e%20i%20t%20u%20n%20g%0D%0AEmailadresse%20des%20Empf%C3%A4ngers%20eingeben%2c%0D%0Aden%20Text%20nach%20Belieben%20erg%C3%A4nzen%20und%0D%0Adiesen%20Anleitungsabschnitt%20vor%20dem%20Absenden%20entfernen%2E" title="mit eigenem Emailprogramm senden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="Email"> Panorama senden </a>
+      <a href="mailto:?subject=StadtPanorama%20<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("- " + citytitle) %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20interessantes%20Panorama%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2F<%= @pano.get_filename %>_5c%2Ehtml%0D%0A" title="mit eigenem Emailprogramm senden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="Email"> Panorama senden </a>
     </div>
     <div id="f_mid">
       &nbsp;

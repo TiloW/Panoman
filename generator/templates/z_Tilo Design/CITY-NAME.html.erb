@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% imgRoot = "../../../public/panoramas" %>
+  <meta charset=utf-8 />
+  <title>Stadtpanoramen - <%= @city.name %></title>
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+  <link href='simple-panorama.css' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" media="screen" href="master.css" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="simple-panorama.js"></script>
+  <script type="text/javascript" src="master.js"></script>
+</head>
+<body>
+  <header>
+    <a href="#"><img src="logo.png" alt="Stadtpanoramen" /></a><br />
+    <nav>
+      <ul>
+        <li><a href="#">Thumbs</a></li>
+        <li><a href="#">Map</a></li>
+        <li><a href="#">Liste</a></li>
+      </ul>
+    </nav>
+    <h1 class="cityTitle"><%= @city.name %></h1>
+  </header>
+  <div id="grid">
+    <ul>
+      <% @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority }.each do |pano| %>
+        <li 
+          data-repeative="<%= pano.repeative %>" 
+          data-imagePath="<%= imgRoot %>/<%= @city.get_filename %>/<%= pano.get_filename %>_5.jpg"
+        >
+          <div class="wrapper">
+            <img src="<%= imgRoot %>/<%= @city.get_filename %>/<%= pano.get_filename %>_3.jpg" />
+          </div>
+          <%= pano.name %>
+          <%
+            spots = []
+            pano.internal_links.each{ |s| spots.push s }
+            pano.external_links.each{ |s| spots.push s }
+            pano.hotspot_infos.each{ |s| spots.push s }
+            spots.sort_by{ |s| s.get_area }.each do |spot|
+          %>
+            <span class="hotspot-data" data-path="" data-title="" data-link="" data-category=""></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <div class="bottom"></div>
+  </div>
+  <footer>
+    <span class="copy">All rights reserved to Helmut Kölbach</span>
+    <a href="#">Kontakt</a>
+  </footer>
+  <div class="overlay">
+    <div class="panoWrapper">
+      <div class="panoContainer"></div>
+      <div class="panoPopup infos">
+      	<span class="icon star"></span><span class="link icon lock"></span><br />
+      	<span class="content">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+        </span>
+      </div>
+      <div class="panoPopup controls">
+      	<span class="icon gear"></span><span class="link icon lock"></span><br />
+      	<span title="Benachbarte Panoramen" class="link icon camera"></span>
+      	<span title="Info Links" class="link icon text"></span>
+      	<span title="Straßen- und Gebäudenamen" class="link icon placemark"></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

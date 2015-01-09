@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset=utf-8> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Panorama Quiz <%= @city.name %> - Fotoquiz mit Fragen zur Stadt">
+   <meta http-equiv="cache-control" content="max-age=260000">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="simple-panorama-0.3.2.js"></script>
+  <script src="quiz.js"></script>
+  <link rel="stylesheet" href="city_quiz.css" />
+  <link rel="stylesheet" href="panorama_quiz.css" />
+  <title>Panorama Quiz <%= @city.name %> </title>
+  <script>
+    new Quiz("quizfragen_<%= @city.get_filename %>.xml", "quizElem", "..", false, true);
+  </script>
+</head>
+<body>
+  <div id="quizElem" class="quiz">
+    <h1>Panorama Quiz <%= @city.name %> </h1>
+  <div class="backgrnd">
+     <div class="simplePanorama" id="panorama">  
+    <!--[if lt IE 9]>
+      <div id="browsertip" align="center" class="browsertipp"><br><br><br>
+       Bitte installieren Sie zum Anzeigen der Panoramen <br><a href="http://windows.microsoft.com/de-DE/internet-explorer/products/ie/home" class="big">die neueste Version des Internet Explorers <br>hier zum Download <br> </a><br>oder <br>verwenden Sie einen anderen Browser!
+       </div> 
+      <![endif]-->
+    </div>
+    </div>
+    <div class="pad">
+    </div>
+    <div class="textWrapper">
+     <div class="info">
+       <span class="rightInfo">&quot;<span class="correctAnswerText"></span>&quot; ist richtig!<br /></span>
+        <span class="wrongInfo">Leider falsch! - Richtig wäre &quot;<span class="correctAnswerText"></span>&quot;<br /></span>
+      </div>
+      <div class="btntip">
+        <button class="btnHint">Panorama zur Frage anzeigen?</button>
+        <div class="nix">
+        </div>
+      </div>
+        <div class="frage">
+        <strong>Frage <span class="questionNumber"></span></strong> von <span class="questionCount"></span> <br />
+        <strong><span class="text"></span></strong>
+        </div>
+      <img src="../navpic/pan.gif" alt="" width="20" height="8" border="0"><button class="btnContinue">Weiter zur n&auml;chsten Frage</button>
+      <div class="conclusion">
+       <div class="endtext">
+        <strong>Es wurden <span class="correctCount"></span> von
+       <span class="questionCount"></span> Fragen richtig beantwortet.</strong><br />
+        Vor der Beantwortung wurde das Panorama zur Frage <span class="hintCount"></span> mal aufgerufen.<br /><br />
+        <a href="javascript:location.reload()">Quiz noch mal starten! </a> <img src="../navpic/pan.gif" alt="" width="55" height="8" border="0"><a href="quiz_stadtpanoramen_index.html" target="_blank"> Neues Quiz auswählen! </a> 
+         </div>        
+          <div class="prog"><br /><br /><br />
+          Gestaltung: Helmut Kölbach -
+          Programmierung: Tilo Wiedera <br /> &copy; <a href="http://www.stadtpanoramen.de" target="_blank" class="prog">stadtpanoramen.de </a>
+          </div>
+      </div>
+      <ul class="options">
+      </ul>
+      <button class="btnEnd">Auswertung</button><br />
+    </div>
+  </div>
+</body>
+</html>

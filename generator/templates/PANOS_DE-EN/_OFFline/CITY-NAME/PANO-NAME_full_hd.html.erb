@@ -1,20 +1,22 @@
 ﻿<!doctype html>
 <html lang="de">
 <head>
-  <meta charset=utf-8> 
-  <meta http-equiv="content-language" content="de"><% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
-  <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
-  <meta name="viewport" content="width=device-width, maximum-scale=1"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
-  <meta name="description" content="<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> <%= (@pano.repeative == true) ? ("- Volbild-Panorama") : ("") %>">
-  <title><%= (@pano.repeative == true) ? ("360° Panorama") : ("") %> <%= pano.name %> <%= pano.location %>  <%= citytitle.blank? ? ("") : (citytitle) %> - Vollbild </title>
-  <link rel="stylesheet" href="../css/simplepanorama.css">
-  <link rel="stylesheet" type="text/css" href="../css/hdpano.css">
-  <link rel="shortcut icon" href="../icon.ico">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <script type="text/javascript" src="../js/modernizr.js"></script>
-  <script type="text/javascript" src="../js/fullpanorama.js"></script>
-  <script type="text/javascript" src="../js/hdpano.js"></script>
-  <script>
+   <meta charset=utf-8> 
+   <meta http-equiv="content-language" content="de"><% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
+   <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
+   <meta name="viewport" content="width=device-width, maximum-scale=1"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
+   <meta name="description" content="<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> <%= (@pano.repeative == true) ? ("- Volbild-Panorama") : ("") %>">
+   <meta http-equiv="cache-control" content="max-age=260000">
+   <title><%= (@pano.repeative == true) ? ("360° Panorama") : ("") %> <%= pano.name %> <%= pano.location %>  <%= citytitle.blank? ? ("") : (citytitle) %> - Vollbild </title>
+   <link rel="stylesheet" href="../css/simplepanorama.css">
+   <link rel="stylesheet" type="text/css" href="../css/hdpano.css">
+   <link rel="shortcut icon" href="../icon.ico">
+   <link rel="alternate" hreflang="en" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @pano.en_name %>_full_hd.html" />
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script type="text/javascript" src="../js/modernizr.js"></script>
+   <script type="text/javascript" src="../js/fullpanorama.js"></script>
+   <script type="text/javascript" src="../js/hdpano.js"></script>
+   <script>
     <!--  <% g_lat = @pano.get_latitude %> <% g_lon = @pano.get_longitude %> <% p_lat = g_lat.to_f %> <% p_lon = g_lon.to_f %>
     $(function() {
       $(window).trigger('resize');
@@ -194,7 +196,7 @@
          Vollbild (F11)
        </div>
        <div id="back_button">
-         <a href="<%= @pano.get_filename %>_5c.html">x</a>
+         <a href="javascript:history.back()">x</a>
        </div>
         <div id="linkInfos">   
          <div id="linkinfo">

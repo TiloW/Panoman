@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="de">
 <head>
    <meta charset=utf-8> 
@@ -6,9 +6,10 @@
    <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
    <meta name="viewport" content="width=1030, maximum-scale=1"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
    <meta name="description" content="Panoramakarte <%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> mit Aufnahmestandort">
+   <meta http-equiv="cache-control" content="max-age=260000">
    <link rel="stylesheet" href="../css/pano_maps.css">
    <link rel="shortcut icon" href="../icon.ico"> 
-   <title><%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : (citytitle) %> - StadtPanorama </title>
+   <title>Panorama-Karte <%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : (citytitle) %></title>
   </head>
   <body>
   <header>
