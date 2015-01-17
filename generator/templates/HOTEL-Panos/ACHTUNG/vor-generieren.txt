@@ -1,0 +1,8 @@
+im panoman entsprechende Hotelpanos zusätzlich zu Stadtpanos als im Netz markieren
+
+controler anpassen:
+- vor dem Kopieren: in generator_controller.rb unten :
+        unless @skip and pano.location != "Ferienwohnung Tecklenburger Augenblicke"
+ bzw andere Location eintragen und 
+
+- in templates-Ordner "LOCATION-Panos" Dateinamen entsprechend ändern falls noch nicht geschehen.

@@ -12,7 +12,7 @@
                Zu den Bildinhalten <% e_links.first(n-2).each do |link| %><% extlinkurl = (link.url.split("/")[2]) %><% unless link.name == "." or extlinkurl == "www.stadtpanoramen.de"  %><%= link.name. + ", " %><% end %><% end %><% e_slast = e_links.at(-2) %> <%= e_slast.name %> und <% e_last = e_links.at(-1) %> <%= e_last.name %> können Infos im Panoramafoto eingeblendet werden.<% end %><% if e_links.length == 1 %> 
                Zum Bildinhalt <% e_first = e_links.at(0) %><%= e_first.name %> kann ein Info-Rahmen im Panoramafoto eingeblendet werden.<% end %>">
    <link rel="stylesheet" href="../css/simplepanorama.css">
-   <link rel="stylesheet" href="../css/pansmall.css">
+   <link rel="stylesheet" href="../css/pan_small.css">
    <link rel="shortcut icon" href="../icon.ico"> 
    <link rel="alternate" hreflang="en" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @pano.en_name %>.html" />
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -379,9 +379,9 @@
         <div id="off" style=" width: 35px; height: 15px; float:left; cursor:pointer; visibility:hidden;">
          <img src="../navpic/off.jpg" width="18" height="15" name="offname" title=" Infos im Bild ausblenden " alt="" border="0" onmouseleave="tauschoff(offname,off)" onmouseover="tauschoff(offname,off_h)">
         </div>    
-       </div>
-       <%= @pano.hdpano==true ?  '<div id="vbbut" style="margin-top:2px; margin-right: 8px; width: 20px; height: 15px; float:right; cursor:pointer;"><img src="../navpic/fullscreen_d.jpg" width="18" height="15"  title="Panorama in Vollbild-Ansicht" alt="Vollbild-Button" border="0" name="vbname" onmouseleave="tauschvb(vbname,vb)" onmouseover="tauschvb(vbname,vb_h)"></div>
-       <div id="wsbut" style="margin-top:2px; margin-right: 8px; width: 20px; height: 15px; float:right; cursor:pointer;"><img src="../navpic/fullscreen_d.jpg" width="18" height="15"  title="Panorama in Widescreen-Ansicht" alt="" border="0" name="vbname" onmouseleave="tauschvb(vbname,vb)" onmouseover="tauschvb(vbname,vb_h)"></div>' : '<div id="wsbut" style="margin-top:2px; margin-right: 32px; width: 20px; height: 15px; float:right; cursor:pointer; display:block"><img src="../navpic/fullscreen_d.jpg" width="18" height="15" title="Panorama in Widescreen-Ansicht" alt="" border="0" name="vbname" onmouseleave="tauschvb(vbname,vb)" onmouseover="tauschvb(vbname,vb_h)"></div>' %>       
+       </div> <%= @pano.hdpano==true ?  
+       '<div id="vbbut" style="margin-top:2px; margin-right: 8px; width: 20px; height: 15px; float:right; cursor:pointer;"><img src="../navpic/fullscreen_d.jpg" width="18" height="15"  title="Panorama in Vollbild-Ansicht" alt="" border="0" name="vbname" onmouseleave="tauschvb(vbname,vb)" onmouseover="tauschvb(vbname,vb_h)"></div>' : 
+       '<div id="wsbut" style="margin-top:2px; margin-right: 8px; width: 20px; height: 15px; float:right; cursor:pointer;"><img src="../navpic/fullscreen_d.jpg" width="18" height="15" title="Panorama in Widescreen-Ansicht" alt="" border="0" name="vbname" onmouseleave="tauschvb(vbname,vb)" onmouseover="tauschvb(vbname,vb_h)"></div>' %>       
         <div style="margin-top:2px; margin-right: 20px; width: 20px; height: 15px; float:right;<%= @pano.get_latitude == "0.000000" ? "visibility:hidden;" : "" %>">
          <a href="karte_<%= @pano.get_filename %>.html" title="<%= @city.name %>-Karte mit Aufnahme-Standort <%= panoname %>"><img src="../navpic/gps.jpg" width="18" height="15" alt="" border="0" name="gpsname" onmouseleave="tauschgps(gpsname,gps)" onmouseover="tauschgps(gpsname,gps_h)" ></a>
         </div>
@@ -454,6 +454,26 @@
         </nav>   
      </div>   
       <div class="pad">&nbsp;
+      </div> 
+      <div class="adv_mobile"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- Mobile-Banner -->
+      <ins class="adsbygoogle"
+           style="display:inline-block;width:320px;height:100px"
+           data-ad-client="ca-pub-2069005959740847"
+           data-ad-slot="6007215713"></ins>
+      <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+      </div> 
+      <div class="adv_mobile"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- Mobile-Banner -->
+      <ins class="adsbygoogle"
+           style="display:inline-block;width:320px;height:100px"
+           data-ad-client="ca-pub-2069005959740847"
+           data-ad-slot="6007215713"></ins>
+      <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
       </div> 
        <div class="advrow"><% if !@pano.exclusive %>   
      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

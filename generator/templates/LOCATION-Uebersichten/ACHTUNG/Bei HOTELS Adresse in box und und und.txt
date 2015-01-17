@@ -1,0 +1,6 @@
+- meta-alternate Link anpassen
+- <h1 class="hotel">
+- navtop-Photo-Service teilweise raus
+- bei mehreren Locations entsprechende wrapper-Listenelemente mit gr.Thumbs löschen.
+- evt. g,Thumbs Rheihenfolge in "Beste nach oben" ändern (wird nach A-Z gelistet).
+

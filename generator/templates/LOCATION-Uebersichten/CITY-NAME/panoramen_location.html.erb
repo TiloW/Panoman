@@ -2,25 +2,26 @@
 <html lang="de">
 <head>
   <meta charset=utf-8 />
-  <title><%= @city.name %> 360° StadtPanoramen </title>
+  <title>::: <%= @city.name %> - Panoramen </title>
    <meta http-equiv="cache-control" content="max-age=260000">
-  <meta name="copyright" content="Helmut Kölbach">    
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="360° Panoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen<% citypanos = @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority } %><% unless citypanos.at(9).nil? %> und Fotos mit den Bildmotiven: <% citypanos.first(8).each do |pano| %><%=  pano.name + ", " %><% end %><% pano8 = citypanos.at(8) %><%=  pano8.name %><% pano9 = citypanos.at(9) %><%= " und " + pano9.name  %><% end %><% n_pano = citypanos.length %><% unless n_pano > 10 %> und Fotos mit den Bildmotiven: <% citypanos.first(n_pano-2).each do |pano_n| %><%=  pano_n.name + ", " %><% end %><% pano_vend = citypanos.at(n_pano-2) %><%=  pano_vend.name %><% pano_end = citypanos.at(n_pano-1) %><%= " und " + pano_end.name  %><% end %>">
+  <meta name="copyright" content="Helmut Kölbach">       
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <meta name="description" content="Panoramen ::: in <%= @city.name %> - Ansichten mit virtuellen Rundgängen im Panoramaformat<% citypanos = @city.panoramas.keep_if{ |p| !p.location.blank? }.sort_by{ |p| p.location } %><% n_pano = citypanos.length %>und Fotos mit den Bildmotiven: <% unless n_pano <= 3 %><% citypanos.first(n_pano-2).each do |pano_u| %><%=  pano_u.name + ", " %><% end %><% pano_vend = citypanos.at(n_pano-2) %><% unless pano_vend.nil? %><%=  pano_vend.name %><% end %><% pano_end = citypanos.at(n_pano-1) %><% unless pano_end.nil? %><%= " und " + pano_end.name  %><% end %><% end %>">
+  <link rel="stylesheet" type="text/css" href="../css/allcities.css">
+  <link rel="alternate" hreflang="en" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/..._panoramas.html" />
   <link rel="shortcut icon" href="../icon.ico">
-  <link rel="alternate" hreflang="en" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @city.en_name %>_germany.html" />
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/allcities.css">
-  <script type="text/javascript" src="../js/modernizr.js"></script>
-  <script  async type="text/javascript"  src="../ind.js"></script> 
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript" src="../ind.js"></script>     
+  <script type="text/javascript" src="../js/s-panorama.js"></script>
 </head>
 <body>
   <header>
       <div class="logo">   
        <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" alt="Stadtpanoramen" border="0"></a> 
-      </div>  
-      <h1><br><%= @city.name %> </h1>   
+      </div>   
+        <h1>::: <br><%= @city.name %> </h1>  
       <nav>        
-      <a class="city-top">Städte </a><br>
+      <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte </a><br>
           <ul>     
             <li><a href="../berlin/">Berlin </a></li>
             <li><a href="../bielefeld/">Bielefeld </a></li>
@@ -54,7 +55,6 @@
             <li><a href="../mannheim/">Mannheim </a></li>
             <li><a href="../minden/">Minden </a></li>
             <li><a href="../muenchen/">München </a></li>
-            <li><a href="../muenster/">Münster </a></li>
             <li><a href="../nuernberg/">Nürnberg </a></li>
             <li><a href="../oldenburg/">Oldenburg </a></li>
             <li><a href="../osnabrueck/">Osnabrück </a></li>
@@ -80,94 +80,30 @@
             <li><a href="../ibbenbueren/">Ibbenbüren </a></li>
             <li><a href="../lengerich/">Lengerich </a></li>
             <li><a href="../luedinghausen/">Lüdinghausen </a></li>
+            <li><a href="../muenster/">Münster </a></li>
             <li><a href="../rheine/">Rheine </a></li>
             <li><a href="../steinfurt/">Steinfurt </a></li>
             <li><a href="../tecklenburg/">Tecklenburg </a></li>
             <li><a href="../telgte/">Telgte </a></li>
             <li><a href="../warendorf/">Warendorf </a></li>
-        </ul>  
-      </nav> 
+      </nav>    
       <div id="navtop">
         <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
-      </div>
+      </div> 
   </header>
   <div id="content">  
-      <div id="menu">  
-        <h2>Panoramen <%= @city.name %> A-Z</h2>
-        <nav>
-          <ul><% @city.panoramas.keep_if{ |p| p.published }.sort_by{ |n| n.name }.each do |pano| %><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
-            <li><a href="<%= pano.get_filename %>.html" title="<%= panoname %> <%= pano.location %> <%= pano.district %>"><%= pano.name %> </a></li><% end %>
-          </ul>
-        </nav>
-      </div>     
-      <div id="box">  <% if !@city.ad_more_first_page_top.blank? %>
-    <div class="adv-more">
-      <%= @city.ad_more_first_page_top %>
-    </div> 
-    <% end %> <% if !@city.linktips.blank? %>
-      <div id="tip">
-        <%= @city.linktips %>
-      </div>
-       <div class="g_adv_linktips">
-            <%= @city.ad_mobile_banner %>
-       </div><% else %>
-       <div class="g_adv_only">
-            <%= @city.ad_mobile_banner %>
-       </div><% end %>
-    </div>                
     <div id="grid">
-      <ul> <% @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority }.first(11).each do |pano| %>      
+      <ul> <% @city.panoramas.keep_if{ |d| !d.location.blank? }.sort_by{ |p| p.location }.each do |pano| %>        
         <li><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
           <div class="wrapper">
-            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <% unless pano.location.nil? %><%= pano.location + " " %><% end %>in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg" alt="<%= pano.name %> <%= pano.location %> <%= @city.name %><%= pano.district %>"></a>    <% unless pano.rotation == 60 %>
-            <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>_5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
+            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>_....html" title="<%= panoname %> <%= pano.location %> in <%= @city.name %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_....jpg" alt="<%= pano.name %> ::: <%= @city.name %>"></a>
+            <% unless pano.rotation == 60 %>
+            <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>..._5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
             </div><% end %>
           </div><%= pano.name %>
         </li><% end %>
-            <% line1="" %>  
-            <% panpub = @city.panoramas.keep_if{ |p| p.published }.count %>
-            <% if panpub > 15 %>
-            <% line1 = '<span style="font-size: 1.1em;"><a href="' + @city.get_filename + '_panoramen.html#' + @city.get_filename + '">Mehr Panoramen von ' + @city.name + '</a></span> <br><br>' %>
-           <% end %>            
-            
-            <% line2="" %>  
-            <% districts = Hash.new
-            @city.panoramas.each { |p| districts[p.district] = true if p.district }
-            districts.each_key do |dist| %>
-            <% unless dist.blank? %>
-            <% distfile =  FileHelper.to_filename dist %>
-            <% line2 += '<a href="panoramen_' + distfile + '.html"> Panoramen ' + dist + ' </a><br><br>' %>            
-           <% end %>
-            <% end %>
-            
-            <% line3="" %>  
-            <% locations = Hash.new
-            @city.panoramas.each { |p| locations[p.location] = true if p.location }
-            locations.each_key do |loc| %>
-            <% unless loc.blank? %>
-            <% locfile =  FileHelper.to_filename loc %><% if loc == "Hotel Bismarkhöhe" || "Ferienwohnung Tecklenburger Augenblicke" || "Landhotel Martinshof" || "Hotel Königswache " %><% folder = locfile %>
-            <% line3 += '<a href="' + folder + '/index.html">Panoramen ' + loc + ' </a><br><br>' %><% else %>
-            <% line3 += '<a href="panoramen_' + locfile + '.html">Panoramen ' + loc + ' </a><br><br>' %><% end %>
-            <% end %>
-            <% end %>
-            
-            <% line4="" %>  
-            <% if @city.quiz == true %>
-            <% line4 = '<a href="http://www.stadtpanoramen.de/' + @city.get_filename + '/' + @city.get_filename + '_quiz.html">' + @city.name + '-Quiz  </a>' %>
-            <% end %> 
-            
-            <% @city.name == 'Münster' ? panolink =  '<a href="../muensterland/index.html">Panoramen Münsterland </a><br><br>'  : (@city.name == 'Köln' ? panolink =  '<a href="http://www.stadtpanoramen.de/phantasialand/">Panoramen Phantasialand </a><br><br>'  : panolink='') %>
-            <% if !line1.blank? or !line2.blank? or !line3.blank? or !line4.blank? or !panolink.blank? %>            
-           <%= '
-        <li>
-          <div class="tabl">  
-            <div class="list_more">' +  line1 + line2 + line3 + panolink + line4 +'
-          </div>
-        </div>
-       </li>' %>
-            <% end %>
       </ul>
-    </div>
+    </div> 
       <div id="cont_down">
             <div id="gmap">
                   <br>
@@ -188,15 +124,14 @@
                     <iframe src="http://www.stadtpanoramen.de/karten/karte_<%= @city.get_filename %>.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
                   <br><a href="http://www.stadtpanoramen.de/html/logos.html#deutschlandkarte"> Deutschlandkarte einbinden <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>       
                </div><% end %><% end %> 
-          <div id="adv2-down">       
+          <div id="adv2-down">     
             <%= @city.ad_sec_page_down %>
             </div>
           </div> 
        </div> 
-            <div id="adtext">
-            <%= @city.citytext %>
-            <br>
-          </div> 
+    <div class="adtext">
+      <br>
+    </div> 
     </div>
       <div id="fb-root"></div>
    <script>(function(d, s, id) {
@@ -209,13 +144,12 @@
   <footer>
     <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
     <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
-    <div class="mail">
-        <a href="mailto:?subject=Tipp%20StadtPanoramen%20von%20<%= @city.name %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20Link%20zu%20interessanten%20Panoramabildern%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2Findex%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AA%20n%20l%20e%20i%20t%20u%20n%20g%0D%0AEmailadresse%20des%20Empf%C3%A4ngers%20eingeben%2c%0D%0Aden%20Text%20nach%20Belieben%20erg%C3%A4nzen%20und%0D%0Adiesen%20Anleitungsabschnitt%20vor%20dem%20Absenden%20entfernen%2E" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite senden </a>
+    <div class="mail"> <a href="mailto:?subject=Tipp%20Panoramen%20:::&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20Link%20zu%20interessanten%20Panoramabildern%20aus%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2Fpanoramen_...%2Ehtml%0D%0A" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite senden </a>
     </div>
-    <div class="gplus"><script type="text/javascript" src="http://apis.google.com/js/plusone.js">{lang: 'de', parsetags: 'explicit'}</script><g:plusone href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/index.html" size="medium" count="false"></g:plusone><script type="text/javascript">gapi.plusone.go();</script>
+    <div class="gplus"><script type="text/javascript" src="http://apis.google.com/js/plusone.js">{lang: 'de', parsetags: 'explicit'}</script><g:plusone href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/panoramen_....html" size="medium" count="false"></g:plusone><script type="text/javascript">gapi.plusone.go();</script>
     </div>
-    <div  class="socmed-fb">
-      <div class="fb-like" data-href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/index.html" data-width="265" data-layout="button" data-action="recommend" colorscheme="dark" data-show-faces="false" data-share="false"></div>      
+    <div id="socmed-fb">
+      <div class="fb-like" data-href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/panoramen_....html" data-width="265" data-layout="button" data-action="recommend" colorscheme="dark" data-show-faces="false" data-share="false"></div>      
     </div>  
   </footer>
 </body>

@@ -10,7 +10,7 @@
    <link rel="stylesheet" href="../css/simplepanorama.css">
    <link rel="stylesheet" href="../css/pan_small.css">
    <link rel="shortcut icon" href="../icon.ico">
-   <link rel="alternate" hreflang="de" href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @pano.name %>.html" />
+   <link rel="alternate" hreflang="de" href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @pano.name %>_<%=FileHelper.to_filename @pano.location %>.html">
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
    <script src="../js/jquery.mousewheel.min.js"></script>
@@ -309,10 +309,10 @@
         <a href="http://www.panorama-cities.net/" target="_top"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas" border="0"></a>
       </div>                  
       <div  class="city">
-        <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<% if !@pano.district.blank? %><%= FileHelper.to_filename @pano.district %>_panoramas.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %><%= FileHelper.to_filename @pano.en_location %>_panoramas.html"><%= @pano.en_location %><% else %><%= FileHelper.to_filename @city.en_name %>_germany.html"><%= @city.en_name %><% end %><% end %> </a><% if !@pano.location.blank? %>in <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @city.en_name %>_germany.html" target="_top"><%= @city.en_name %> </a><% end %>
+        <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<% if !@pano.district.blank? %><%= FileHelper.to_filename @pano.district %>_panoramas.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %><%= FileHelper.to_filename @pano.en_location %>_panoramas.html"><%= @pano.en_location %><% else %><%= FileHelper.to_filename @city.en_name %>_germany.html"><%= @city.en_name %><% end %><% end %> </a><% if !@pano.location.blank?  && (@pano.location.length <= 20) %>in <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @city.en_name %>_germany.html" target="_top"><%= @city.en_name %> </a><% end %>
       </div>  
       <div class="flag">
-        <a href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @pano.name %>.html"><img src="../navpic/de_ico.gif" width="35px" height="26px" border="0" title="<%= @pano.name %> - German Version" alt="German"> </a>
+        <a href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @pano.name %>_<%=FileHelper.to_filename @pano.location %>.html"><img src="../navpic/de_ico.gif" width="35px" height="26px" border="0" title="<%= @pano.name %> - German Version" alt="German"> </a>
       </div>                                                    
       <div class="cities_en"> 
         <a href="http://panorama-cities.net/german_cities/" target="_top" title="German Cities" class="city-top">Cities</a>
@@ -427,7 +427,7 @@
      </div> 
    </div>            
       <div id="full">   
-      <a href="<%= FileHelper.to_filename @pano.en_name %>_5c.html" onMouseOut="tauschc(cname,Bild7)" onMouseOver="tauschc(cname,Bild8)"><img src="../navpic/bcine.gif" width="108" height="20" title="Panorama in voller Breite" alt="" name="cname" border="0"></a> 
+      <a href="<%= FileHelper.to_filename @pano.en_name %>_<% FileHelper.to_filename @pano.en_location %>_5c.html" onMouseOut="tauschc(cname,Bild7)" onMouseOver="tauschc(cname,Bild8)"><img src="../navpic/bcine.gif" width="108" height="20" title="Panorama in voller Breite" alt="" name="cname" border="0"></a> 
     </div>   
       <div class="pad">
       </div>       
@@ -442,13 +442,11 @@
       </div>
         <nav>
           <div id="cont" class="wrapper">
-              <div id="thumbnails"> 
-                <% @city.panoramas.sort_by!{ |pano| pano.priority }.each do |pano| %>
-                 <% next unless pano.published %>
+              <div id="thumbnails"> <% @city.panoramas.keep_if{ |d| d.location == "Ferienwohnung Tecklenburger Augenblicke" }.sort_by{ |p| p.location }.each do |pano| %>    <% next unless pano.published %>
                   <div class="anch"><a name="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>"> </a>
                   </div> <% city_name = @city.get_filename %>
                   <div id="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>" class="thumbWrapper" style="background-image: url(photos/<%= FileHelper.to_filename pano.name %>.jpg)">
-                    <a href="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>.html" title="<%= pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name):(pano.en_name)) : (pano.alt_en_name) %>  <%= location_en %> <%= @pano.district %>" target="_top">
+                    <a href="<%= pano.en_name.blank? ? (pano.get_filename) : (FileHelper.to_filename pano.en_name) %>_<%=FileHelper.to_filename @pano.location%>.html" title="<%= pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name):(pano.en_name)) : (pano.alt_en_name) %>  <%= location_en %> <%= @pano.district %>" target="_top">
                       <span class="title"><%= pano.en_name.blank? ? (pano.name):(pano.en_name) %> </span></a>
                   </div>
                 <% end %> 
@@ -470,27 +468,6 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
       </div> 
-       <div class="advrow"><% if !@pano.exclusive %>  
-         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <!-- EN-Linkblock -->
-          <ins class="adsbygoogle"
-               style="display:inline-block;width:728px;height:15px"
-               data-ad-client="ca-pub-2069005959740847"
-               data-ad-slot="3269152914"></ins>
-          <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-          </script><% end %>
-               <% if @city.en_name == "Phantasialand" %>  
-         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <!-- EN-Linkblock -->
-          <ins class="adsbygoogle"
-               style="display:inline-block;width:728px;height:15px"
-               data-ad-client="ca-pub-2069005959740847"
-               data-ad-slot="3269152914"></ins>
-          <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-          </script><% end %>
-      </div>
       <div>   
      <map name="busMap">
       <area shape="rect" coords="0,0,41,13" href="javascript:ll()" title="pan fast left" alt="" onMouseUp="button(bus,Bildll2)" onMouseDown="button(bus,Bildll)">
@@ -503,7 +480,7 @@
       </div>    
   <footer>
     <div class="f_left"> 
-      <a href="mailto:?subject=City Panorama%20<%= pano_enname %> <%= location_en.blank? ? ("") : ("- " + location_en) %> <%= citytitle.blank? ? ("") : (citytitle + " Germany") %>&body=Dear%0D%0A%0D%0AI%20discovered%20a%20nice%20panoramic%20photo%20of%20the%20city%20<%= @city.en_name %>%20in%20Germany%0D%0Awww%2Epanorama-cities%2Enet%2F<%= FileHelper.to_filename @city.en_name %>%2F<%= FileHelper.to_filename @pano.en_name %>%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AI%20n%20s%20t%20r%20u%20c%20t%20i%20o%20n%0D%0AEnter%20the%20email%20address%20of%20the%20recipient%2C%0D%0Aadd%20your%20part%20to%20the%20text%20as%20desired%20and%0D%0Adelete%20this%20part%20of%20instructions%20before%20sending%2E" title="by Email"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="Email"> Email this page </a>
+      <a href="mailto:?subject=<%= pano_enname %> <%= location_en.blank? ? ("") : ("- " + location_en) %> <%= citytitle.blank? ? ("") : (citytitle + " Germany") %>&body=Dear%0D%0A%0D%0AI%20discovered%20a%20nice%20panoramic%20photo%20from%20<%= @city.en_name %>%20in%20Germany%0D%0Awww%2Epanorama-cities%2Enet%2F<%= FileHelper.to_filename @city.en_name %>%2F<%= FileHelper.to_filename @pano.en_name %>%2Ehtml%0D%0A" title="by Email"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="Email"> Email this page </a>
     </div>
     <div class="f_right">
       <a href="http://www.panorama-cities.net/html/kontakt.html">Contact us</a>
