@@ -54,7 +54,18 @@
       </div>
       <div class="field">
         <%= f.label :citytext, "Citytext"  %>
-        <%= f.text_area :citytext, :cols => 75, :rows => 12 %>
+        <%= f.text_area :citytext, :cols =>199 %>
+      </div>
+      <div class="field">
+        <%= f.label :citytext2, "Citytext 2"  %>
+        <%= f.text_area :citytext2, :cols =>199 %>
+      </div>
+      <div class="field">
+        <%= f.label :citytext3, "Citytext 3"  %>
+        <%= f.text_area :citytext3, :cols =>199 %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Speichern" %>
       </div>
       <div class="field">
         <%= f.label :html_content, "Werbung Pano-Seiten - klPanos-r"  %>
@@ -81,23 +92,8 @@
         <%= f.text_area :en_ad_first_page_top, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
-        <%= f.label :en_ad_more_first_page_top, "En-Weitere Werbung Stadtübersicht top"  %>
+        <%= f.label :en_ad_more_first_page_top, "En-Werbung Stadtübersicht top"  %>
         <%= f.text_area :en_ad_more_first_page_top, :cols => 75, :rows => 12 %>
-      </div>
-      <div class="field">
-        <%= f.label :en_ad_first_page_down, "En-Werbung Stadtübersicht unten"  %>
-        <%= f.text_area :en_ad_first_page_down, :cols => 75, :rows => 12 %>
-      </div>
-      <div class="field">
-        <%= f.label :en_ad_sec_page_top, "En-Werbung 2.Stadtübersicht top"  %>
-        <%= f.text_area :en_ad_sec_page_top, :cols => 75, :rows => 12 %>
-      </div>
-      <div class="actions">
-        <%= f.submit "Speichern" %>
-      </div>
-      <div class="field">
-        <%= f.label :en_ad_sec_page_down, "En-Werbung Stadtübersichten unten"  %>
-        <%= f.text_area :en_ad_sec_page_down, :cols => 75, :rows => 12 %>
       </div>
       <div class="field">
         <%= f.label :en_ad_panos, "En-Werbung Panoramen"  %>

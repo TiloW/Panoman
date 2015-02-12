@@ -8,8 +8,5 @@ class Ads < ActiveRecord::Migration
     
     add_column :cities, :en_ad_first_page_top, :string
     add_column :cities, :en_ad_more_first_page_top, :string
-    add_column :cities, :en_ad_first_page_down, :string
-    add_column :cities, :en_ad_sec_page_top, :string
-    add_column :cities, :en_ad_sec_page_down, :string
   end
 end

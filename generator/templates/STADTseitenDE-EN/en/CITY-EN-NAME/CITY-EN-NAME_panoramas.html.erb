@@ -1,93 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset=utf-8 /><% cityen_name = FileHelper.to_filename @city.en_name %>
+  <meta charset=utf-8><% cityen_name = FileHelper.to_filename @city.en_name %>
   <title><%= @city.en_name %> Panoramas </title>
-   <meta http-equiv="cache-control" content="max-age=260000">
+  <meta http-equiv="cache-control" content="max-age=604800">
   <meta name="copyright" content="Helmut Koelbach">   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="360° City Panoramas of <%= @city.en_name %> - Virtual tours and panoramic city photos<% citypanos = @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority } %><% unless citypanos.at(18).nil? %> with motifs of: <% citypanos.slice(10..17).each do |pano| %><%=  (pano.en_name.blank? ? pano.name : pano.en_name) + ", " %><% end %><% pano17 = citypanos.at(17) %><%=  pano17.en_name.blank? ? pano17.name : pano17.en_name %><% pano18 = citypanos.at(18) %><%= " and " + (pano18.en_name.blank? ? pano18.name : pano18.en_name)  %><% end %>">
+  <link rel="canonical" href="http://www.panorama-cities.net/<%= cityen_name %>/<%= cityen_name %>_panoramas.html">
   <link rel="shortcut icon" href="../icon.ico">
-  <link rel="alternate" hreflang="de" href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @city.name %>_panoramen.html" />
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/allcities.css">
-  <script type="text/javascript" src="../js/modernizr.js"></script>
-  <script async type="text/javascript" language="javascript" src="../ind.js"></script> 
+  <link rel="alternate" hreflang="de" href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @city.name %>_panoramen.html">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/cityindx.css">
+  <script type="text/javascript">
+     ci="";
+     function cindex(ci) {
+     win=window.open(ci,"cinepano","scrollbars=yes,resizable=yes");
+     win.focus();
+     }
+  </script> 
 </head>
 <body>
-  <header>  
-      <a href="http://www.panorama-cities.net/" target="_top"><img src="../navpic/logo.png" height="50px" alt="City Panoramas" border="0"></a>
+  <header> 
+    <div class="whead-lg">
+      <div class="logo">  
+       <a href="http://www.panorama-cities.net/" target="_top"><img src="../navpic/logo.png" width="124" height="51" alt="City Panoramas" border="0"></a>
+      </div>  
       <h1><br><%= @city.en_name %> </h1>    
-    <nav>  
-      <a class="cityen-top">German 
-Cities</a><br>
-          <ul>     
-            <li><a href="../berlin/berlin_germany.html">Berlin </a></li>
-            <li><a href="../bielefeld/bielefeld_germany.html">Bielefeld </a></li>
-            <li><a href="../bochum/bochum_germany.html">Bochum </a></li>
-            <li><a href="../bonn/bonn_germany.html">Bonn </a></li>
-            <li><a href="../braunschweig/braunschweig_germany.html">Braunschweig </a></li>
-            <li><a href="../bremen/bremen_germany.html">Bremen </a></li>
-            <li><a href="../bremerhaven/bremerhaven_germany.html">Bremerhaven </a></li>
-            <li><a href="../cologne/cologne_germany.html">Cologne </a></li>
-            <li><a href="../darmstadt/darmstadt_germany.html">Darmstadt </a></li>
-            <li><a href="../dortmund/dortmund_germany.html">Dortmund </a></li>
-            <li><a href="../dresden/dresden_germany.html">Dresden </a></li>
-            <li><a href="../duesseldorf/duesseldorf_germany.html">Düsseldorf </a></li>
-            <li><a href="../duisburg/duisburg_germany.html">Duisburg </a></li>
-            <li><a href="../erfurt/erfur_germany.html">Erfurt </a></li>
-            <li><a href="../essen/essen_germany.html">Essen </a></li>
-            <li><a href="../frankfurt/frankfurt_germany.html">Frankfurt </a></li>
-            <li><a href="../freiburg/freiburg_germany.html">Freiburg </a></li>
-            <li><a href="../goslar/goslar_germany.html">Goslar </a></li>
-            <li><a href="../hamburg/hamburg_germany.html">Hamburg </a></li>
-            <li><a href="../hannover/hannover_germany.html">Hannover </a></li>
-            <li><a href="../heidelberg/heidelberg_germany.html">Heidelberg </a></li>
-            <li><a href="../hildesheim/hildesheim_germany.html">Hildesheim </a></li>
-            <li><a href="../karlsruhe/karlsruhe_germany.html">Karlsruhe </a></li>
-            <li><a href="../kassel/kassel_germany.html">Kassel </a></li>
-            <li><a href="../kiel/kiel_germany.html">Kiel </a></li>
-            <li><a href="../koblenz/koblenz_germany.html">Koblenz </a></li>
-            <li><a href="../leipzig/leipzig_germany.html">Leipzig </a></li>
-            <li><a href="../luebeck/luebeck_germany.html">Lübeck </a></li>
-            <li><a href="../mainz/mainz_germany.html">Mainz </a></li>
-            <li><a href="../mannheim/mannheim_germany.html">Mannheim </a></li>
-            <li><a href="../minden/minden_germany.html">Minden </a></li>
-            <li><a href="../munich/munich_germany.html">Munich </a></li>
-            <li><a href="../muenster/muenster_germany.html">Münster </a></li>
-            <li><a href="../nuremberg/nuremberg_germany.html">Nuremberg </a></li>
-            <li><a href="../oldenburg/oldenburg_germany.html">Oldenburg </a></li>
-            <li><a href="../osnabrueck/osnabrueck_germany.html">Osnabrück </a></li>
-            <li><a href="../rostock/rostock_germany.html">Rostock </a></li>
-            <li><a href="../rothenburg_ob_der_tauber/rothenburg_ob_der_tauber_germany.html">Rothenburg o.d.T.</a></li>
-            <li><a href="../schwerin/schwerin_germany.html">Schwerin </a></li>
-            <li><a href="../siegen/siegen_germany.html">Siegen </a></li>
-            <li><a href="../stuttgart/stuttgart_germany.html">Stuttgart </a></li>
-            <li><a href="../trier/trier_germany.html">Trier </a></li>
-            <li><a href="../tuebingen/tuebingen_germany.html">Tübingen </a></li>
-            <li><a href="../wernigerode/wernigerode_germany.html">Wernigerode </a></li>
-            <li><a href="../wiesbaden/wiesbaden_germany.html">Wiesbaden </a></li>
-            <li><a href="../wismar/wismar_germany.html">Wismar </a></li>
-            <li><a href="../wuerzburg/wuerzburg_germany.html">Würzburg </a></li>
-            <li style="padding-right: 200px;"> &nbsp;</li>
-            <li><a href="../muensterland/muensterland_germany.html" class="msland">Münsterland </a></li>
-            <li><a href="../ahaus/ahaus_germany.html">Ahaus </a></li>
-            <li><a href="../ahlen/ahlen_germany.html">Ahlen </a></li>
-            <li><a href="../coesfeld/coesfeld_germany.html">Coesfeld </a></li>
-            <li><a href="../emsdetten/emsdetten_germany.html">Emsdetten </a></li>
-            <li><a href="../greven/greven_germany.html">Greven </a></li>
-            <li><a href="../horstmar/horstmar_germany.html">Horstmar </a></li>
-            <li><a href="../ibbenbueren/ibbenbueren_germany.html">Ibbenbüren </a></li>
-            <li><a href="../lengerich/lengerich_germany.html">Lengerich </a></li>
-            <li><a href="../luedinghausen/luedinghausen_germany.html">Lüdinghausen </a></li>
-            <li><a href="../rheine/rheine_germany.html">Rheine </a></li>
-            <li><a href="../steinfurt/steinfurt_germany.html">Steinfurt </a></li>
-            <li><a href="../tecklenburg/tecklenburg_germany.html">Tecklenburg </a></li>
-            <li><a href="../telgte/telgte_germany.html">Telgte </a></li>
-            <li><a href="../warendorf/warendorf_germany.html">Warendorf </a></li>
-        </ul>  
-    </nav>               
+        <nav>  
+          <a class="cityen-top">German Cities</a><br><br>
+              <ul>     
+                <li><a href="../berlin/berlin_germany.html">Berlin </a></li>
+                <li><a href="../bielefeld/bielefeld_germany.html">Bielefeld </a></li>
+                <li><a href="../bochum/bochum_germany.html">Bochum </a></li>
+                <li><a href="../bonn/bonn_germany.html">Bonn </a></li>
+                <li><a href="../braunschweig/braunschweig_germany.html">Braunschweig </a></li>
+                <li><a href="../bremen/bremen_germany.html">Bremen </a></li>
+                <li><a href="../bremerhaven/bremerhaven_germany.html">Bremerhaven </a></li>
+                <li><a href="../cologne/cologne_germany.html">Cologne </a></li>
+                <li><a href="../darmstadt/darmstadt_germany.html">Darmstadt </a></li>
+                <li><a href="../dortmund/dortmund_germany.html">Dortmund </a></li>
+                <li><a href="../dresden/dresden_germany.html">Dresden </a></li>
+                <li><a href="../duesseldorf/duesseldorf_germany.html">Düsseldorf </a></li>
+                <li><a href="../duisburg/duisburg_germany.html">Duisburg </a></li>
+                <li><a href="../erfurt/erfur_germany.html">Erfurt </a></li>
+                <li><a href="../essen/essen_germany.html">Essen </a></li>
+                <li><a href="../frankfurt/frankfurt_germany.html">Frankfurt </a></li>
+                <li><a href="../freiburg/freiburg_germany.html">Freiburg </a></li>
+                <li><a href="../goslar/goslar_germany.html">Goslar </a></li>
+                <li><a href="../hamburg/hamburg_germany.html">Hamburg </a></li>
+                <li><a href="../hannover/hannover_germany.html">Hannover </a></li>
+                <li><a href="../heidelberg/heidelberg_germany.html">Heidelberg </a></li>
+                <li><a href="../hildesheim/hildesheim_germany.html">Hildesheim </a></li>
+                <li><a href="../karlsruhe/karlsruhe_germany.html">Karlsruhe </a></li>
+                <li><a href="../kassel/kassel_germany.html">Kassel </a></li>
+                <li><a href="../kiel/kiel_germany.html">Kiel </a></li>
+                <li><a href="../koblenz/koblenz_germany.html">Koblenz </a></li>
+                <li><a href="../leipzig/leipzig_germany.html">Leipzig </a></li>
+                <li><a href="../luebeck/luebeck_germany.html">Lübeck </a></li>
+                <li><a href="../mainz/mainz_germany.html">Mainz </a></li>
+                <li><a href="../mannheim/mannheim_germany.html">Mannheim </a></li>
+                <li><a href="../minden/minden_germany.html">Minden </a></li>
+                <li><a href="../munich/munich_germany.html">Munich </a></li>
+                <li><a href="../muenster/muenster_germany.html">Münster </a></li>
+                <li><a href="../nuremberg/nuremberg_germany.html">Nuremberg </a></li>
+                <li><a href="../oldenburg/oldenburg_germany.html">Oldenburg </a></li>
+                <li><a href="../osnabrueck/osnabrueck_germany.html">Osnabrück </a></li>
+                <li><a href="../rostock/rostock_germany.html">Rostock </a></li>
+                <li><a href="../rothenburg_ob_der_tauber/rothenburg_ob_der_tauber_germany.html">Rothenburg o.d.T.</a></li>
+                <li><a href="../schwerin/schwerin_germany.html">Schwerin </a></li>
+                <li><a href="../siegen/siegen_germany.html">Siegen </a></li>
+                <li><a href="../stuttgart/stuttgart_germany.html">Stuttgart </a></li>
+                <li><a href="../trier/trier_germany.html">Trier </a></li>
+                <li><a href="../tuebingen/tuebingen_germany.html">Tübingen </a></li>
+                <li><a href="../wernigerode/wernigerode_germany.html">Wernigerode </a></li>
+                <li><a href="../wiesbaden/wiesbaden_germany.html">Wiesbaden </a></li>
+                <li><a href="../wismar/wismar_germany.html">Wismar </a></li>
+                <li><a href="../wuerzburg/wuerzburg_germany.html">Würzburg </a></li>
+                <li style="padding-right: 200px;"> &nbsp;</li>
+                <li><a href="../muensterland/muensterland_germany.html" class="msland">Münsterland </a></li>
+                <li><a href="../ahaus/ahaus_germany.html">Ahaus </a></li>
+                <li><a href="../ahlen/ahlen_germany.html">Ahlen </a></li>
+                <li><a href="../coesfeld/coesfeld_germany.html">Coesfeld </a></li>
+                <li><a href="../emsdetten/emsdetten_germany.html">Emsdetten </a></li>
+                <li><a href="../greven/greven_germany.html">Greven </a></li>
+                <li><a href="../horstmar/horstmar_germany.html">Horstmar </a></li>
+                <li><a href="../ibbenbueren/ibbenbueren_germany.html">Ibbenbüren </a></li>
+                <li><a href="../lengerich/lengerich_germany.html">Lengerich </a></li>
+                <li><a href="../luedinghausen/luedinghausen_germany.html">Lüdinghausen </a></li>
+                <li><a href="../rheine/rheine_germany.html">Rheine </a></li>
+                <li><a href="../steinfurt/steinfurt_germany.html">Steinfurt </a></li>
+                <li><a href="../tecklenburg/tecklenburg_germany.html">Tecklenburg </a></li>
+                <li><a href="../telgte/telgte_germany.html">Telgte </a></li>
+                <li><a href="../warendorf/warendorf_germany.html">Warendorf </a></li>
+            </ul>  
+        </nav>               
       <div class="flag"><a href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/"><img src="../navpic/de_ico.gif" width="35px" height="26px" border="0" title="<%= @city.name %> - German Version" alt="German"> </a>
       </div>
+    </div>
   </header>
   <div id="large_content">  
       <div id="menu">  
@@ -108,12 +117,25 @@ Cities</a><br>
           </ul>
          </nav>
       </div>     
-    <div id="box">  
-          <% if !@city.en_ad_more_first_page_top.blank? %>
-          <div class="adv-more">
-          <%= @city.en_ad_more_first_page_top %>
-          </div> 
-          <div class="g_adv ">
+    <div id="box">       
+        <div id="g_search">    
+        <% if @city.map_id != "0004da425c9f05f247e60" %>    
+          <script>
+            (function() {
+              var cx = '014086874790278901250:wzouflswkja';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                  '//www.google.com/cse/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
+          </script>
+          <gcse:search></gcse:search>
+        <% end %> 
+      </div> 
+       <div class="g_adv_search">
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
               <!-- EN-Cties-all -->
               <ins class="adsbygoogle"  
@@ -122,22 +144,9 @@ Cities</a><br>
                 data-ad-slot="1928550116"></ins>
               <script>
               (adsbygoogle = window.adsbygoogle || []).push({});
-             </script>
-          </div> 
-            <% else %>  
-            <div class="g_adv_only">
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-              <!-- EN-Cties-all -->
-              <ins class="adsbygoogle"  
-                style="display:inline-block;width:300px;height:250px"
-                data-ad-client="ca-pub-2069005959740847"
-                data-ad-slot="1928550116"></ins>
-              <script>
-              (adsbygoogle = window.adsbygoogle || []).push({});
-             </script>
-            </div> 
-      <% end %>
-      <a name="<%= cityen_name %>">&nbsp;</a>  
+             </script>  
+    </div>          
+    <a name="<%= cityen_name %>">&nbsp;</a>
     </div>          
     <% panpub = @city.panoramas.keep_if{ |p| p.published }.count %>
     <div id="grid"><% if panpub > 30 %>
@@ -150,7 +159,7 @@ Cities</a><br>
           end.sort_by{ |p| p.priority }.first(26).each do |pano| %>  
         <li><% pano_subtitle = (pano.en_name.blank? ? (pano.alt_en_name.blank? ? (pano.name) : (pano.alt_en_name)) : (pano.en_name)) %>  <% pano_enname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
           <div class="wrapper"><% pano_enlocation = (pano.en_location.blank? ? (pano.location.blank? ? (" ") : (pano.location)) : (pano.en_location)) %>
-            <a href="http://www.panorama-cities.net/<%= cityen_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title=" <%= pano_enname %> <%= pano_enlocation + " " %>in <%= @city.en_name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= cityen_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" alt="<%= pano.name + " " + @city.name %>"></a>
+            <a href="http://www.panorama-cities.net/<%= cityen_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title=" <%= pano_enname %> <%= pano_enlocation + " " %>in <%= @city.en_name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= cityen_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" width="350" height="144" alt="<%= pano.name + " " + @city.name %>"></a>
             <% unless pano.rotation == 60 %>  
             <div class="widescreen"><a href="javascript:cindex('http://www.panorama-cities.net/<%= cityen_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>_5c.html')" title="<%= pano_enname %> Panorama in Widescreen">Widescreen</a>
             </div><% end %>
@@ -170,7 +179,7 @@ Cities</a><br>
           </div>
         </li>
         </li>
-      <% @city.panoramas.keep_if{ |p| p.published }.sort_by do |n| 
+      <% @city.panoramas.keep_if{ |p| p.published   && !( p.location == "Landhotel Martinshof" or p.location == "Hotel Königswache" ) }.sort_by do |n| 
                 if n.en_name.blank?
                   n.name
                 else
@@ -179,13 +188,13 @@ Cities</a><br>
           end.sort_by{ |p| p.priority }.last(panpub-26).each do |pano| %>  
         <li><% pano_subtitle = (pano.en_name.blank? ? (pano.alt_en_name.blank? ? (pano.name) : (pano.alt_en_name)) : (pano.en_name)) %>  <% pano_enname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
           <div class="wrapper"><% pano_enlocation = (pano.en_location.blank? ? (pano.location.blank? ? (" ") : (pano.location)) : (pano.en_location)) %>
-            <a href="http://www.panorama-cities.net/<%= cityen_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title=" <%= pano_enname %> <%= pano_enlocation + " " %>in <%= @city.en_name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= cityen_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" alt="<%= pano.name + " " + @city.name %>"></a>
+            <a href="http://www.panorama-cities.net/<%= cityen_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title=" <%= pano_enname %> <%= pano_enlocation + " " %>in <%= @city.en_name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= cityen_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" width="350" height="144" alt="<%= pano.name + " " + @city.name %>"></a>
             <% unless pano.rotation == 60 %>  
             <div class="widescreen"><a href="javascript:cindex('http://www.panorama-cities.net/<%= cityen_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>_5c.html')" title="<%= pano_enname %> Panorama in Widescreen">Widescreen</a>
             </div><% end %>
           </div><%= pano_subtitle %>
         </li><% end %> <% else %>
-      <ul> <% @city.panoramas.keep_if{ |p| p.published }.sort_by do |n| 
+      <ul> <% @city.panoramas.keep_if{ |p| p.published && !( p.location == "Hotel Bismarckhöhe" or  p.location == "Ferienwohnung Tecklenburger Augenblicke" )}.sort_by do |n| 
                 if n.en_name.blank?
                   n.name
                 else
@@ -194,34 +203,37 @@ Cities</a><br>
           end.sort_by{ |p| p.priority }.each do |pano| %>  
         <li><% pano_subtitle = (pano.en_name.blank? ? (pano.alt_en_name.blank? ? (pano.name) : (pano.alt_en_name)) : (pano.en_name)) %>  <% pano_enname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
           <div class="wrapper"><% pano_enlocation = (pano.en_location.blank? ? (pano.location.blank? ? (" ") : (pano.location)) : (pano.en_location)) %>
-            <a href="http://www.panorama-cities.net/<%= cityen_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title=" <%= pano_enname %> <%= pano_enlocation + " " %>in <%= @city.en_name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= cityen_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" alt="<%= pano.name + " " + @city.name %>"></a>
+            <a href="http://www.panorama-cities.net/<%= cityen_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title=" <%= pano_enname %> <%= pano_enlocation + " " %>in <%= @city.en_name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= cityen_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" width="350" height="144" alt="<%= pano.name + " " + @city.name %>"></a>
             <% unless pano.rotation == 60 %>  
             <div class="widescreen"><a href="javascript:cindex('http://www.panorama-cities.net/<%= cityen_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>_5c.html')" title="<%= pano_enname %> Panorama in Widescreen">Widescreen</a>
             </div><% end %>
           </div><%= pano_subtitle %>
         </li><% end %><% end %>
       </ul>
-    </div>            
-      <div id="cont_down">
-      <div id="gmap">
-                  <br>
-        <a name="karte"><%= @city.en_name %> Panorama Locations </a><br><% mapcode_en = @city.mymap_en_id  %><% if mapcode_en == "zIANpqu4IHeQ.kS48YRoSRHE0" %>
-        <iframe id="map_frame" src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.kS48YRoSRHE0&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode_en == "zIANpqu4IHeQ.kn1PxIW2ji2I" %><iframe id="map_frame" src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.kn1PxIW2ji2I&ie=UTF8&z=19&t=h"<% else %><iframe   id="map_frame" src="https://mapsengine.google.com/map/embed?mid=<%= @city.mymap_en_id %>"<% end %><% end %> frameborder="0" scrolling="no" marginheight="0" marginwidth="0" name="goomap" ></iframe><% if mapcode_en == "zIANpqu4IHeQ.kS48YRoSRHE0" %>
-        <a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.kS48YRoSRHE0&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode_en == "zIANpqu4IHeQ.kn1PxIW2ji2I" %><a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.kn1PxIW2ji2I&ie=UTF8&z=19&t=h"<% else %><a href="https://mapsengine.google.com/map/viewer?mid=<%= @city.mymap_en_id %>"<% end %><% end %> target="_blank"><span style="font-size:1.1em;">Panoramas of <%= @city.en_name %></span> </a> <br><span style="font-size:0.9em;">(View Larger Map)</span>
+     </div>            
+    </div>
+  <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="../js/modernizr.js"></script>
+  <script type="text/javascript" src="../js/jquery.lazyloadxt.extra.min.js"></script>
+     <div class="cont_down">
+      <div class="g_map">
+        <h5><%= @city.en_name %> Panorama Locations </h5><% mapcode_en = @city.mymap_en_id  %><% if mapcode_en == "zIANpqu4IHeQ.kS48YRoSRHE0" %>
+        <iframe id="map_frame" data-src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.kS48YRoSRHE0&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode_en == "zIANpqu4IHeQ.kn1PxIW2ji2I" %><iframe id="map_frame" data-src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.kn1PxIW2ji2I&ie=UTF8&z=19&t=h"<% else %><iframe   id="map_frame" data-src="https://www.google.com/maps/d/embed?mid=<%= @city.mymap_en_id %>"<% end %><% end %> frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><% if mapcode_en == "zIANpqu4IHeQ.kS48YRoSRHE0" %>
+        <a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.kS48YRoSRHE0&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode_en == "zIANpqu4IHeQ.kn1PxIW2ji2I" %><a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.kn1PxIW2ji2I&ie=UTF8&z=19&t=h"<% else %><a href="https://www.google.com/maps/d/viewer?mid=<%= @city.mymap_en_id %>"<% end %><% end %> target="_blank">Panorama Map of <%= @city.en_name %> </a> <span class="mintxt">(View Larger Map)</span>
       </div> 
            <br> 
-          <div id="box-ur">
           <% if @city.map_id == "0004da425c9f05f247e60" %>  
               <div class="de-map"> 
                 MAP OF GERMANY
                  <br> 
                   <iframe src="http://www.panorama-cities.net/maps/map_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
+                  </div> 
                   <% else %>          
                    <% if @city.map_id == "00044b138d7eba762674d" %> 
-                    <div>&nbsp;  <% else %>        
+                    </div> <% else %>        
                    <% if @city.map_id == "0004df7ee473a37211d4c" %> 
-                    <div>&nbsp; <% else %>  
-              <div class="de-map">  
+                    </div> <% else %>  
+              <div class="d-map">  
                 MAP OF GERMANY
                  <br>
                   <iframe src="http://www.panorama-cities.net/maps/map_<%= cityen_name %>.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
@@ -238,27 +250,30 @@ Cities</a><br>
                   (adsbygoogle = window.adsbygoogle || []).push({});
                   </script>
           </div> 
-       </div>  
       </div> 
     <div class="adtext">
       <br>
     </div> 
-    </div>
-      <div id="fb-root"></div>
-   <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));</script>
   <footer> 
     <span class="contact"><a href="http://www.panorama-cities.net/html/kontakt.html">Contact us</a></span>
     <div class="mail"> <a href="mailto:?subject=City Panoramas%20of%20<%= @city.en_name %>%20Germany&body=Dear%0D%0A%0D%0AI%20discovered%20nice%20panoramic%20photos%20of%20the%20city%20<%= @city.en_name %>in%20Germany%%0D%0Awww%2Epanorama-cities%2Enet%2F<%= cityen_name %>%2F<%= cityen_name %>_panoramas%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AI%20n%20s%20t%20r%20u%20c%20t%20i%20o%20n%0D%0AEnter%20the%20email%20address%20of%20the%20recipient%2C%0D%0Aadd%20your%20part%20to%20the%20text%20as%20desired%20and%0D%0Adelete%20this%20part%20of%20instructions%20before%20sending%2E" title="by Email"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="Email"> Email this page </a>
     </div>
-    <div class="gplus"><script type="text/javascript" src="http://apis.google.com/js/plusone.js">{lang: 'en', parsetags: 'explicit'}</script><g:plusone href="http://www.panorama-cities.net/<%= cityen_name %>/<%= cityen_name %>_panoramas.html" size="medium" count="false"></g:plusone><script type="text/javascript">gapi.plusone.go();</script></div>
-    <div  class="socmed-fb">
-      <div class="fb-like" data-href="http://www.panorama-cities.net/<%= cityen_name %>/<%= cityen_name %>_panoramas.html" data-layout="button" data-action="recommend" colorscheme="dark" data-show-faces="false" data-share="false"></div>      
+    <div class="gplus">
+      <script type="text/javascript">
+       (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+        window.___gcfg = {
+        lang: 'en-US',
+        parsetags: 'onload'
+       };
+      </script><div class="g-plusone" data-href="https://apis.google.com/js/plusone.js" data-size="medium" data-count="false">
+       </div>
+    </div>
+    <div class="socmed-fb">
+     <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fpanorama-cities.net%2F<%= cityen_name %>%2<%= cityen_name %>_panoramas.html&amp;locale=en_US&amp;width&amp;layout=button&amp;action=recommend&amp;show_faces=false&amp;share=false&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:35px;" allowTransparency="true"></iframe>      
     </div>  
   </footer>
 </body>

@@ -15,7 +15,7 @@
         <name><%= @city.name %> </name>        
         <% sortedPanoramas = @city.panoramas %>
         <% sortedPanoramas.sort_by!{ |p| (p.district.blank? ? "0_" : p.district) + (p.location.blank? ? "0_" : p.location) + p.name } %>
-        <% sortedPanoramas.each do |pano| %>    
+        <% sortedPanoramas.keep_if{ |p| p.published }.each do |pano| %>    
           <% pano_filename = FileHelper.to_filename pano.name %>
           <% pano_en_filename = FileHelper.to_filename( pano.en_name.blank? ? pano.name : pano.en_name ) %>          
           <% unless  (pano.get_latitude == "0.000000") or not pano.location.blank? or not pano.district.blank? %>

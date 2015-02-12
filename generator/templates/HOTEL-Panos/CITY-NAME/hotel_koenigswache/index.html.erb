@@ -110,7 +110,7 @@
           <div class="wrapper">
             <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/.../<%= pano.get_filename %>_....html" title="<%= panoname %> <%= pano.location %> in <%= @city.name %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/.../panoramas/<%= pano.get_filename %>_....jpg" alt="<%= pano.name %> ::: <%= @city.name %>"></a>
             <% unless pano.rotation == 60 %>
-            <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>..._5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
+            <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>_..._5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
             </div><% end %>
           </div><%= pano.name %>
         </li><% end %>
@@ -156,12 +156,12 @@
   <footer>
     <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
     <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
-    <div class="mail"> <a href="mailto:?subject=Tipp%20Panoramen%20:::&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20Link%20zu%20interessanten%20Panoramabildern%20aus%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2Fpanoramen_...%2Ehtml%0D%0A" title="per Email versenden"><img src="../../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite senden </a>
+    <div class="mail"> <a href="mailto:?subject=Tipp%20Panoramen%20:::&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20Link%20zu%20interessanten%20Panoramabildern%20aus%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2...%2index%2Ehtml%0D%0A" title="per Email versenden"><img src="../../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite senden </a>
     </div>
-    <div class="gplus"><script type="text/javascript" src="http://apis.google.com/js/plusone.js">{lang: 'de', parsetags: 'explicit'}</script><g:plusone href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/panoramen_....html" size="medium" count="false"></g:plusone><script type="text/javascript">gapi.plusone.go();</script>
+    <div class="gplus"><script type="text/javascript" src="http://apis.google.com/js/plusone.js">{lang: 'de', parsetags: 'explicit'}</script><g:plusone href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/.../index.html" size="medium" count="false"></g:plusone><script type="text/javascript">gapi.plusone.go();</script>
     </div>
     <div id="socmed-fb">
-      <div class="fb-like" data-href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/panoramen_....html" data-width="265" data-layout="button" data-action="recommend" colorscheme="dark" data-show-faces="false" data-share="false"></div>      
+      <div class="fb-like" data-href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/.../index.html" data-width="265" data-layout="button" data-action="recommend" colorscheme="dark" data-show-faces="false" data-share="false"></div>      
     </div>  
   </footer>
 </body>

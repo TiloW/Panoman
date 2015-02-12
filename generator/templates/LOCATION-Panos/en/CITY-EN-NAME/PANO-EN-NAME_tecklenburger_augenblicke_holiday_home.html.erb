@@ -272,8 +272,7 @@
         }, 1000);<% end %>
       }); 
  (function($){
-  $(document).ready(function () {  
-      $("#thumbframe").load("photo_stock_<%= FileHelper.to_filename @city.en_name %>.html");  
+  $(document).ready(function () {   
       $(window).load(function(){ 
         $("#cont").mCustomScrollbar({
           horizontalScroll:true,
@@ -305,6 +304,7 @@
   </head>
   <body>
   <header>
+    <div class="whead">
       <div class="logo">
         <a href="http://www.panorama-cities.net/" target="_top"><img src="../navpic/logo.png" width="150px" height="51px" alt="City Panoramas" border="0"></a>
       </div>                  
@@ -317,6 +317,7 @@
       <div class="cities_en"> 
         <a href="http://panorama-cities.net/german_cities/" target="_top" title="German Cities" class="city-top">Cities</a>
       </div> 
+    </div>
   </header>
  <div class="all"> 
     <div id="nojava">

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset=utf-8 />
-  <title>::: Panoramas </title> 
-   <meta http-equiv="cache-control" content="max-age=260000">
+  <meta charset=utf-8><% cityen_name = FileHelper.to_filename @city.en_name %>
+   <meta http-equiv="cache-control" content="max-age=604800">
   <meta name="copyright" content="Helmut Koelbach">      
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="City Panoramas of <%= @city.en_name %> ::: - 360° City Views and Virtual Tours of ::: in Germany">
-  <link rel="stylesheet" type="text/css" href="../css/city_index.css" />
-  <link rel="alternate" hreflang="de" href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/panoramen_....html" />
+  <meta name="description" content="::: Panoramas - Views and Virtual Tours of the ::: in <%= @city.en_name %> Germany">
+  <link rel="canonical" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/..._panoramas.html"> 
+  <link rel="stylesheet" type="text/css" href="../css/cityindx.css">
+  <link rel="alternate" hreflang="de" href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/panoramen_....html">
   <link rel="shortcut icon" href="../icon.ico">
   <script type="text/javascript" language="javascript" src="../ind.js"></script>     
   <script type="text/javascript" src="../js/s-panorama.js"></script>
+  <title>::: <%= @city.en_name %> Germany - Panoramas </title>
 </head>
 <body>
   <header>  
     <div class="whead">
-      <a href="http://www.panorama-cities.net/" target="_top"><img src="../navpic/logo.png" height="50px" alt="City Panoramas" border="0"></a>
-      <h1><%= @city.en_name %> <br>::: </h1>  
+      <a href="http://www.panorama-cities.net/" target="_top"><img src="../navpic/logo.png" width="124" height="51" alt="City Panoramas" border="0"></a>
+      <h1>::: </h1>  
         <nav>  
-          <a href="http://panorama-cities.net/german_cities/" class="city-top">German 
-Cities</a><br>
+          <a href="http://panorama-cities.net/german_cities/" class="city-loc">German Cities</a><br><br>
               <ul>     
                 <li><a href="../berlin/berlin_germany.html">Berlin </a></li>
                 <li><a href="../bielefeld/bielefeld_germany.html">Bielefeld </a></li>
@@ -91,79 +91,60 @@ Cities</a><br>
       </div>
     </div>
   </header>
-  <div id="content"> 
-    <div id="box">  
-            <div id="g_adv_only">
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-              <!-- EN-Cties-all -->
-              <ins class="adsbygoogle"  
-                style="display:inline-block;width:300px;height:250px"
-                data-ad-client="ca-pub-2069005959740847"
-                data-ad-slot="1928550116"></ins>
-              <script>
-              (adsbygoogle = window.adsbygoogle || []).push({});
-             </script>
-            </div> 
-    </div> 
-         
+  <div id="content">  
+   <div id="content-top">         
     <div id="grid">
-      <ul> <% @city.panoramas.keep_if{ |d| !d.district.blank? }.sort_by do |n| 
+      <ul> <% @city.panoramas.keep_if{ |d| !d.location.blank? }.sort_by do |n| 
             if n.en_name.blank?
               n.name
             else
               n.en_name
             end 
-          end.sort_by{ |p| p.district }.each do |pano| %>      
+          end.sort_by{ |p| p.location }.each do |pano| %>      
         <li><% pano_enname = (pano.alt_en_name.blank? ? (pano.en_name.blank? ? (pano.name) : (pano.en_name)) : (pano.alt_en_name)) %>
           <div class="wrapper">
-            <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title="<%= pano_enname %> <%= pano.en_location %> in <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" alt="<%= pano.name + " " + @city.name %>"></a>
+            <a href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>.html" title="<%= pano_enname %> <%= pano.en_location %> in <%= @city.en_name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= FileHelper.to_filename pano.name %>_<%= FileHelper.to_filename @city.name %>.jpg" width="350" height="144" alt="<%= pano.name + " " + @city.name %>"></a>
             <% unless pano.rotation == 60 %>
             <div class="widescreen"><a href="javascript:cindex('<%= pano.en_name.blank? ? (FileHelper.to_filename pano.name) : (FileHelper.to_filename pano.en_name) %>_5c.html')" title="<%= pano_enname %> Panorama in Widescreen">Widescreen</a>
             </div><% end %>
           </div><%= pano_enname %>
         </li><% end %>
       </ul>
-    </div>
-      
-    <div id="gmap">
-        <%= @city.en_name %> <%= @city.name == "Rostock" ? "Warnemünde and Hohe Düne" : ":::" %> Panorama Locations
-         <br><% if (@city.name == "Bremen") then dist_mapcoord = "&source=embed&ll=53.167948,8.626628&spn=0.016722,0.023603&z=15" %><% end %>   <% if (@city.name == "Lübeck") then dist_mapcoord = "&source=embed&ll=53.961136,10.875049&spn=0.016412,0.023646&z=15" %><% end %>   <% if (@city.name == "Rostock") then dist_mapcoord = "&source=embed&ll=54.177984,12.091613&spn=0.016326,0.023561&z=15" %><% end %>   <% if (@city.name == "Steinfurt") then dist_mapcoord = "&source=embed&ll=52.134436,7.36702&spn=0.069543,0.095959&z=13" %><% end %>   <% if (@city.name == "Wiesbaden") then dist_mapcoord = "&source=embed&ll=50.008966,8.280902&spn=0.008964,0.01178&z=16" %><% end %>
-       <iframe id="map_frame"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= dist_mapcoord %>&amp;output=embed"></iframe><br /><a href="http://maps.google.com/maps/ms?msa=0&amp;msid=204881142368333592551.<%= @city.map_id %>&amp;ie=UTF8&amp;t=m<%= dist_mapcoord %>&amp;source=embed" target="_blank">Panoramas of ::: </a> &nbsp;(View Larger Map)
+          </div>       
+         </div>
+        </div>   
+  <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="../js/modernizr.js"></script>
+  <script type="text/javascript" src="../js/jquery.lazyloadxt.extra.min.js"></script>    
+     <div class="cont_down">
+      <div class="g_map">
+        <h5><%= @city.en_name %> Panorama Locations </h5><% mapcode_en = @city.mymap_en_id  %><% if mapcode_en == "zIANpqu4IHeQ.kS48YRoSRHE0" %>
+        <iframe id="map_frame" data-src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.kS48YRoSRHE0&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode_en == "zIANpqu4IHeQ.kn1PxIW2ji2I" %><iframe id="map_frame" data-src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.kn1PxIW2ji2I&ie=UTF8&z=19&t=h"<% else %><iframe   id="map_frame" data-src="https://www.google.com/maps/d/embed?mid=<%= @city.mymap_en_id %>"<% end %><% end %> frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><% if mapcode_en == "zIANpqu4IHeQ.kS48YRoSRHE0" %>
+        <a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.kS48YRoSRHE0&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode_en == "zIANpqu4IHeQ.kn1PxIW2ji2I" %><a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.kn1PxIW2ji2I&ie=UTF8&z=19&t=h"<% else %><a href="https://www.google.com/maps/d/viewer?mid=<%= @city.mymap_en_id %>"<% end %><% end %> target="_blank">Panorama Map of <%= @city.en_name %> </a> <span class="mintxt">(View Larger Map)</span>
+      </div> 
+          <% if @city.map_id == "0004da425c9f05f247e60" %>  
+              <div class="d-map"> 
+                MAP OF GERMANY
+                 <br> 
+                  <iframe src="http://www.panorama-cities.net/maps/map_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
+                  <% else %>          
+                   <% if @city.map_id == "00044b138d7eba762674d" %> 
+                    </div> <% else %>        
+                   <% if @city.map_id == "0004df7ee473a37211d4c" %> 
+                    </div> <% else %>  
+              <div class="d-map">  
+                MAP OF GERMANY
+                 <br>
+                  <iframe src="http://www.panorama-cities.net/maps/map_<%= cityen_name %>.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
+                <br><a href="http://www.panorama-cities.net/html/map_germany.html#map_germany" class="white">This interactive map on your web page <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>
+              </div>
+     </div> <% end %><% end %><% end %>
+    <div class="adtext">
+      <br>
     </div> 
-    <div class="more"> 
-        <% if @city.map_id == "0004da425c9f05f247e60" %>  
-      <div id="de-map"> 
-        MAP OF GERMANY
-         <br> 
-          <iframe src="http://www.panorama-cities.net/maps/map_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
-          <% else %>          
-           <% if @city.map_id == "00044b138d7eba762674d" %> 
-       <div>&nbsp;  <% else %>        
-           <% if @city.map_id == "0004df7ee473a37211d4c" %> 
-       <div>&nbsp; <% else %>  
-       <div id="de-map">  
-        MAP OF GERMANY
-         <br>
-          <iframe src="http://www.panorama-cities.net/maps/map_<%= FileHelper.to_filename @city.en_name %>.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
-        <br><a href="http://www.panorama-cities.net/html/map_germany.html#map_germany" class="white">This interactive map on your web page <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>
-        <% end %><% end %><% end %>
-       </div>
-       <div id="adv2-down">    
-         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <!-- EN-Cities-u -->
-          <ins class="adsbygoogle"
-               style="display:inline-block;width:468px;height:60px"
-               data-ad-client="ca-pub-2069005959740847"
-               data-ad-slot="2564475714"></ins>
-          <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-        </div>  
-      </div>
-  </div>
   <footer>
     <span class="contact"><a href="http://www.panorama-cities.net/html/kontakt.html">Contact us</a></span>
-    <div class="mail"> <a href="mailto:?subject=City Panoramas%20of%20:::%20Germany&body=Dear%0D%0A%0D%0AI%20discovered%20nice%20panoramic%20photos%20of%20the%20city%20<%= @city.en_name %>%20:::%20in%20Germany%%0D%0Awww%2Epanorama-cities%2Enet%2F<%= FileHelper.to_filename @city.en_name %>%2F..._panoramas%2Ehtml%0D%0A" title="by Email"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="Email"> Email this page </a>
+    <div class="mail"> <a href="mailto:?subject=Panoramas%20of%20the%20:::%20in%20<%= @city.en_name %>%20Germany&body=Dear%0D%0A%0D%0AI%20discovered%20nice%20panoramic%20photos%20of%20the%20:::%20in%20<%= @city.en_name %>%20Germany%%0D%0Awww%2Epanorama-cities%2Enet%2F<%= FileHelper.to_filename @city.en_name %>%2F..._panoramas%2Ehtml%0D%0A" title="by Email"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="Email"> Email this page </a>
     </div>
     <div class="gplus">
       <script type="text/javascript">
@@ -173,15 +154,23 @@ Cities</a><br>
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
         })();
         window.___gcfg = {
-        lang: 'en-US',
+        lang: 'de',
         parsetags: 'onload'
        };
       </script><div class="g-plusone" data-href="https://apis.google.com/js/plusone.js" data-size="medium" data-count="false">
        </div>
     </div>
-    <div class="socmed-fb">
-      <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.panorama-cities.net%2F<%= FileHelper.to_filename @city.en_name %>%2F..._panoramas.html%2F&amp;locale=en_US&amp;layout=button&amp;show_faces=false&amp;width=450&amp;action=recommend&amp;colorscheme=dark" scrolling="no" frameborder="0" allowTransparency="true" style="border:none; overflow:hidden; width:450px; height:20px"></iframe>      
-   </div>  
+    <div id="socmed-fb">
+  <div id="fb-root"></div>
+   <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));</script>
+      <div class="fb-like" data-href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/..._panoramas.html" data-width="265" data-layout="button" data-action="recommend" colorscheme="dark" data-show-faces="false" data-share="false"></div>      
+    </div>  
   </footer>
 </body>
 </html>

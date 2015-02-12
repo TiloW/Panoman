@@ -275,7 +275,6 @@
       }); 
  (function($){
   $(document).ready(function () {  
-      $("#thumbframe").load("fotoarchiv_<%= @city.get_filename %>.html");  
       $(window).load(function(){ 
         $("#cont").mCustomScrollbar({
           horizontalScroll:true,
@@ -307,6 +306,7 @@
   </head>
   <body>
   <header>
+    <div class="whead">
      <div class="logo">
       <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen" border="0"></a>
      </div>                                                   
@@ -316,6 +316,7 @@
      <div class="cities">  
       <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
      </div>          
+    </div>
   </header>
   <div class="all"> 
     <div id="nojava">

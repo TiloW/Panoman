@@ -3,16 +3,15 @@
 <head>
    <meta charset=utf-8><% location_en = (@pano.en_location.blank? ? (@pano.location) : (@pano.en_location)) %> 
    <meta http-equiv="content-language" content="en"><% pano_enname = (@pano.alt_en_name.blank? ? (@pano.en_name.blank? ? (@pano.name) : (@pano.en_name)) : (@pano.alt_en_name)) %>
+   <meta http-equiv="cache-control" content="max-age=604800">
    <meta name="viewport" content="width=device-width, maximum-scale=1"><% city_en_name = (pano_enname[@city.en_name] == @city.en_name) ? ("") :(@city.en_name) %>
    <meta name="copyright" content="Helmut Koelbach"><% citytitle = @pano.district.blank? ? (city_en_name) : (@pano.district) %>    
-   <meta name="description" content="<%= pano_enname %> <%= location_en.blank? ? ("") : ("at the " + location_en) %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> - Fullscreen Panorama">
-   <meta http-equiv="cache-control" content="max-age=10800">
    <title><%= (@pano.repeative == true) ? ("360° Fullscreen Panorama") : ("") %> <%= pano_enname %> <%= location_en.blank? ? ("") : ("- " + location_en) %> <%= citytitle.blank? ? ("") : (citytitle) %></title>
    <link rel="stylesheet" href="../css/simplepanorama.css">
    <link rel="stylesheet" type="text/css" href="../css/hdpano.css">
    <link rel="shortcut icon" href="../icon.ico">
    <link rel="alternate" hreflang="de" href="http://www.stadtpanoramen.de/<%= FileHelper.to_filename @city.name %>/<%= FileHelper.to_filename @pano.name %>_full_hd.html" />
-   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+   <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
    <script type="text/javascript" src="../js/modernizr.js"></script>
    <script type="text/javascript" src="../js/fullpanorama.js"></script>
    <script type="text/javascript" src="../js/hdpano.js"></script>

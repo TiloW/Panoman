@@ -70,7 +70,7 @@ class GeneratorController < ApplicationController
       @pano_files_out[file] = Hash.new
       panos = pano_filter === -1 ? (city_filter === -1 ? Panorama.all : City.find(city_filter).panoramas) : [Panorama.find(pano_filter)]
       panos.each do |pano|
-        unless @skip and not pano.published
+        unless @skip and not pano.district
           @pano = pano
           @city = pano.city
           @pano_files_out[file][pano.id] = @out_path + get_out_file(file, { :city => pano.city, :pano => pano })

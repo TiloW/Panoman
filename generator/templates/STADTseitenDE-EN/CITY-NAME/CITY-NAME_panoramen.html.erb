@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset=utf-8 />
+  <meta charset=utf-8>
   <title><%= @city.name %> Panoramen </title>
-   <meta http-equiv="cache-control" content="max-age=260000">
+   <meta http-equiv="cache-control" content="max-age=604800">
   <meta name="copyright" content="Helmut Kölbach">  
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
   <meta name="description" content="360° StadtPanoramen von <%= @city.name %> - Stadtansichten mit virtuellen Rundgängen<% citypanos = @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority } %><% unless citypanos.at(18).nil? %> und Fotos mit den Bildmotiven: <% citypanos.slice(10..16).each do |pano| %><%=  pano.name + ", " %><% end %><% pano17= citypanos.at(17) %><%=  pano17.name %><% pano18 = citypanos.at(18) %><%= " und " + pano18.name  %><% end %>">
+  <link rel="canonical" href="http://www.stadtpanoramen.de/stadt/<%= @city.get_filename %>/<%= @city.get_filename %>_panoramen.html">
   <link rel="shortcut icon" href="../icon.ico">
   <link rel="alternate" hreflang="en" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @city.en_name %>_panoramas.html" />
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/allcities.css">
-  <script type="text/javascript" src="../js/modernizr.js"></script>
-  <script  async type="text/javascript" src="../ind.js"></script>  
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/cityindx.css">
+  <script type="text/javascript">
+     ci="";
+     function cindex(ci) {
+     win=window.open(ci,"cinepano","scrollbars=yes,resizable=yes");
+     win.focus();
+     }
+  </script> 
 </head>
 <body>
   <header>
+    <div class="whead-lg">
       <div class="logo">   
-       <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" alt="Stadtpanoramen" border="0"></a> 
+         <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" width="124" height="51" alt="Stadtpanoramen" border="0"></a> 
       </div>   
       <h1><% if @city.name != "Rothenburg ob der Tauber" %><br><% end %><%= @city.name %> </h1>   
       <nav>        
-      <a class="city-top">Städte </a><br>
+      <a class="city-top">Städte </a><br><br>
           <ul>     
             <li><a href="../berlin/">Berlin </a></li>
             <li><a href="../bielefeld/">Bielefeld </a></li>
@@ -90,6 +97,7 @@
       <div id="navtop"<% if @city.name == "Rothenburg ob der Tauber" %> style="margin-top:66px"<% end %>>
         <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
       </div>
+    </div>
   </header>
   <div id="large_content">  
       <div id="menu">  
@@ -104,16 +112,16 @@
         <div id="g_search">    
         <% if @city.map_id != "0004da425c9f05f247e60" %>    
           <script>
-          (function() {
-            var cx = '014086874790278901250:trd61z8lvpu';
-            var gcse = document.createElement('script');
-            gcse.type = 'text/javascript';
-            gcse.async = true;
-            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-                '//www.google.com/cse/cse.js?cx=' + cx;
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(gcse, s);
-          })();
+            (function() {
+              var cx = '014086874790278901250:pav3_fk-wmo';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                  '//www.google.com/cse/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
           </script>
           <gcse:search></gcse:search>
         <% end %> 
@@ -121,14 +129,14 @@
        <div class="g_adv_search">
             <%= @city.ad_mobile_banner %>
        </div>
-      <a name="<%= @city.get_filename %>">&nbsp;</a>  
+       <a name="<%= @city.get_filename %>">&nbsp;</a>  
       </div> 
     <% panpub = @city.panoramas.keep_if{ |p| p.published }.count %>
     <div id="grid"><% if panpub > 30 %>
       <ul> <% @city.panoramas.keep_if{ |p| p.published }.sort_by{ |p| p.priority }.first(26).each do |pano| %>      
         <li><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
           <div class="wrapper">
-            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <% unless pano.location.nil? %><%= pano.location + " " %><% end %>in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg" alt="<%= pano.name %> <%= pano.location %> <%= @city.name %><%= pano.district %>"></a>    <% unless pano.rotation == 60 %>
+            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <% unless pano.location.nil? %><%= pano.location + " " %><% end %>in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg" width="350" height="144" alt="<%= pano.name %> <%= pano.location %> <%= @city.name %><%= pano.district %>"></a>    <% unless pano.rotation == 60 %>
             <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>_5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
             </div><% end %>
           </div><%= pano.name %>
@@ -145,24 +153,24 @@
           (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
           </div>
-        </li><% @city.panoramas.keep_if{ |p| p.published && !( p.location == "Landhotel Martinshof" or p.location == "Hotel Königswache") }.sort_by{ |p| p.priority }.last(panpub-26).each do |pano| %>      
+        </li><% @city.panoramas.keep_if{ |p| p.published && !( p.location == "Landhotel Martinshof" or p.location == "Hotel Königswache" ) }.sort_by{ |p| p.priority }.last(panpub-26).each do |pano| %>      
         <li><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
           <div class="wrapper">
-            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <% unless pano.location.nil? %><%= pano.location + " " %><% end %>in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg" alt="<%= pano.name %> <%= pano.location %> <%= @city.name %><%= pano.district %>"></a>    <% unless pano.rotation == 60 %>
+            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <% unless pano.location.nil? %><%= pano.location + " " %><% end %>in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg" width="350" height="144" alt="<%= pano.name %> <%= pano.location %> <%= @city.name %><%= pano.district %>"></a>    <% unless pano.rotation == 60 %>
             <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>_5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
             </div><% end %>
           </div><%= pano.name %>
         </li><% end %><% unless @city.name != "München" %>
         <li>
           <div class="wrapper">
-            <a href="http://www.stadtpanoramen.de/muenchen/landhotel_martinshof/lamdhotel_landhotel_martinshof.html" title="Landhotel Martinshof"><img src="http://panorama-cities.net/munich/landhotel_martinshof/panoramas/lamdhotel_landhotel_martinshof.jpg" alt="Landhotel Martinshof "></a> 
-            <div class="widescreen"><a href="javascript:cindex('landhotel_martinshof/lamdhotel_landhotel_martinshof_5c.html')" title="Panorama Landhotel in voller Breite">Widescreen</a>
+            <a href="http://www.stadtpanoramen.de/muenchen/landhotel_martinshof/landhotel_landhotel_martinshof.html" title="Landhotel Martinshof"><img src="http://panorama-cities.net/munich/landhotel_martinshof/panoramas/landhotel_landhotel_martinshof.jpg" width="350" height="144" alt="Landhotel Martinshof "></a> 
+            <div class="widescreen"><a href="javascript:cindex('landhotel_martinshof/landhotel_landhotel_martinshof_5c.html')" title="Panorama Landhotel in voller Breite">Widescreen</a>
             </div>
           </div>Landhotel Martinshof
        </li>
         <li>
           <div class="wrapper">
-            <a href="http://www.stadtpanoramen.de/muenchen/hotel_koenigswache/foyer_hotel_koenigswache.html" title="Foyer Hotel Königswache"><img src="http://panorama-cities.net/munich/hotel_koenigswache/panoramas/foyer_hotel_koenigswache.jpg" alt="Foyer Hotel Königswache  "></a> 
+            <a href="http://www.stadtpanoramen.de/muenchen/hotel_koenigswache/foyer_hotel_koenigswache.html" title="Foyer Hotel Königswache"><img src="http://panorama-cities.net/munich/hotel_koenigswache/panoramas/foyer_hotel_koenigswache.jpg" width="350" height="144" alt="Foyer Hotel Königswache  "></a> 
             <div class="widescreen"><a href="javascript:cindex('hotel_koenigswache/foyer_hotel_koenigswache_5c.html')" title="Panorama Restaurant in voller Breite">Widescreen</a>
             </div>
           </div>Hotel Königswache
@@ -170,21 +178,21 @@
       <ul><% @city.panoramas.keep_if{ |p| p.published && !( p.location == "Hotel Bismarckhöhe" or  p.location == "Ferienwohnung Tecklenburger Augenblicke" ) }.sort_by{ |p| p.priority }.each do |pano| %>      
         <li><% panoname = (pano.alt_name.blank? ? (pano.name) : (pano.alt_name)) %>
           <div class="wrapper">
-            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <% unless pano.location.nil? %><%= pano.location + " " %><% end %>in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg" alt="<%= pano.name %> <%= pano.location %> <%= @city.name %><%= pano.district %>"></a>    <% unless pano.rotation == 60 %>
+            <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= pano.get_filename %>.html" title="<%= panoname %> <% unless pano.location.nil? %><%= pano.location + " " %><% end %>in <%= @city.name %> <%= pano.district %>"><img src="http://panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= pano.get_filename %>_<%= @city.get_filename %>.jpg" width="350" height="144" alt="<%= pano.name %> <%= pano.location %> <%= @city.name %><%= pano.district %>"></a>    <% unless pano.rotation == 60 %>
             <div class="widescreen"><a href="javascript:cindex('<%= pano.get_filename %>_5c.html')" title="Panorama <%= pano.name %> in voller Breite">Widescreen</a>
             </div><% end %>
           </div><%= pano.name %>
         </li><% end %><% end %><% unless @city.name != "Tecklenburg" %>
         <li>
           <div class="wrapper">
-            <a href="http://www.stadtpanoramen.de/tecklenburg/ferienwohnung_tecklenburger_augenblicke/winterlandschaft_ferienwohnung_tecklenburger_augenblicke.html" title="Winterlandschaft Ferienwohnung Tecklenburger Augenblicke"><img src="http://panorama-cities.net/tecklenburg/ferienwohnung_tecklenburger_augenblicke/panoramas/winterlandschaft_ferienwohnung_tecklenburger_augenblicke.jpg" alt="Winterlandschaft Ferienwohnung Tecklenburger Augenblicke"></a>    
+            <a href="http://www.stadtpanoramen.de/tecklenburg/ferienwohnung_tecklenburger_augenblicke/winterlandschaft_ferienwohnung_tecklenburger_augenblicke.html" title="Winterlandschaft Ferienwohnung Tecklenburger Augenblicke"><img src="http://panorama-cities.net/tecklenburg/ferienwohnung_tecklenburger_augenblicke/panoramas/winterlandschaft_ferienwohnung_tecklenburger_augenblicke.jpg" width="350" height="144" alt="Winterlandschaft Ferienwohnung Tecklenburger Augenblicke"></a>    
             <div class="widescreen"><a href="javascript:cindex('ferienwohnung_tecklenburger_augenblicke/winterlandschaft_ferienwohnung_tecklenburger_augenblicke_5c.html')" title="Panorama Winterlandschaft Ferienwohnung in voller Breite">Widescreen</a>
             </div>
           </div>Winterlandschaft
        </li>
         <li>
           <div class="wrapper">
-            <a href="http://www.stadtpanoramen.de/tecklenburg/hotel_bismarckhoehe/restaurant_hotel_bismarckhoehe.html" title="Restaurant Hotel Bismarckhöhe "><img src="http://panorama-cities.net/tecklenburg/hotel_bismarckhoehe/panoramas/restaurant_hotel_bismarckhoehe.jpg" alt="Restaurant Hotel Bismarckhöhe "></a> 
+            <a href="http://www.stadtpanoramen.de/tecklenburg/hotel_bismarckhoehe/restaurant_hotel_bismarckhoehe.html" title="Restaurant Hotel Bismarckhöhe "><img src="http://panorama-cities.net/tecklenburg/hotel_bismarckhoehe/panoramas/restaurant_hotel_bismarckhoehe.jpg" width="350" height="144" alt="Restaurant Hotel Bismarckhöhe "></a> 
             <div class="widescreen"><a href="javascript:cindex('hotel_bismarckhoehe/restaurant_hotel_bismarckhoehe_5c.html')" title="Panorama Restaurant in voller Breite">Widescreen</a>
             </div>
           </div>Restaurant
@@ -198,16 +206,14 @@
        </li><% end %>
       </ul>
     </div>    
-      <div id="cont_down">
-            <div id="gmap">
-                  <br>
-                 <a name="karte"><%= @city.name %> Panorama-Aufnahmestandorte</a>
-                 <br><% mapcode = @city.mymap_id %><% if mapcode == "zIANpqu4IHeQ.kKDcOohK8htk" %>      
-                <iframe id="map_frame"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.kKDcOohK8htk&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode == "zIANpqu4IHeQ.k6dPEXy8Scoc" %><iframe  id="map_frame"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.k6dPEXy8Scoc&ie=UTF8&z=19&t=h"<% else %><iframe  id="map_frame"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://mapsengine.google.com/map/embed?mid=<%= @city.mymap_id %>"<% end %><% end %>></iframe><% if mapcode == "zIANpqu4IHeQ.kKDcOohK8htk" %>
-                <a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.kKDcOohK8htk&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode == "zIANpqu4IHeQ.k6dPEXy8Scoc" %><a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.k6dPEXy8Scoc&ie=UTF8&z=19&t=h"<% else %><a href="https://mapsengine.google.com/map/viewer?mid=<%= @city.mymap_id %>" <% end %><% end %> target="_blank"><span style="font-size:17px;"><%= @city.name %> Panorama-Karte </span></a> <br><span style="font-size:12px;">(Panoramen auf einer größeren Karte anzeigen)</span>
+    </div>  
+  <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="../js/modernizr.js"></script>
+  <script type="text/javascript" src="../js/jquery.lazyloadxt.extra.min.js"></script>
+    <div class="cont_down"> <% unless @city.citytext.blank? %>
+            <div class="pad">&nbsp;
             </div>
-           <br> 
-          <div id="box-ur">
+            <%= @city.citytext %>   
               <div class="de-map"><% if  @city.map_id == "0004df7ee473a37211d4c" or @city.map_id =="00044b138d7eba762674d" %> <% else %>  
                   INTERAKTIVE <br>DEUTSCHLANDKARTE
                    <br>
@@ -216,34 +222,54 @@
                 </div>
                  <% else %>  
                     <iframe src="http://www.stadtpanoramen.de/karten/karte_<%= @city.get_filename %>.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
-                  <br><a href="http://www.stadtpanoramen.de/html/logos.html#deutschlandkarte"> Deutschlandkarte einbinden <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>       
-               </div><% end %><% end %> 
-          <div id="adv2-down">     
-            <%= @city.ad_sec_page_down %>
-            </div>
-          </div> 
-       </div> 
-    <div class="adtext">
-      <br>
-    </div> 
-    </div>
-      <div id="fb-root"></div>
-   <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));</script>
+                  <br><a href="http://www.stadtpanoramen.de/html/logos.html#deutschlandkarte"> Deutschlandkarte einbinden <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>
+                 </div>           
+               <% end %><% end %>
+            <%= @city.citytext2 %>   
+            <div id="gmap"> <% end %><% unless !@city.citytext.blank? %>
+            <div class="g_map"> <% end %>
+                 <h5><%= @city.name %> Panorama-Aufnahmestandorte </h5>
+                 <% mapcode = @city.mymap_id %><% if mapcode == "zIANpqu4IHeQ.kKDcOohK8htk" %>      
+                <iframe id="map_frame"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0" data-src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.kKDcOohK8htk&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode == "zIANpqu4IHeQ.k6dPEXy8Scoc" %><iframe  id="map_frame"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0" data-src="https://www.google.com/maps/d/embed?mid=zIANpqu4IHeQ.k6dPEXy8Scoc&ie=UTF8&z=19&t=h"<% else %><iframe  id="map_frame"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0" data-src="https://www.google.com/maps/d/embed?mid=<%= @city.mymap_id %>"<% end %><% end %>></iframe><% if mapcode == "zIANpqu4IHeQ.kKDcOohK8htk" %>
+                <a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.kKDcOohK8htk&ie=UTF8&ll=<%= @city.map_coord %>&z=16&t=m"<% else %><% if mapcode == "zIANpqu4IHeQ.k6dPEXy8Scoc" %><a href="https://www.google.com/maps/d/viewer?mid=zIANpqu4IHeQ.k6dPEXy8Scoc&ie=UTF8&z=19&t=h"<% else %><a href="https://www.google.com/maps/d/viewer?mid=<%= @city.mymap_id %>" <% end %><% end %> target="_blank"><span style="font-size:17px;"><%= @city.name %> Panorama-Karte </span></a> <br><span class="mintxt">(Panoramen auf einer größeren Karte anzeigen)</span>
+            </div><% unless !@city.citytext.blank? %>            
+              <div class="d-map"><% if  @city.map_id == "0004df7ee473a37211d4c" or @city.map_id =="00044b138d7eba762674d" %> <% else %>  
+                  INTERAKTIVE <br>DEUTSCHLANDKARTE
+                   <br>
+              <% if @city.map_id == "0004da425c9f05f247e60" %>
+                  <iframe src="http://www.stadtpanoramen.de/karten/karte_muensterland.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
+                </div>
+                 <% else %>  
+                    <iframe src="http://www.stadtpanoramen.de/karten/karte_<%= @city.get_filename %>.html" width="229" height="312" name="map" marginwidth="0"  marginheight="3" frameborder="0" scrolling="no"></iframe>
+                  <br><a href="http://www.stadtpanoramen.de/html/logos.html#deutschlandkarte"> Deutschlandkarte einbinden <img src="../navpic/pfeil_rr.gif" alt="" width="8" height="8" border="0"> </a>
+                </div>       
+               <% end %><% end %>
+       <div class="adv_mobile">
+       </div> <% end %>
+            <%= @city.citytext3 %>  
+       </div>
   <footer>
     <a href="http://www.stadtpanoramen.de/html/st_copyright.html">Impressum</a>  
     <span class="contact"><a href="http://www.stadtpanoramen.de/html/kontakt.html">Kontakt</a></span>
-    <div class="mail"> <a href="mailto:?subject=Tipp%20StadtPanoramen%20von%20<%= @city.name %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20Link%20zu%20interessanten%20Panoramabildern%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>/<%= @city.get_filename %>_panoramen.html%0D%0A" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite senden </a>
+    <div class="mail">
+        <a href="mailto:?subject=Tipp%20StadtPanoramen%20von%20<%= @city.name %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20Link%20zu%20interessanten%20Panoramabildern%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2Findex%2Ehtml%0D%0A" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> Seite senden </a>
     </div>
-    <div class="gplus"><script type="text/javascript" src="http://apis.google.com/js/plusone.js">{lang: 'de', parsetags: 'explicit'}</script><g:plusone href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= @city.get_filename %>_panoramen.html" size="medium" count="false"></g:plusone><script type="text/javascript">gapi.plusone.go();</script>
+    <div class="gplus">
+      <script type="text/javascript">
+       (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+        window.___gcfg = {
+        lang: 'de',
+        parsetags: 'onload'
+       };
+      </script><div class="g-plusone" data-href="https://apis.google.com/js/plusone.js" data-size="medium" data-count="false">
+       </div>
     </div>
-    <div class="socmed-fb">
-      <div class="fb-like" data-href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<%= @city.get_filename %>_panoramen.html" data-width="265" data-layout="button" data-action="recommend" colorscheme="dark" data-show-faces="false" data-share="false"></div>      
+    <div  class="socmed-fb">
+              <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;locale=de_DE&amp;width&amp;layout=button&amp;action=recommend&amp;show_faces=false&amp;share=false&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:35px;" allowTransparency="true"></iframe>      
     </div>  
   </footer>
 </body>

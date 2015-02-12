@@ -3,16 +3,16 @@
 <head>
    <meta charset=utf-8> 
    <meta http-equiv="content-language" content="de"><% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
+   <meta http-equiv="cache-control" content="max-age=604800">
    <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
    <meta name="viewport" content="width=device-width, maximum-scale=1"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
-   <meta name="description" content="<%= panoname %> <%= @pano.location %> - Volbild-Panorama">
-   <meta http-equiv="cache-control" content="max-age=260000">
+   <meta name="description" content="<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> <%= (@pano.repeative == true) ? ("- Volbild-Panorama") : ("") %>">
    <title><%= (@pano.repeative == true) ? ("360° Panorama") : ("") %> <%= pano.name %> <%= pano.location %>  <%= citytitle.blank? ? ("") : (citytitle) %> - Vollbild </title>
    <link rel="stylesheet" href="../css/simplepanorama.css">
    <link rel="stylesheet" type="text/css" href="../css/hdpano.css">
    <link rel="shortcut icon" href="../icon.ico">
    <link rel="alternate" hreflang="en" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @pano.en_name %>_full_hd.html" />
-   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
    <script type="text/javascript" src="../js/modernizr.js"></script>
    <script type="text/javascript" src="../js/fullpanorama.js"></script>
    <script type="text/javascript" src="../js/hdpano.js"></script>

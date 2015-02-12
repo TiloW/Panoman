@@ -3,7 +3,7 @@
 <head>
    <meta charset=utf-8> 
    <meta http-equiv="content-language" content="de">
-   <meta http-equiv="cache-control" content="max-age=260000"><% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
+   <meta http-equiv="cache-control" content="max-age=604800"><% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
    <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
    <meta name="viewport" content="width=device-width, initial-scale=1.0"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>
    <meta name="description" content="<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> <%= (@pano.repeative == true) ? ("- 360° Panorama") : ("") %><% unless @pano.date_of_recording.year.to_i <= 1999 %> - aufgenommen im <%= @pano.get_german_month %><% end %><% places = @pano.hotspot_infos
@@ -15,10 +15,10 @@
    <link rel="stylesheet" href="../css/pan_small.css">
    <link rel="shortcut icon" href="../icon.ico"> 
    <link rel="alternate" hreflang="en" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @pano.en_name %>.html" />
-   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-    <script src="../js/jquery.mousewheel.min.js"></script>
-    <script src="../js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="../js/modernizr.js"></script>
     <script type="text/javascript" src="../js/simple-panorama.min.js"></script>
     <script type="text/javascript" src="../js/j_pano.js"></script>
@@ -275,7 +275,6 @@
       }); 
  (function($){
   $(document).ready(function () {  
-      $("#thumbframe").load("fotoarchiv_<%= @city.get_filename %>.html");  
       $(window).load(function(){ 
         $("#cont").mCustomScrollbar({
           horizontalScroll:true,
@@ -307,20 +306,23 @@
   </head>
   <body>
   <header>
-     <div class="logo">
-      <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen" border="0"></a>
-     </div>                                                   
-     <div class="city">
-      <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a> <% if !@pano.location.blank? %>in <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/" target="_top"><%= @city.name %> </a><% end %>
-     </div>                            
-     <div class="cities">  
-      <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
-     <div class="service">
-      <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+    <div class="whead">
+       <div class="logo">
+        <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" width="124" height="51"  alt="Stadtpanoramen" border="0"></a>
+       </div>                                                   
+       <div class="city">
+        <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a> <% if !@pano.location.blank? %>in <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/" target="_top"><%= @city.name %> </a><% end %>
+       </div>                            
+       <div class="cities">  
+          <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
+         <div class="service">
+          <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+         </div>   
+       </div>          
      </div>   
-     </div>          
   </header>
-  <div class="all"> 
+  <div class="allcontent"> 
+   <div class="all"> 
     <div id="nojava">
      <h1>
         <%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : (citytitle) %>
@@ -398,8 +400,8 @@
         </ul> 
        </div>   
        <div id="tour">
-        <span style="line-height:23px; letter-spacing: 2px; color: rgb(230, 230, 230);">Panorama-Tour </span>
-        <span style="color: rgb(230, 230, 230);">Virtueller Rundgang </span>
+        <span style="line-height:22px; letter-spacing: 2px; color: rgb(230, 230, 230);">Panorama-Tour </span>
+        <span style="line-height:22px; color: rgb(230, 230, 230);">Virtueller Rundgang </span>
         <br>Nächstes Panorama:
         <ul>
         <% counter = -1 
@@ -438,8 +440,9 @@
         <nav>
           <div id="cont" class="wrapper">
             <div id="thumbnails"> 
-              <% @city.panoramas.sort_by!{ |pano| pano.priority }.each do |pano| %>
-               <% next unless pano.published %>
+              <% @city.panoramas.sort_by!{ |pano| pano.priority }.each do |pano| %>             
+              <% panloc = pano.location %>
+               <% next unless pano.published and !(pano.location == "Hotel Bismarckhöhe" or pano.location == "Ferienwohnung Tecklenburger Augenblicke" or pano.location == "Hotel Königswache" or pano.location == "Landhotel Martinshof" ) %>
                 <div class="anch"><a name="<%= pano.get_filename %>"> </a>
                 </div> <% city_name = @city.get_filename %>
                 <div id="<%= pano.get_filename %>" class="thumbWrapper" style="background-image: url(http://stadtpanoramen.de/en/<%= city_name.to_s == "koeln" ? "cologne" : (city_name.to_s == "muenchen" ? "munich" :(city_name.to_s == "nuernberg" ? "nuremberg" : city_name)) %>/photos/<%= pano.get_filename %>.jpg)">
@@ -454,16 +457,6 @@
         </nav>   
      </div>   
       <div class="pad">&nbsp;
-      </div> 
-      <div class="adv_mobile"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <!-- Mobile-Banner -->
-      <ins class="adsbygoogle"
-           style="display:inline-block;width:320px;height:100px"
-           data-ad-client="ca-pub-2069005959740847"
-           data-ad-slot="6007215713"></ins>
-      <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
       </div> 
       <div class="adv_mobile"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
       <!-- Mobile-Banner -->
@@ -506,14 +499,7 @@
       </map>     
      <noscript style="color:#ff6666;font-size:20pt"><br>Das Panorama benötigt <a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://ecosia.org/search.php?q=javascript+aktivieren">Javascript-Aktivierung! </a> </noscript>
      </div>   
-  <div id="fb-root"></div>
-   <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));</script>  
+    </div>
   <footer>
     <div class="f_left"> 
       <a href="mailto:?subject=StadtPanorama%20<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : (citytitle) %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20interessantes%20Panorama%20von%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2F<%= @pano.get_filename %>%2Ehtml%0D%0A%0D%0A%0D%0A%2A%2A%2A%2A%2A%2A%2A%2A%0D%0AA%20n%20l%20e%20i%20t%20u%20n%20g%0D%0AEmailadresse%20des%20Empf%C3%A4ngers%20eingeben%2c%0D%0Aden%20Text%20nach%20Belieben%20erg%C3%A4nzen%20und%0D%0Adiesen%20Anleitungsabschnitt%20vor%20dem%20Absenden%20entfernen%2E" title="per Email versenden"><img src="../navpic/brief.gif" width="27" height="18" border="0" alt="per Email"> weiterempfehlen </a>

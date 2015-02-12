@@ -2,16 +2,17 @@
 <html lang="de">
 <head>
    <meta charset=utf-8> <% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
+   <meta http-equiv="content-language" content="de">
+   <meta http-equiv="cache-control" content="max-age=604800">
    <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
    <meta name="viewport" content="width=device-width, initial-scale=1.0"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
    <meta name="description" content="<%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> <%= (@pano.repeative == true) ? ("- Widescreen-Panorama - Ansicht in voller Breite") : ("") %>">
-   <meta http-equiv="cache-control" content="max-age=260000">
    <title><%= (@pano.repeative == true) ? ("360° Widescreen Panorama") : ("") %> <%= panoname %> <%= pano.location %>  <%= citytitle.blank? ? ("") : (citytitle) %></title>
    <link rel="stylesheet" href="../css/simplepanorama.css">
    <link rel="stylesheet" type="text/css" href="../css/cine_pano.css">
    <link rel="shortcut icon" href="../icon.ico">
    <link rel="alternate" hreflang="en" href="http://www.panorama-cities.net/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @pano.en_name %>_5c.html" />
-   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
    <script type="text/javascript" src="../js/modernizr.js"></script>
    <script type="text/javascript" src="../js/simple-panorama.min.js"></script>
    <script type="text/javascript" src="../js/cine_pano.js"></script>
@@ -266,23 +267,25 @@
 </head>
 <body>
   <header>
-     <div id="top">
-       <div class="logo">
-        <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen" border="0"></a>
-       </div>                     
-       <div id="city">
-        <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a><% if !@pano.location.blank? %>in <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/" target="_top"><%= @city.name %> </a><% end %>
-       </div>  
-       <div id="close">
-         <a href="javascript:window.close()"><img src="../navpic/close.png" alt="" border="0"></a>
-        </div>                         
-       <div id="cities">  
-          <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
-         <div class="service">
-          <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
-         </div>   
-       </div>    
-     </div>          
+    <div class="whead">
+       <div id="top">
+         <div class="logo">
+          <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png"  width="124" height="51" alt="Stadtpanoramen" border="0"></a>
+         </div>                     
+         <div id="city">
+          <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a><% if !@pano.location.blank? %>in <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/" target="_top"><%= @city.name %> </a><% end %>
+         </div>  
+         <div id="close">
+           <a href="javascript:window.close()"><img src="../navpic/close.png" alt="" border="0"></a>
+          </div>                         
+         <div id="cities">  
+            <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
+           <div class="service">
+            <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+           </div>   
+         </div>    
+        </div>      
+     </div>           
   </header>
  <div id="all"> 
     <div id="panoramaWrapper">

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141117090421) do
+ActiveRecord::Schema.define(:version => 20150127150640) do
 
   create_table "cities", :force => true do |t|
     t.text     "en_name"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(:version => 20141117090421) do
     t.string   "en_ad_mobile_banner"
     t.string   "mymap_id"
     t.string   "mymap_en_id"
+    t.string   "citytext2"
+    t.string   "citytext3"
   end
 
   create_table "external_links", :force => true do |t|

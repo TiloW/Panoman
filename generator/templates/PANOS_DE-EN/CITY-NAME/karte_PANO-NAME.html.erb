@@ -4,15 +4,16 @@
    <meta charset=utf-8> 
    <meta http-equiv="content-language" content="de"><% panoname = (@pano.alt_name.blank? ? (@pano.name) : (@pano.alt_name)) %>
    <meta name="copyright" content="Helmut Kölbach"><% city_name = (panoname[@city.name] == @city.name) ? ("") :(@city.name) %>    
-   <meta name="viewport" content="width=1030, maximum-scale=1"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"><% citytitle = @pano.district.blank? ? (city_name) : (@pano.district) %>    
    <meta name="description" content="Panoramakarte <%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : ("in " + citytitle) %> mit Aufnahmestandort">
-   <meta http-equiv="cache-control" content="max-age=260000">
+   <meta http-equiv="cache-control" content="max-age=604800">
    <link rel="stylesheet" href="../css/pano_maps.css">
    <link rel="shortcut icon" href="../icon.ico"> 
    <title>Panorama-Karte <%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : (citytitle) %></title>
   </head>
   <body>
   <header>
+    <div class="whead">
      <div class="logo">
       <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen" border="0"></a>
      </div>                                                   
@@ -23,6 +24,7 @@
       <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
      <div class="service">
       <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+     </div>   
      </div>   
      </div>          
   </header>  

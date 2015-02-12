@@ -19,7 +19,7 @@
     $(function() {
       pano = new SimplePanorama({
        'selector': '#pano',
-       'imagePath': '../../en/<%= FileHelper.to_filename @city.en_name %>/panoramas/<%= @pano.get_filename %>_5.jpg', 
+       'imagePath': '../../en/<%= FileHelper.to_filename @city.en_name %>/<%= FileHelper.to_filename @pano.location %>/panoramas/<%= @pano.get_filename %>_5.jpg', 
        'modules': ['move_mousedown', 'move_swipe'], 
        'initialPos':<%= @pano.initial_center.blank? ?  "0" : (@pano.initial_center*5/3.5).to_i %>,
        'repeative': <%= @pano.repeative.blank? ?  "false" : @pano.repeative %>,
@@ -353,7 +353,7 @@
    </div> 
    <div id="foot">   
     <div id="f_left"> 
-      <a href="mailto:?subject=<%= panoname %> <% if @pano.location.length <= 20 %> <%= citytitle.blank? ? ("") : (citytitle) %><% else %><% end %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20interessantes%20Panorama%20aus%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2F<%= @pano.get_filename %>_5c%2Ehtml%0D%0A" title="mit eigenem Emailprogramm senden"><img src="../../navpic/brief.gif" width="27" height="18" border="0" alt="Email"> Panorama senden </a>
+      <a href="mailto:?subject=<%= panoname %> <% if @pano.location.length <= 20 %> <%= citytitle.blank? ? ("") : (citytitle) %><% else %><% end %>&body=Hallo%2c%0D%0A%0D%0Ahier%20ein%20interessantes%20Panorama%20aus%20<%= @city.name %>%0D%0Awww%2Estadtpanoramen%2Ede%2F<%= @city.get_filename %>%2F<%=FileHelper.to_filename @pano.location %>%2F<%= @pano.get_filename %>_<%=FileHelper.to_filename @pano.location %>_5c%2Ehtml%0D%0A" title="mit eigenem Emailprogramm senden"><img src="../../navpic/brief.gif" width="27" height="18" border="0" alt="Email"> Panorama senden </a>
     </div>
     <div id="f_mid">
       &nbsp;

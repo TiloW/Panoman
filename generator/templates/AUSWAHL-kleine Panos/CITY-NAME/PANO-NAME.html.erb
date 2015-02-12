@@ -275,7 +275,6 @@
       }); 
  (function($){
   $(document).ready(function () {  
-      $("#thumbframe").load("fotoarchiv_<%= @city.get_filename %>.html");  
       $(window).load(function(){ 
         $("#cont").mCustomScrollbar({
           horizontalScroll:true,
@@ -307,20 +306,23 @@
   </head>
   <body>
   <header>
-     <div class="logo">
-      <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen" border="0"></a>
-     </div>                                                   
-     <div class="city">
-      <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a> <% if !@pano.location.blank? %>in <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/" target="_top"><%= @city.name %> </a><% end %>
-     </div>                            
-     <div class="cities">  
-      <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
-     <div class="service">
-      <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+    <div class="whead">
+       <div class="logo">
+        <a href="http://www.stadtpanoramen.de/" target="_top"><img src="../navpic/logo.png" width="150px" height="51px" alt="Stadtpanoramen" border="0"></a>
+       </div>                                                   
+       <div class="city">
+        <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/<% if !@pano.district.blank? %>panoramen_<%= FileHelper.to_filename @pano.district %>.html"><%= @pano.district %><% else %><% if !@pano.location.blank? %>panoramen_<%= FileHelper.to_filename @pano.location %>.html"><%= @pano.location %><% else %>"><%= @city.name %><% end %><% end %> </a> <% if !@pano.location.blank? %>in <a href="http://www.stadtpanoramen.de/<%= @city.get_filename %>/" target="_top"><%= @city.name %> </a><% end %>
+       </div>                            
+       <div class="cities">  
+          <a href="http://www.stadtpanoramen.de/stadt/" title="Städte-Bilder Übersicht" class="city-top">Städte</a>
+         <div class="service">
+          <a href="http://www.stadtpanoramen.de/html/photo-service.html" title="Panoramabilder und virtuelle Rundgänge">Photo-Service </a>
+         </div>   
+       </div>          
      </div>   
-     </div>          
   </header>
-  <div class="all"> 
+  <div class="allcontent"> 
+   <div class="all"> 
     <div id="nojava">
      <h1>
         <%= panoname %> <%= @pano.location %> <%= citytitle.blank? ? ("") : (citytitle) %>
@@ -438,8 +440,9 @@
         <nav>
           <div id="cont" class="wrapper">
             <div id="thumbnails"> 
-              <% @city.panoramas.sort_by!{ |pano| pano.priority }.each do |pano| %>
-               <% next unless pano.published %>
+              <% @city.panoramas.sort_by!{ |pano| pano.priority }.each do |pano| %>             
+              <% panloc = pano.location %>
+               <% next unless pano.published and !(pano.location == "Hotel Bismarckhöhe" or pano.location == "Ferienwohnung Tecklenburger Augenblicke" or pano.location == "Hotel Königswache" or pano.location == "Landhotel Martinshof" ) %>
                 <div class="anch"><a name="<%= pano.get_filename %>"> </a>
                 </div> <% city_name = @city.get_filename %>
                 <div id="<%= pano.get_filename %>" class="thumbWrapper" style="background-image: url(http://stadtpanoramen.de/en/<%= city_name.to_s == "koeln" ? "cologne" : (city_name.to_s == "muenchen" ? "munich" :(city_name.to_s == "nuernberg" ? "nuremberg" : city_name)) %>/photos/<%= pano.get_filename %>.jpg)">
@@ -496,6 +499,7 @@
       </map>     
      <noscript style="color:#ff6666;font-size:20pt"><br>Das Panorama benötigt <a style="color:#ff6666;font-size:20pt;text-decoration:underline" href="http://ecosia.org/search.php?q=javascript+aktivieren">Javascript-Aktivierung! </a> </noscript>
      </div>   
+    </div>
   <div id="fb-root"></div>
    <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];

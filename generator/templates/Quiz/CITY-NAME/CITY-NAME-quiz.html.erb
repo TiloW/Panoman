@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width"> 
   <meta name="description" content="Quiz über <%= @city.name %> mit Panorama-Ansichten">
    <meta http-equiv="cache-control" content="max-age=260000">
-  <link rel="stylesheet" type="text/css" href="../css/pano_quiz.css">
+  <link rel="stylesheet" type="text/css" href="../css/panoquiz.css">
   <title><%= @city.name %>-Quiz StadtPanoramen</title>
   <script type="text/javascript">
   <!--
@@ -28,10 +28,10 @@
   </script>
 </head>
 <body onLoad="lade()">
-  <div class="logo">   
-    <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" alt="Stadtpanoramen" border="0"></a> 
-  </div>  
   <div class="content">
+    <div class="logo">   
+      <a href="http://www.stadtpanoramen.de/"><img src="../navpic/logo.png" alt="Stadtpanoramen" border="0"></a> 
+    </div>  
     <div class="frame">
       <iframe id= "quiz-frame"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.stadtpanoramen.de/staedtequiz/quiz_<%= @city.get_filename %>.html"></iframe>      
       <div id="fb-root">
